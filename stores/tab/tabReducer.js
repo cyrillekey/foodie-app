@@ -13,7 +13,6 @@ const tabReducer = (state = initialState,action)=>{
                 ...state,selectedTab:action.payload.selectedTab,
             };
         case tabActions.SET_TEST:
-            //console.log(action.payload);
             return {
                 ...state,test:action.payload.test,
             };

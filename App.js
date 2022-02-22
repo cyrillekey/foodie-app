@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from "redux-thunk"
 import rootReducer from './stores/rootReducer';
 import CustomDrawer from './navigation/CustomDrawer';
+import OnBoarding from "./screens/Onboarding/Onboarding";
 const Stack = createStackNavigator();
 const store=createStore(
     rootReducer,
@@ -21,12 +22,13 @@ const App = () => {
                 screenOptions={{
                     headerShown: false,
                 }}
-                initialRouteName={'Home'}
+                initialRouteName={'OnBoarding'}
             >
                 <Stack.Screen
-                    name="Home"
-                    component={CustomDrawer}
+                    name="onBoarding"
+                    component={OnBoarding}
                 />
+                <Stack.Screen name="Home" component={CustomDrawer}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>

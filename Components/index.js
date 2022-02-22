@@ -1,6 +1,10 @@
 import Header from "./Header";
 import HorizontalFoodCard from "./HorizontalFoodCard";
-export{
+import Section from "./Section";
+import TextButton from "./TextButton";
+export {
     Header,
     HorizontalFoodCard,
-}
+    Section,
+    TextButton,
+};

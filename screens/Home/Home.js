@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
+
 const Home = () => {
     //const [selectedCatId, setselectedCatId] = React.useState(1);
     //const [selectedMenu, setselectedMenu] = React.useState(1);
@@ -95,7 +96,79 @@ const Home = () => {
         );
     }
     const renderPopularNearYou=()=>{
-        
+        return (
+                    <FlatList
+                    horizontal
+                    data={dummyData.categories}
+                    key={item=>`${item.id}`}
+                    renderItem={({item,index})=>(
+                        <TouchableOpacity style={{
+                            flexDirection:'row',
+                            height:50,
+                            marginTop:SIZES.padding,
+                            marginLeft:index==0 ?SIZES.padding :SIZES.radius,
+                            marginRight:index==dummyData.categories.length-1 ? SIZES.padding :SIZES.radius,
+                            paddingHorizontal:1,
+                            borderRadius:SIZES.radius,
+                            backgroundColor:COLORS.primary,
+                        }}>
+                            <Image
+                                source={item.icon}
+                                style={{
+                                    marginTop:5,
+                                    height:50,
+                                    width:50,
+                                }
+                                }
+                            />
+                            <Text style={{
+                                alignSelf:'center',
+                                marginRight:SIZES.base,
+                                ...FONTS.h3,
+                                color:COLORS.white
+                            }}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>
+                        )}
+                    />
+        );
+    }
+    const renderDelivery=()=>{
+        return (
+            <View style={{
+                marginTop:SIZES.padding,
+                marginHorizontal:SIZES.padding
+            }}>
+                <Text
+                style={{
+                    ...FONTS.h3,
+                    color:COLORS.primary,
+                }}
+                >
+                    Delivery To
+                </Text>
+                <TouchableOpacity
+                style={{
+                    flexDirection:'row',
+                    marginTop:SIZES.base,
+                    alignItems:'center'
+                }}
+                >
+                    <Text style={{...FONTS.h3}}>
+                        {dummyData.myProfile.address}
+                    </Text>
+                    <Image
+                    source={icons.down_arrow}
+                    style={{
+                        height:20,
+                        width:20,
+                        marginLeft:SIZES.base,
+                    }}
+                    />
+                    </TouchableOpacity>
+            </View>
+        );
     }
     return (
         <View
@@ -109,6 +182,8 @@ const Home = () => {
                 keyExtractor={(item)=>`${item.id}`}
                 showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={<View>
+                    {renderDelivery()}
+                    {renderPopularNearYou()}
                     {renderMenuTypes()}
                 </View>}
                 renderItem={({item,index})=>{
