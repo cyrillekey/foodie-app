@@ -15,7 +15,7 @@ const Header = ({containerStye,title,leftComponent,rightComponent})=>{
                 alignItems:'center',
                 justifyContent:'center',
             }}>
-                <Text style={{...FONTS.h3,color:COLORS.black}}>{title}</Text>
+                <Text style={{...FONTS.h3,color:COLORS.black}}>{title.toUpperCase()}</Text>
             </View>
             {rightComponent}
         </View>

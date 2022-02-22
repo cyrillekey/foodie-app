@@ -1,6 +1,5 @@
-import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
-
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStore,applyMiddleware } from 'redux';
@@ -16,6 +15,7 @@ const store=createStore(
 const App = () => {
     return (
         <Provider store={store}>
+            <GestureHandlerRootView style={{flex:1}}>
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
@@ -29,6 +29,7 @@ const App = () => {
                 />
             </Stack.Navigator>
         </NavigationContainer>
+        </GestureHandlerRootView>
         </Provider>
     )
 }
