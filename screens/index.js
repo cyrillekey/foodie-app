@@ -17,6 +17,9 @@ import Notification from "./Notification/Notification"
 import OnBoarding from "./Onboarding/Onboarding";
 import Signin from "./Authentication/Signin";
 import AuthLayout from "./Authentication/AuthLayout";
+import SignUp from "./Authentication/SignUp";
+import ForgotPassword from "./Authentication/ForgotPassword";
+import OtpScreen from "./Authentication/OtpScreen";
 export {
     MainLayout,
     Home,
@@ -26,5 +29,8 @@ export {
     Notification,
     OnBoarding,
     Signin,
-    AuthLayout
-}
+    AuthLayout,
+    SignUp,
+    ForgotPassword,
+    OtpScreen,
+};
