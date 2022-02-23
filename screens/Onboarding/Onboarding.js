@@ -14,7 +14,8 @@ const OnBoarding =({navigation})=>{
                 style={{
                     flexDirection:'row',
                     alignItems:'center',
-                    justifyContent:'center'
+                    justifyContent:'center',
+                    marginTop:20
                 }}
             >
                 {
@@ -70,7 +71,7 @@ const OnBoarding =({navigation})=>{
     const renderFooter=()=>{
         return(
             <View style={{
-                height:160
+                height:120
             }}>
                 <View style={{
                     flex:1,
@@ -93,7 +94,7 @@ const OnBoarding =({navigation})=>{
                         color:COLORS.black
                     }}
                     onPress={()=>
-                        navigation.replace('Home')
+                        navigation.replace('SignIn')
                     }
                 />
                 <TextButton
@@ -106,7 +107,7 @@ const OnBoarding =({navigation})=>{
                     onPress={()=>{
                         let index=Math.ceil(Number(scrollX._value/SIZES.width))
                         if(index<constants.onboarding_screens.length-1){
-                            navigation.replace("Home")
+                            navigation.replace("SignIn")
                         }
                     }}
                 />
@@ -127,7 +128,6 @@ const OnBoarding =({navigation})=>{
                 data={constants.onboarding_screens}
                 scrollEventThrottle={1}
                 snapToAlignment="center"
-                showHorizontalScrollindicator={false}
                 onScroll={
                     Animated.event(
                         [
@@ -140,7 +140,7 @@ const OnBoarding =({navigation})=>{
                         <View
                             style={{
                                 flex:1,
-                                width:SIZES.width*0.99
+                                width:SIZES.width*0.98
                             }}
                         >
                             <View

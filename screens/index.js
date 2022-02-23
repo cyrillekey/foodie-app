@@ -14,12 +14,17 @@ import Favourite from "./Favourite/Favourite";
 
 // Notification
 import Notification from "./Notification/Notification"
-
+import OnBoarding from "./Onboarding/Onboarding";
+import Signin from "./Authentication/Signin";
+import AuthLayout from "./Authentication/AuthLayout";
 export {
     MainLayout,
     Home,
     Search,
     CartTab,
     Favourite,
-    Notification
+    Notification,
+    OnBoarding,
+    Signin,
+    AuthLayout
 }
