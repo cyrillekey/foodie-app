@@ -9,7 +9,8 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
             behavior="height"
             style={{
                 flex:1,
-                paddingHorizontal:SIZES.padding
+                paddingHorizontal:SIZES.padding,
+                marginTop:SIZES.padding
             }}>
                 <View style={{
                     alignItems:'center',

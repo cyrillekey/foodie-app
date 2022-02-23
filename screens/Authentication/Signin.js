@@ -2,7 +2,7 @@
 import React from "react";
 import { View,Image, TouchableOpacity, Switch,Text } from "react-native";
 import { AuthLayout } from "..";
-import { FormInput, TextButton } from "../../Components";
+import { FormInput, TextButton, TextIconButton } from "../../Components";
 import { SIZES ,icons, COLORS, FONTS} from "../../constants";
 const Signin=({navigation})=>{
     return (
@@ -134,7 +134,34 @@ const Signin=({navigation})=>{
                         }}
                     />
                 </View>
+                
             </View>
+            <View>
+                    <TextIconButton
+                    containerStyle={{
+                        height:50,
+                        alignItems:'center',
+                        borderRadius:SIZES.radius,
+                        backgroundColor:COLORS.blue,
+                        marginBottom:SIZES.padding
+                    }}
+                        label="Sign in With Facebook"
+                        iconLeft={
+                            icons.cart
+                        }
+                        iconStyle={{
+                            marginLeft:SIZES.radius,
+                            tintColor:COLORS.white
+                        }}
+                        labelStyle={{
+                            marginLeft:SIZES.radius,
+                            color:COLORS.white
+                        }}
+                        onPress={()=>{
+                            console.log("exmpa")
+                        }}
+                    />
+                </View>
             </AuthLayout>
     );
 }

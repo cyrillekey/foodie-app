@@ -3,11 +3,14 @@ import HorizontalFoodCard from "./HorizontalFoodCard";
 import Section from "./Section";
 import TextButton from "./TextButton";
 import FormInput from "./FormTextInput";
+import TextIconButton from "./TextIconButton";
+import Iconlabel from "./Iconlabel";
 export {
     Header,
     HorizontalFoodCard,
     Section,
     TextButton,
     FormInput,
-    
+    TextIconButton,
+    Iconlabel
 };

@@ -16,7 +16,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '../stores/tab/tabActions';
 import { Favourite, Home ,Notification,Search} from './index';
 
-const TabButton = ({label,icon,isFocus,onPress,innerContainerStyle,outerContainerStyle})=>{
+const TabButton = ({label,icon,isFocus,onPress,innerContainerStyle,outerContainerStyle,navigation})=>{
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <Animated.View style={[{
@@ -222,10 +222,10 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                             height:'100%',
                             width:SIZES.width,
                         }}>
-                            {item.label == constants.screens.home && <Home/>}
-                            {item.label == constants.screens.favourite && <Favourite/>}
-                            {item.label == constants.screens.search && <Search/>}
-                            {item.label == constants.screens.notification && <Notification/>}
+                            {item.label == constants.screens.home && <Home {...navigation}/>}
+                            {item.label == constants.screens.favourite && <Favourite {...navigation}/>}
+                            {item.label == constants.screens.search && <Search {...navigation}/>}
+                            {item.label == constants.screens.notification && <Notification {...navigation} />}
                         </View>
                     );}}
             />

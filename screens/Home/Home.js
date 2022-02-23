@@ -7,7 +7,7 @@ import {
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
 
-const Home = () => {
+const Home = (navigation) => {
     //const [selectedCatId, setselectedCatId] = React.useState(1);
     //const [selectedMenu, setselectedMenu] = React.useState(1);
     const [menu, setmenu] = React.useState([]);
@@ -70,7 +70,7 @@ const Home = () => {
             horizontal
             data={dummyData.menu}
             keyExtractor={item=>`${item.id}`}
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{
                 marginTop:20,
                 marginBottom:30,
@@ -101,6 +101,8 @@ const Home = () => {
                     horizontal
                     data={dummyData.categories}
                     key={item=>`${item.id}`}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
                     renderItem={({item,index})=>(
                         <TouchableOpacity style={{
                             flexDirection:'row',
@@ -201,7 +203,12 @@ const Home = () => {
                                 width:110,
                             }}
                             item={item}
-                            onPress={()=>{}}
+                            onPress={()=>{
+                                //console.log(navigation)
+                                navigation.navigate("fooddetails",{
+                                    id:25
+                                })
+                            }}
                         />
                     );
                 }}
