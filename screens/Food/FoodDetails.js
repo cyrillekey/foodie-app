@@ -21,7 +21,7 @@ const FoodDetails = ({navigation}) => {
         title="Mangos"
         leftComponent={
             <TextIconButton
-            iconLeft={icons.down_arrow}
+            iconLeft={icons.back}
             containerStyle={{
                 width:40,
                 height:40,
@@ -34,7 +34,8 @@ const FoodDetails = ({navigation}) => {
             iconStyle={{
                 width:20,
                 height:20,
-                tintColor:COLORS.gray2
+                tintColor:COLORS.gray2,
+                marginRight:SIZES.base
             }}
             onPress={()=>{
                 navigation.pop()
@@ -142,7 +143,7 @@ const FoodDetails = ({navigation}) => {
                     paddingHorizontal:0
                     
                 }}
-                    icon={icons.coupon}
+                    icon={icons.clock}
                     label="30min"
                     labelStyle={{
                         color:COLORS.black
@@ -157,8 +158,8 @@ const FoodDetails = ({navigation}) => {
                     paddingHorizontal:0
                     
                 }}
-                    icon={icons.help}
-                    label="Free Shipping"
+                    icon={icons.dollar}
+                    label="Best Seller"
                     labelStyle={{
                         color:COLORS.black
                     }}
@@ -285,7 +286,7 @@ const FoodDetails = ({navigation}) => {
     ><StepperIncrement
             onAdd={()=>{}}
             onMinus={()=>{}}
-            value={1}
+            value={4}
         />
         <TextButton
         buttonContainerStyle={{

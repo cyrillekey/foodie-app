@@ -20,7 +20,19 @@ const setting = require("../assets/icons/setting.png")
 const star = require("../assets/icons/star.png")
 const wallet = require("../assets/icons/wallet.png")
 const help = require("../assets/icons/help.png")
-
+const back = require("../assets/icons/back.png")
+const call = require("../assets/icons/call.png")
+const cancel = require("../assets/icons/cancel.png")
+const error_tick = require("../assets/icons/check_circle.png")
+const clock = require("../assets/icons/clock.png")
+const correct = require("../assets/icons/correct.png")
+const dollar = require("../assets/icons/dollar.png")
+const eye_closed = require("../assets/icons/eye_close.png")
+const eye = require("../assets/icons/eye.png")
+const location_pin = require("../assets/icons/location_pin.png")
+// const location = require("../assets/icons/location1.png")
+const minus = require("../assets/icons/minus.png")
+const plus =  require("../assets/icons/plus.png")
 export default {
     coupon,
     cross,
@@ -44,4 +56,7 @@ export default {
     star,
     wallet,
     help,
+    error_tick,
+    eye,
+    eye_closed,plus,minus,location_pin,clock,dollar,back,call,cancel,correct
 }

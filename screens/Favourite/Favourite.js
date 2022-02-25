@@ -3,11 +3,16 @@ import {
     Text,
     View,
 } from 'react-native';
+import { FONTS } from '../../constants';
 
 const Favourite = () => {
     return (
         <View>
-            <Text>Favourite</Text>
+            <Text
+            style={{
+                ...FONTS.body3
+            }}
+            >Favourite</Text>
         </View>
     )
 }

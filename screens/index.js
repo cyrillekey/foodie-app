@@ -21,6 +21,8 @@ import SignUp from "./Authentication/SignUp";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import OtpScreen from "./Authentication/OtpScreen";
 import FoodDetails from "./Food/FoodDetails";
+import Restaurant from "./Restaurant/Restaurant";
+import Orders from "./Orders/Orders";
 export {
     MainLayout,
     Home,
@@ -34,5 +36,7 @@ export {
     SignUp,
     ForgotPassword,
     OtpScreen,
-    FoodDetails
+    FoodDetails,
+    Restaurant,
+    Orders,
 };

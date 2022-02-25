@@ -24,11 +24,13 @@ const onboarding_screens = [
 const screens = {
     main_layout: "MainLayout",
     home: "Home",
-    search: "Search",
-    cart: "Cart",
     favourite: "Favourite",
-    notification: "Notification",
-    my_wallet:"Wallet"
+    orders: "Orders",
+    cart: "Cart", 
+    notification: "Profile",
+    my_wallet:"Wallet",
+    restaurant:"Restaurant",
+    profile:'profile'
 }
 
 const bottom_tabs = [
@@ -38,19 +40,19 @@ const bottom_tabs = [
     },
     {
         id: 1,
-        label: screens.search,
-    },
-    {
-        id: 2,
-        label: screens.cart,
-    },
-    {
-        id: 3,
         label: screens.favourite,
     },
     {
+        id: 2,
+        label: screens.restaurant,
+    },
+    {
+        id: 3,
+        label: screens.orders,
+    },
+    {
         id: 4,
-        label: screens.notification,
+        label: screens.profile,
     },
 ]
 

@@ -5,6 +5,7 @@ import { AuthLayout } from "..";
 import { FormInput, TextButton, TextIconButton } from "../../Components";
 import { SIZES ,icons, COLORS, FONTS} from "../../constants";
 const Signin=({navigation})=>{
+    const [see,setSee]=React.useState(true)
     return (
         <AuthLayout
             title="Lets join"
@@ -30,7 +31,7 @@ const Signin=({navigation})=>{
                     }}
                     >
                         <Image
-                        source={icons.cherry}
+                        source={icons.error_tick}
                         style={{
                             height:20,
                             width:20,
@@ -43,25 +44,32 @@ const Signin=({navigation})=>{
                 <FormInput
                     label={"Password"}
                     placeholder={"password here"}
-                    secureTextEntry={true}
+                    secureTextEntry={see}
                     autoCompleteType="password"
                     containerStyle={{
                         marginTop:SIZES.padding
+                    }}
+                    onChange={()=>{
+
                     }}
                     appendComponent={
                         <TouchableOpacity style={{
                             width:40,
                             alignItems:'flex-end',
                             justifyContent:'center'
-                        }}>
+                        }}
+                        onPress={()=>setSee(!see)}
+                        >
                             <Image
-                            source={icons.notification}
+                            source={see ?icons.eye:icons.eye_closed}
                             style={{
                                 height:20,
                                 width:20,
                                 tintColor:COLORS.gray
                             }}
+                            
                             />
+                            
                         </TouchableOpacity>
                     }
                 />

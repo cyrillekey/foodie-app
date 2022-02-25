@@ -25,11 +25,11 @@ const StepperIncrement = ({
                 alignItems:'center',
                 justifyComponent:'center'
             }}
-            iconLeft={icons.notification}
+            iconLeft={icons.minus}
             iconStyle={{
                 height:25,
                 width:25,
-                tintColor:value>1 ?COLORS.primary : COLORS.gray
+                
             }}
 
             onPress={{
@@ -57,11 +57,11 @@ const StepperIncrement = ({
                 alignItems:'center',
                 justifyComponent:'center'
             }}
-            iconRight={icons.cross}
+            iconRight={icons.plus}
             iconStyle={{
                 height:25,
                 width:25,
-                tintColor:value>1 ?COLORS.primary : COLORS.gray
+                tintColor : value > 1 ? COLORS.primary : COLORS.gray
             }}
 
             onPress={

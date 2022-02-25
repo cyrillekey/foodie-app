@@ -93,7 +93,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                     }}/>
                     <CustomDrawerItem label={constants.screens.my_wallet} icon={icons.wallet} onPress={()=>{
                         dispatch(setSelectedTab({selectedTab:constants.screens.my_wallet}));
-                        navigation.navigate('MainLayout');
+                        //navigation.navigate('MainLayout');
                     }}/>
                     <CustomDrawerItem label={constants.screens.notification} icon={icons.notification} onPress={()=>{
                         dispatch(setSelectedTab({selectedTab:constants.screens.notification}));

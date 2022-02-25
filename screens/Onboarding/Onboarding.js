@@ -105,10 +105,11 @@ const OnBoarding =({navigation})=>{
                     borderRadius:SIZES.radius
                     }}
                     onPress={()=>{
+                        console.log(constants.onboarding_screens.length)
                         let index=Math.ceil(Number(scrollX._value/SIZES.width))
-                        if(index<constants.onboarding_screens.length-1){
-                            navigation.replace("SignIn")
-                        }
+                        // if(index<constants.onboarding_screens.length-1){
+                        //     navigation.replace("SignIn")
+                        // }
                     }}
                 />
                 </View>
@@ -123,6 +124,11 @@ const OnBoarding =({navigation})=>{
             {renderHeaderLogo()}
             <Animated.FlatList
                 ref={flatListRef}
+                onEndReached={
+                    ()=>{
+                        console.log("end")
+                    }
+                }
                 horizontal
                 pagingEnabled
                 data={constants.onboarding_screens}

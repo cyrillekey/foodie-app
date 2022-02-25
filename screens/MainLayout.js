@@ -14,7 +14,7 @@ import {Header} from '../Components';
 import { COLORS, SIZES,icons, dummyData, FONTS, constants } from '../constants';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '../stores/tab/tabActions';
-import { Favourite, Home ,Notification,Search} from './index';
+import { Favourite, Home ,Notification,Orders,Restaurant,Search} from './index';
 
 const TabButton = ({label,icon,isFocus,onPress,innerContainerStyle,outerContainerStyle,navigation})=>{
     return (
@@ -67,6 +67,8 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
     const favouriteTabColor = useSharedValue(COLORS.white);
     const notificationTabFlex = useSharedValue(1);
     const notificationTabColor = useSharedValue(COLORS.white);
+    const orderTabFlex = useSharedValue(1);
+    const orderTabColor = useSharedValue(COLORS.white);
     //Animation stylr
     const homeFlexStyle = useAnimatedStyle(()=>{
         return {
@@ -108,6 +110,16 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
             backgroundColor:notificationTabColor.value,
         };
     });
+    const orderFlexStyle = useAnimatedStyle(()=>{
+        return {
+            flex:orderTabFlex.value,
+        };
+    });
+    const orderColorrStyle = useAnimatedStyle(()=>{
+        return {
+            backgroundColor:orderTabColor.value,
+        };
+    });
     const selected = useSelector(state=>state.tabReducer.selectedTab);
     const dispatch = useDispatch();
     React.useEffect(()=>{
@@ -136,7 +148,7 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
             favouriteTabFlex.value = withTiming(1,{duration:500});
             favouriteTabColor.value = withTiming(COLORS.white,{duration:500})
         }
-        if (selected === constants.screens.search){
+        if (selected === constants.screens.restaurant){
             flasListRef?.current?.scrollToIndex({
                 index:2,
                 amimated:false
@@ -147,9 +159,20 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
             searchTabFlex.value = withTiming(1,{duration:500});
             searchTabColor.value = withTiming(COLORS.white,{duration:500})
         }
-        if (selected === constants.screens.notification){
+        if (selected === constants.screens.orders){
             flasListRef?.current?.scrollToIndex({
                 index:3,
+                amimated:false
+            })
+            orderTabFlex.value = withTiming(4,{duration:500});
+            orderTabColor.value = withTiming(COLORS.primary,{duration:500})
+        } else {
+            orderTabFlex.value = withTiming(1,{duration:500});
+            orderTabColor.value = withTiming(COLORS.white,{duration:500})
+        }
+        if (selected === constants.screens.profile){
+            flasListRef?.current?.scrollToIndex({
+                index:4,
                 amimated:false
             })
             notificationTabFlex.value = withTiming(4,{duration:500});
@@ -213,8 +236,9 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                         }}>
                             {item.label == constants.screens.home && <Home {...navigation}/>}
                             {item.label == constants.screens.favourite && <Favourite {...navigation}/>}
-                            {item.label == constants.screens.search && <Search {...navigation}/>}
-                            {item.label == constants.screens.notification && <Notification {...navigation} />}
+                            {item.label == constants.screens.restaurant && <Restaurant {...navigation}/>}
+                            {item.label == constants.screens.orders && <Orders {...navigation} />}
+                            {item.label == constants.screens.profile && <Notification {...navigation} />}
                         </View>
                     );}}
             />
@@ -244,11 +268,14 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                     outerContainerStyle={favouriteFlexStyle}
                     innerContainerStyle={favouriteColorrStyle}
                     />
-                    <TabButton label="Search" icon={icons.search} isFocus={selected==constants.screens.search} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.search}));}}
+                    <TabButton label="Restaurants" icon={icons.menu} isFocus={selected==constants.screens.restaurant} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.restaurant}));}}
                     outerContainerStyle={searchFlexStyle}
                     innerContainerStyle={searchColorrStyle}
                     />
-                    <TabButton label="Orders" icon={icons.cart} isFocus={selected==constants.screens.notification} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.notification}));}}
+                    <TabButton label="Orders" icon={icons.cart} isFocus={selected==constants.screens.orders} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.orders}));}}
+                    outerContainerStyle={orderFlexStyle}
+                    innerContainerStyle={orderColorrStyle}/>
+                    <TabButton label="Profile" icon={icons.profile} isFocus={selected==constants.screens.profile} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.profile}));}}
                     outerContainerStyle={notificationFlexStyle}
                     innerContainerStyle={notificationColorrStyle}/>
                 </View>
