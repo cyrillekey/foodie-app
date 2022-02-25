@@ -5,6 +5,9 @@ import TextButton from "./TextButton";
 import FormInput from "./FormTextInput";
 import TextIconButton from "./TextIconButton";
 import Iconlabel from "./Iconlabel";
+import LineDivider from "./LineDivider";
+import Ratings from "./Ratings";
+import StepperIncrement from "./StepperIncrement";
 export {
     Header,
     HorizontalFoodCard,
@@ -12,5 +15,8 @@ export {
     TextButton,
     FormInput,
     TextIconButton,
-    Iconlabel
+    Iconlabel,
+    LineDivider,
+    Ratings,
+    StepperIncrement,
 };

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import { ScrollView, View ,Image, Text} from 'react-native'
-import { Header, Iconlabel, TextButton } from '../../Components'
+import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
 import { COLORS ,SIZES,icons, FONTS,images, dummyData} from '../../constants'
 const FoodDetails = ({navigation}) => {
   return (
@@ -18,7 +18,29 @@ const FoodDetails = ({navigation}) => {
             alignItems:'center',
             paddingHorizontal:SIZES.padding
     }}
-        title="Manof"
+        title="Mangos"
+        leftComponent={
+            <TextIconButton
+            iconLeft={icons.down_arrow}
+            containerStyle={{
+                width:40,
+                height:40,
+                justifyContent:'center',
+                alignItems:'center',
+                borderWidth:1,
+                borderRadius:SIZES.radius,
+                borderColor:COLORS.gray2
+            }}
+            iconStyle={{
+                width:20,
+                height:20,
+                tintColor:COLORS.gray2
+            }}
+            onPress={()=>{
+                navigation.pop()
+            }}
+            />
+        }
     />
     <ScrollView>
         <View style={{
@@ -215,7 +237,70 @@ const FoodDetails = ({navigation}) => {
                 </View>
             </View>
         </View>
+        <LineDivider/>
+        <View
+            style={{
+                flexDirection:'row',
+                marginVertical:SIZES.padding,
+                paddingHorizontal:SIZES.padding,
+                alignItems:'center'
+            }}
+        >
+            <Image
+            source={images.profile}
+            style={{
+                width:50,
+                height:50,
+                borderRadius:SIZES.radius
+            }}
+            />
+            <View
+            style={{
+                flex:1,
+                marginLeft:SIZES.radius,
+                justifyContent:'center'
+            }}
+            >
+                <Text style={{...FONTS.h3}}>John Doe</Text>
+                <Text style={{...FONTS.body4,color:COLORS.gray}}>12.5 KM away from here</Text>
+                
+            </View>
+            <Ratings
+                rating={4}
+                iconStyle={{
+                    marginLeft:3,
+                }}
+                />
+        </View>
     </ScrollView>
+    <LineDivider/>
+    <View
+    style={{
+        flexDirection:'row',
+        height:90,
+        alignItems:'center',
+        paddingHorizontal:SIZES.padding,
+        paddingBottom:SIZES.radius
+    }}
+    ><StepperIncrement
+            onAdd={()=>{}}
+            onMinus={()=>{}}
+            value={1}
+        />
+        <TextButton
+        buttonContainerStyle={{
+            flex:1,
+            flexDirection:'row',
+            height:60,
+            marginLeft:SIZES.radius,
+            paddingHorizontal:SIZES.radius,
+            borderRadius:SIZES.radius
+        }}
+        label="Buy Now"
+        label2='$12.99'
+        
+        />
+    </View>
     </View>
   )
 }

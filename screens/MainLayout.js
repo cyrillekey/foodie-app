@@ -186,23 +186,12 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                     borderRadius:SIZES.radius,
                 }}
                 onPress={()=>navigation.openDrawer()}
+
                 >
                     <Image source={icons.menu}/>
                 </TouchableOpacity>
             }
-            rightComponent={
-                <TouchableOpacity style={{
-                    borderRadius:SIZES.radius,
-                    alignItems:'center',
-                    justifyContent:'center',
-                }}>
-                    <Image source={dummyData.myProfile.profile_image} style={{
-                        width:40,
-                        height:40,
-                        borderRadius:SIZES.radius,
-                    }}/>
-                </TouchableOpacity>
-            }
+            quantity={14}
             />
             <View style={{
                 flex:1,
