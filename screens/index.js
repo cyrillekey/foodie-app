@@ -23,6 +23,7 @@ import OtpScreen from "./Authentication/OtpScreen";
 import FoodDetails from "./Food/FoodDetails";
 import Restaurant from "./Restaurant/Restaurant";
 import Orders from "./Orders/Orders";
+import Profile from "./Profile/Profile";
 export {
     MainLayout,
     Home,
@@ -39,4 +40,5 @@ export {
     FoodDetails,
     Restaurant,
     Orders,
+    Profile,
 };

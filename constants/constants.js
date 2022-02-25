@@ -30,7 +30,7 @@ const screens = {
     notification: "Profile",
     my_wallet:"Wallet",
     restaurant:"Restaurant",
-    profile:'profile'
+    profile:'Profile'
 }
 
 const bottom_tabs = [

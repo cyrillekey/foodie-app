@@ -14,7 +14,7 @@ import {Header} from '../Components';
 import { COLORS, SIZES,icons, dummyData, FONTS, constants } from '../constants';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '../stores/tab/tabActions';
-import { Favourite, Home ,Notification,Orders,Restaurant,Search} from './index';
+import { Favourite, Home ,Notification,Orders,Profile,Restaurant,Search} from './index';
 
 const TabButton = ({label,icon,isFocus,onPress,innerContainerStyle,outerContainerStyle,navigation})=>{
     return (
@@ -238,7 +238,7 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                             {item.label == constants.screens.favourite && <Favourite {...navigation}/>}
                             {item.label == constants.screens.restaurant && <Restaurant {...navigation}/>}
                             {item.label == constants.screens.orders && <Orders {...navigation} />}
-                            {item.label == constants.screens.profile && <Notification {...navigation} />}
+                            {item.label == constants.screens.profile && <Profile {...navigation} />}
                         </View>
                     );}}
             />
