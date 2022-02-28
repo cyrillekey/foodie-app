@@ -15,6 +15,7 @@ const FormInput = ({
     autoCompleteType = 'off',
     autoCapitalize = 'none',
     errorMsg = ' ',
+    inputContainerStyle
 })=>{
     return (
         <View style={{...containerStyle}}>
@@ -39,11 +40,12 @@ const FormInput = ({
             <View
             style={{
                 flexDirection:'row',
-                height:55,
+                height:SIZES.height > 800 ? 55 : 45,
                 paddingHorizontal:SIZES.padding,
-                marginTop:SIZES.base,
+                marginTop:SIZES.height > 800 ? SIZES.base : 0,
                 borderRadius:SIZES.radius,
                 backgroundColor:COLORS.lightGray2,
+                ...inputContainerStyle
             }}
             >
                 {prependComponent}

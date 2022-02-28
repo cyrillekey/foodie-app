@@ -215,6 +215,7 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                 </TouchableOpacity>
             }
             quantity={14}
+            navigation={navigation}
             />
             <View style={{
                 flex:1,

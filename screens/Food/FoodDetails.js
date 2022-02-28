@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { ScrollView, View ,Image, Text} from 'react-native'
+import { ScrollView, View ,Image, Text, TouchableOpacity} from 'react-native'
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
 import { COLORS ,SIZES,icons, FONTS,images, dummyData} from '../../constants'
 const FoodDetails = ({navigation}) => {
@@ -12,6 +12,7 @@ const FoodDetails = ({navigation}) => {
     }}
     >
     <Header
+    navigation={navigation}
     containerStye={{
             height:50,
             marginTop:10,
@@ -59,7 +60,8 @@ const FoodDetails = ({navigation}) => {
                     flexDirection:'row',
                     justifyContent:'space-between',
                     marginTop:SIZES.base,
-                    paddingHorizontal:SIZES.radius
+                    paddingHorizontal:SIZES.radius,
+                    
                 }}
                 >
                     <View
@@ -81,14 +83,16 @@ const FoodDetails = ({navigation}) => {
                             125Calories
                         </Text>
                     </View>
+                    <TouchableOpacity>
                     <Image
                     source={icons.love}
                     style={{
                         height:30,
                         width:30,
-                        tintColor:COLORS.primary
+                        tintColor:COLORS.gray
                     }}
                     />
+                    </TouchableOpacity>
                 </View>
                 <Image
                 source={dummyData.menu[0].list[0].image}

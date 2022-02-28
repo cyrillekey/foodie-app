@@ -1,16 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { View,Text ,KeyboardAvoidingView,Image} from "react-native";
+import { View,Text ,KeyboardAvoidingView,Image, SafeAreaView} from "react-native";
 import { COLORS, SIZES,images, FONTS } from "../../constants";
+import {KeyboardAvoidingScrollView} from 'react-native-keyboard-avoiding-scroll-view';
+
 
 const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
     return (
-            <KeyboardAvoidingView 
-            behavior="height"
-            style={{
+            <KeyboardAvoidingScrollView
+            keyboardDismissMode="on-drag"
+            en
+            contentContainerStyle={{
                 flex:1,
                 paddingHorizontal:SIZES.padding,
-                marginTop:SIZES.padding
             }}>
                 <View style={{
                     alignItems:'center',
@@ -19,12 +21,12 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                      source={images.logo}
                      resizeMode="contain"
                      style={{
+                        height:100,
                          width:200,
-                         height:100,
                      }}
                     />
                 </View>
-                <View 
+                <SafeAreaView
                 style={{
                     marginTop:SIZES.padding,
                     ...titlecontainerStyle
@@ -45,9 +47,9 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                     }}>
                         {sutitle}
                     </Text>
-                </View>
+                </SafeAreaView>
                 {children}
-            </KeyboardAvoidingView>
+            </KeyboardAvoidingScrollView>
     );
 };
 export default AuthLayout;

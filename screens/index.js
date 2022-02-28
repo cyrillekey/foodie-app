@@ -24,6 +24,9 @@ import FoodDetails from "./Food/FoodDetails";
 import Restaurant from "./Restaurant/Restaurant";
 import Orders from "./Orders/Orders";
 import Profile from "./Profile/Profile";
+import Payment from "./Payment/Payment";
+import PlaceOrder from "./Orders/PlaceOrder";
+import Success from "./Success/Success";
 export {
     MainLayout,
     Home,
@@ -41,4 +44,7 @@ export {
     Restaurant,
     Orders,
     Profile,
+    Payment,
+    PlaceOrder,
+    Success
 };

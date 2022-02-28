@@ -113,10 +113,79 @@ const menu = [
     },
 
 ]
+const allCards = [
+    {
+        id: 1,
+        name: "Apple Pay",
+        icon: require("../assets/icons/apple.png")
+    },
+    {
+        id: 2,
+        name: "Visa",
+        icon: require("../assets/icons/visa.png"),
+    },
+    {
+        id: 3,
+        name: "PayPal",
+        icon: require("../assets/icons/paypal.png"),
+    },
+    {
+        id: 4,
+        name: "Google Pay",
+        icon: require("../assets/icons/google.png"),
+    },
+    {
+        id: 5,
+        name: "Master Card",
+        icon: require("../assets/icons/mastercard.png"),
+    },
+]
+const restaurant=[
+    {
+        id: 1,
+        name: "Hamburger",
+        description: "Chicken patty hamburger",
+        categories: [1, 2],
+        price: 15.99,
+        calories: 78,
+        isFavourite: true,
+        image: require("../assets/dummyData/hamburger.png")
+    },
+    {
+        id: 2,
+        name: "Hot Tacos",
+        description: "Mexican tortilla & tacos",
+        categories: [1, 3],
+        price: 10.99,
+        calories: 78,
+        isFavourite: false,
+        image: require("../assets/dummyData/hot_tacos.png")
+    }
+    ,{
 
-
+        name: "Veg Biryani",
+        description: "Indian Vegetable Biryani",
+        categories: [1, 2, 3],
+        price: 10.99,
+        calories: 78,
+        isFavourite: true,
+        image: require("../assets/dummyData/veg_biryani.png")
+    },
+     {
+        id: 4,
+        name: "Wrap Sandwich",
+        description: "Grilled vegetables sandwich",
+        categories: [1, 2],
+        price: 10.99,
+        calories: 78,
+        isFavourite: true,
+        image: require("../assets/dummyData/wrap_sandwich.png")
+    }
+]
 export default {
     myProfile,
     categories,
     menu,
+    allCards,
+    restaurant
 }

@@ -3,13 +3,37 @@
 import React from "react";
 import { View,Text, TouchableOpacity ,Image} from "react-native";
 import { COLORS, FONTS, SIZES,icons } from "../constants";
-const Header = ({containerStye,title,leftComponent,rightComponent,quantity})=>{
+import { TextIconButton } from ".";
+const Header = ({containerStye,title,leftComponent,rightComponent,quantity,navigation,isBackPresent=false})=>{
     return (
         <View style={{
             flexDirection:"row",
             ...containerStye,
         }}>
-            {leftComponent}
+            
+            {!isBackPresent ? leftComponent:
+                <TextIconButton
+                iconLeft={icons.back}
+                containerStyle={{
+                    width:40,
+                    height:40,
+                    justifyContent:'center',
+                    alignItems:'center',
+                    borderWidth:1,
+                    borderRadius:SIZES.radius,
+                    borderColor:COLORS.gray2
+                }}
+                iconStyle={{
+                    width:20,
+                    height:20,
+                    tintColor:COLORS.gray2,
+                    marginRight:SIZES.base
+                }}
+                onPress={()=>{
+                    navigation.pop()
+                }}
+            />
+            }
             <View style={{
                 flex:1,
                 alignItems:'center',
@@ -26,7 +50,9 @@ const Header = ({containerStye,title,leftComponent,rightComponent,quantity})=>{
                 borderRadius:SIZES.radius,
                 backgroundColor:COLORS.lightOrange2
             }}
-            onPress={()=>{}}
+            onPress={()=>{
+                navigation.navigate("cart")
+            }}
             >
                 <Image
                 source={icons.cart}

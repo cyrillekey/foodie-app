@@ -33,6 +33,8 @@ const location_pin = require("../assets/icons/location_pin.png")
 // const location = require("../assets/icons/location1.png")
 const minus = require("../assets/icons/minus.png")
 const plus =  require("../assets/icons/plus.png")
+const check_on =  require("../assets/icons/check_on.png")
+const check_off =  require("../assets/icons/check_off.png")
 export default {
     coupon,
     cross,
@@ -58,5 +60,6 @@ export default {
     help,
     error_tick,
     eye,
-    eye_closed,plus,minus,location_pin,clock,dollar,back,call,cancel,correct
+    eye_closed,plus,minus,location_pin,clock,dollar,back,call,cancel,correct,
+    check_off,check_on
 }

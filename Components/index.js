@@ -8,6 +8,9 @@ import Iconlabel from "./Iconlabel";
 import LineDivider from "./LineDivider";
 import Ratings from "./Ratings";
 import StepperIncrement from "./StepperIncrement";
+import FooterTotal from "./FooterTotal";
+import CardItem from "./CardItem";
+import OrderItem from "./OrderItem";
 export {
     Header,
     HorizontalFoodCard,
@@ -19,4 +22,8 @@ export {
     LineDivider,
     Ratings,
     StepperIncrement,
+    FooterTotal,
+    CardItem,
+    OrderItem
+    
 };

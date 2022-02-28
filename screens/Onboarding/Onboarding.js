@@ -134,6 +134,7 @@ const OnBoarding =({navigation})=>{
                 data={constants.onboarding_screens}
                 scrollEventThrottle={1}
                 snapToAlignment="center"
+                showsHorizontalScrollIndicator={false}
                 onScroll={
                     Animated.event(
                         [

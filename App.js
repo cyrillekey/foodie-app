@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
-import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp } from "./screens";
+import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success} from "./screens";
 import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
 const Stack = createStackNavigator();
@@ -31,6 +31,10 @@ const App = () => {
                 <Stack.Screen name="Otp" component={OtpScreen}/>
                 <Stack.Screen name="forgotpassword" component={ForgotPassword}/>
                 <Stack.Screen name="fooddetails" component={FoodDetails}/>
+                <Stack.Screen name="cart" component={CartTab}/>
+                <Stack.Screen name="payment" component={Payment}/>
+                <Stack.Screen name="checkout" component={PlaceOrder}/>
+                <Stack.Screen name="success" component={Success}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>

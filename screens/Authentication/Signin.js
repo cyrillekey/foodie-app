@@ -1,11 +1,34 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { View,Image, TouchableOpacity, Switch,Text } from "react-native";
+import { View,Image, TouchableOpacity, Switch,Text, Button } from "react-native";
 import { AuthLayout } from "..";
 import { FormInput, TextButton, TextIconButton } from "../../Components";
 import { SIZES ,icons, COLORS, FONTS} from "../../constants";
-const Signin=({navigation})=>{
-    const [see,setSee]=React.useState(true)
+const Signin = ({navigation})=>{
+    const [see,setSee] = React.useState(true);
+    const [form,setFrom]=React.useState({
+        password:'',
+        email:'',
+        emailError:'',
+        passwordError:'',
+        passWordvalid:false,
+        emailValid:false
+    });
+    const validateEmail = (email)=> {
+        const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!res.test(String(email).toLowerCase())){
+            setFrom({...form,emailError:'Invalid Email',emailValid:false})
+        } else {
+            setFrom({...form,emailError:'',email:true})
+        }
+      };
+    const validatePassword = (value)=>{
+        if(value.length>=6){
+            setFrom({...form,passwordError:'',passWordvalid:true})
+        } else {
+            setFrom({...form,passwordError:'Password to short',passWordvalid:false})
+        }
+    };
     return (
         <AuthLayout
             title="Lets join"
@@ -13,7 +36,7 @@ const Signin=({navigation})=>{
         >
             <View style={{
                 flex:1,
-                marginTop:SIZES.padding * 2
+                marginTop:SIZES.padding * 2,
             }}>
                 <FormInput
                 label="Email"
@@ -21,13 +44,13 @@ const Signin=({navigation})=>{
                 keyboardType="email-address"
                 autoCompleteType="email"
                 onChange={(value)=>{
-
+                    validateEmail(value);
                 }}
-                errorMsg="Invalid email"
+                errorMsg={form.emailError}
                 appendComponent={
-                    <View 
+                    <View
                     style={{
-                        justifyContent:'center'
+                        justifyContent:'center',
                     }}
                     >
                         <Image
@@ -35,23 +58,24 @@ const Signin=({navigation})=>{
                         style={{
                             height:20,
                             width:20,
-                            tintColor:COLORS.green
+                            tintColor:form.emailError === '' ? COLORS.green : COLORS.red,
                         }}
                         />
                     </View>
                 }
                 />
                 <FormInput
-                    label={"Password"}
-                    placeholder={"password here"}
+                    label={'Password'}
+                    placeholder={'password here'}
                     secureTextEntry={see}
                     autoCompleteType="password"
                     containerStyle={{
-                        marginTop:SIZES.padding
+                        marginTop:SIZES.padding,
                     }}
-                    onChange={()=>{
-
+                    onChange={(value)=>{
+                        validatePassword(value);
                     }}
+                    errorMsg={form.passwordError}
                     appendComponent={
                         <TouchableOpacity style={{
                             width:40,
@@ -67,9 +91,7 @@ const Signin=({navigation})=>{
                                 width:20,
                                 tintColor:COLORS.gray
                             }}
-                            
                             />
-                            
                         </TouchableOpacity>
                     }
                 />
@@ -82,7 +104,7 @@ const Signin=({navigation})=>{
                         onValueChange={(value)=>{
                             console.log(value)
                         }}
-                        value={true}
+                        value={false}
                     />
                     <TextButton
                         label="Forgot Password"
@@ -105,9 +127,8 @@ const Signin=({navigation})=>{
                         alignItems:'center',
                         marginTop:SIZES.padding,
                         borderRadius:SIZES.radius,
-                        backgroundColor:COLORS.primary
                     }}
-                    disabled={false}
+                    disabled={!form.passWordvalid && !form.emailValid}
                     onPress={()=>{
                         navigation.navigate('Home')
                     }}
@@ -142,16 +163,14 @@ const Signin=({navigation})=>{
                         }}
                     />
                 </View>
-                
-            </View>
-            <View>
-                    <TextIconButton
+                <View
+            ><TextIconButton
                     containerStyle={{
                         height:50,
                         alignItems:'center',
                         borderRadius:SIZES.radius,
                         backgroundColor:COLORS.blue,
-                        marginBottom:SIZES.padding
+                        marginTop:SIZES.padding*2,
                     }}
                         label="Sign in With Facebook"
                         iconLeft={
@@ -166,10 +185,11 @@ const Signin=({navigation})=>{
                             color:COLORS.white
                         }}
                         onPress={()=>{
-                            console.log("exmpa")
+                            console.log("exmpa");
                         }}
                     />
                 </View>
+            </View> 
             </AuthLayout>
     );
 }
