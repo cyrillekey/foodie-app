@@ -8,6 +8,7 @@ import {KeyboardAvoidingScrollView} from 'react-native-keyboard-avoiding-scroll-
 const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
     return (
             <KeyboardAvoidingScrollView
+            behaviour="padding"
             keyboardDismissMode="on-drag"
             en
             contentContainerStyle={{
@@ -26,7 +27,7 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                      }}
                     />
                 </View>
-                <SafeAreaView
+                <View
                 style={{
                     marginTop:SIZES.padding,
                     ...titlecontainerStyle
@@ -43,11 +44,11 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                         textAlign:'center',
                         color:COLORS.darkGray,
                         marginTop:SIZES.base,
-                        ...FONTS.body3
+                        ...FONTS.body3,
                     }}>
                         {sutitle}
                     </Text>
-                </SafeAreaView>
+                </View>
                 {children}
             </KeyboardAvoidingScrollView>
     );

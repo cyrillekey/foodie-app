@@ -64,7 +64,7 @@ const wrapSandwich = {
     categories: [1, 2],
     price: 10.99,
     calories: 78,
-    isFavourite: true,
+    isFavourite: false,
     image: require("../assets/dummyData/wrap_sandwich.png")
 }
 

@@ -19,7 +19,7 @@ const Signin = ({navigation})=>{
         if (!res.test(String(email).toLowerCase())){
             setFrom({...form,emailError:'Invalid Email',emailValid:false})
         } else {
-            setFrom({...form,emailError:'',email:true})
+            setFrom({...form,emailError:'',emailValid:true})
         }
       };
     const validatePassword = (value)=>{

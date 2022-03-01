@@ -206,7 +206,7 @@ const Home = (navigation) => {
                             onPress={()=>{
                                 //console.log(navigation)
                                 navigation.navigate("fooddetails",{
-                                    id:25
+                                    id:item.id
                                 })
                             }}
                         />

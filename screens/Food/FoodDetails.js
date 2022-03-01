@@ -3,7 +3,14 @@ import React from 'react'
 import { ScrollView, View ,Image, Text, TouchableOpacity} from 'react-native'
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
 import { COLORS ,SIZES,icons, FONTS,images, dummyData} from '../../constants'
-const FoodDetails = ({navigation}) => {
+const FoodDetails = ({route,navigation}) => {
+    const [food,setFood]=React.useState({
+        name:''
+    });
+    React.useEffect(()=>{
+        let index=dummyData.menu[1].list.find(element=>element.id==route.params.id)
+        setFood(index)
+    },[route.params.id])
   return (
     <View
     style={{
@@ -19,7 +26,7 @@ const FoodDetails = ({navigation}) => {
             alignItems:'center',
             paddingHorizontal:SIZES.padding
     }}
-        title="Mangos"
+        title={food.name}
         leftComponent={
             <TextIconButton
             iconLeft={icons.back}
@@ -80,7 +87,7 @@ const FoodDetails = ({navigation}) => {
                             ...FONTS.body4,
                             color:COLORS.darkGray2
                         }}>
-                            125Calories
+                            {food.calories} Calories
                         </Text>
                     </View>
                     <TouchableOpacity>
@@ -89,13 +96,13 @@ const FoodDetails = ({navigation}) => {
                     style={{
                         height:30,
                         width:30,
-                        tintColor:COLORS.gray
+                        tintColor:food.isFavourite ? COLORS.red : COLORS.gray,
                     }}
                     />
                     </TouchableOpacity>
                 </View>
                 <Image
-                source={dummyData.menu[0].list[0].image}
+                source={food.image}
                 resizeMode="contain"
                 style={{
                     height:170,
@@ -113,7 +120,7 @@ const FoodDetails = ({navigation}) => {
                     ...FONTS.h1
                 }}
                 >
-                    {dummyData.menu[0].list[0].name}
+                    {food.name}
                 </Text>
                 <Text
                 style={{
@@ -123,7 +130,7 @@ const FoodDetails = ({navigation}) => {
                     textAlign:'justify'
                 }}
                 >
-                {dummyData.menu[0].list[0].description}
+                {food.description}
                 </Text>
                 <View
                 style={{
@@ -302,7 +309,7 @@ const FoodDetails = ({navigation}) => {
             borderRadius:SIZES.radius
         }}
         label="Buy Now"
-        label2='$12.99'
+        label2={`$${food.price}`}
         
         />
     </View>
