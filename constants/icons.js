@@ -35,6 +35,8 @@ const minus = require("../assets/icons/minus.png")
 const plus =  require("../assets/icons/plus.png")
 const check_on =  require("../assets/icons/check_on.png")
 const check_off =  require("../assets/icons/check_off.png")
+const delete_icon =  require("../assets/icons/delete.png")
+const dotted_line =  require("../assets/icons/dotted_line.png")
 export default {
     coupon,
     cross,
@@ -61,5 +63,7 @@ export default {
     error_tick,
     eye,
     eye_closed,plus,minus,location_pin,clock,dollar,back,call,cancel,correct,
-    check_off,check_on
-}
+    check_off,check_on,
+    delete_icon,
+    dotted_line,
+};

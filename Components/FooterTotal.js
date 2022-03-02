@@ -1,13 +1,13 @@
 import React from 'react'
 import { View ,Text} from 'react-native'
+import { useSelector } from 'react-redux'
 import { LineDivider, TextButton } from '.'
 import { COLORS, FONTS, SIZES } from '../constants'
 const FooterTotal = ({
-    subTotal,
-    shippingFee,
-    total,
     onPress
 }) => {
+    const subtotal = useSelector(state=>state.productReducer.cartTotal)
+    const shippingCost = useSelector(state=>state.productReducer.shippingCost)
   return (
     <View>
         <View
@@ -32,7 +32,7 @@ const FooterTotal = ({
                 >Subtotal</Text>
                 <Text style={{
                     ...FONTS.h3
-                }}>{subTotal.toFixed(2)}</Text>
+                }}>$ {subtotal.toFixed(2)}</Text>
             </View>
             <View
             style={{
@@ -47,7 +47,7 @@ const FooterTotal = ({
                 }}>Delivery Fee</Text>
                 <Text style={{
                         ...FONTS.h3
-                }}>$ {shippingFee.toFixed(2)}</Text>
+                }}>$ {shippingCost.toFixed(2)}</Text>
             </View>
             <LineDivider
             lineStyle={{
@@ -66,7 +66,7 @@ const FooterTotal = ({
             }} >Total</Text>
             <Text style={{
                 ...FONTS.h2,
-            }} >$ {total.toFixed(2)}</Text>
+            }} >$ {(subtotal + shippingCost).toFixed(2)}</Text>
             </View>
             <TextButton
             label="Proceed"

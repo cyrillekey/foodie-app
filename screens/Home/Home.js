@@ -6,15 +6,15 @@ import {
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
+import { useSelector } from 'react-redux';
 
 const Home = (navigation) => {
     //const [selectedCatId, setselectedCatId] = React.useState(1);
     //const [selectedMenu, setselectedMenu] = React.useState(1);
-    const [menu, setmenu] = React.useState([]);
-    React.useEffect(()=>{
-       setmenu(dummyData.menu[1].list)
-        // handleCategoryChange(selectedCatId,selectedMenu)
-    },[]);
+    const menu = useSelector(state=>state.productReducer.products);
+    // React.useEffect(()=>{
+    //     // handleCategoryChange(selectedCatId,selectedMenu)
+    // },[]);
     // const handleCategoryChange=(selectedCatId,selectedMenu)=>{
     //     let selectedMenut=dummyData.menu.push.find(a=>a.id==selectedMenu);
     //     setmenu(selectedMenut?.list.filter(a => a.categories.includes(selectedCatId)))

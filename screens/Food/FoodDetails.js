@@ -1,21 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import { ScrollView, View ,Image, Text, TouchableOpacity} from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
-import { COLORS ,SIZES,icons, FONTS,images, dummyData} from '../../constants'
+import { COLORS ,SIZES,icons, FONTS,images} from '../../constants'
+import { addToCart } from '../../stores/cart/cartActions'
 const FoodDetails = ({route,navigation}) => {
-    const [food,setFood]=React.useState({
-        name:''
-    });
-    React.useEffect(()=>{
-        let index=dummyData.menu[1].list.find(element=>element.id==route.params.id)
-        setFood(index)
-    },[route.params.id])
+    const food = useSelector(state=>state.productReducer.products.find(element=>element.id === route.params.id));
+    const dispatch = useDispatch();
+    const [count,setCount]=React.useState(1)
   return (
     <View
     style={{
         flex:1,
-        backgroundColor:COLORS.white
+        backgroundColor:COLORS.white,
     }}
     >
     <Header
@@ -295,9 +293,15 @@ const FoodDetails = ({route,navigation}) => {
         paddingBottom:SIZES.radius
     }}
     ><StepperIncrement
-            onAdd={()=>{}}
-            onMinus={()=>{}}
-            value={4}
+            onAdd={()=>{
+                setCount(count+1)
+            }}
+            onMinus={()=>{
+                if(count!=1){
+                    setCount(count-1)
+                }
+            }}
+            value={count}
         />
         <TextButton
         buttonContainerStyle={{
@@ -310,7 +314,10 @@ const FoodDetails = ({route,navigation}) => {
         }}
         label="Buy Now"
         label2={`$${food.price}`}
-        
+        onPress={()=>{
+            dispatch(addToCart({id:food
+            .id,qty:count}));
+        }}
         />
     </View>
     </View>

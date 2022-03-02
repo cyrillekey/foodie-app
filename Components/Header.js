@@ -4,14 +4,15 @@ import React from "react";
 import { View,Text, TouchableOpacity ,Image} from "react-native";
 import { COLORS, FONTS, SIZES,icons } from "../constants";
 import { TextIconButton } from ".";
-const Header = ({containerStye,title,leftComponent,rightComponent,quantity,navigation,isBackPresent=false})=>{
+import { useSelector } from "react-redux";
+const Header = ({containerStye,title,leftComponent,rightComponent,quantity,navigation,isBackPresent=false,isCartpresent=true})=>{
+    const qty = useSelector(state=>state.productReducer.qty);
     return (
         <View style={{
             flexDirection:"row",
             ...containerStye,
         }}>
-            
-            {!isBackPresent ? leftComponent:
+            {!isBackPresent ? leftComponent :
                 <TextIconButton
                 iconLeft={icons.back}
                 containerStyle={{
@@ -41,6 +42,8 @@ const Header = ({containerStye,title,leftComponent,rightComponent,quantity,navig
             }}>
                 <Text style={{...FONTS.h3,color:COLORS.black}}>{title.toUpperCase()}</Text>
             </View>
+            {
+            isCartpresent &&
             <TouchableOpacity
             style={{
                 width:40,
@@ -83,11 +86,12 @@ const Header = ({containerStye,title,leftComponent,rightComponent,quantity,navig
                 textAlign:'center',
 
                 }}
-                > 
-                {quantity}
+                >
+                 {qty}
                 </Text>
                 </View>
             </TouchableOpacity>
+            }
         </View>
     );
 };

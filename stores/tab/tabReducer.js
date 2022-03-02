@@ -1,5 +1,4 @@
 import * as tabActions from './actionTypes';
-
 const initialState = {
     selectedTab:'',
     test:'',

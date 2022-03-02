@@ -32,9 +32,9 @@ const StepperIncrement = ({
                 
             }}
 
-            onPress={{
+            onPress={
                 onMinus
-            }}
+            }
         />
         <View
         style={{

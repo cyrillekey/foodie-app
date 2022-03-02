@@ -27,6 +27,8 @@ import Profile from "./Profile/Profile";
 import Payment from "./Payment/Payment";
 import PlaceOrder from "./Orders/PlaceOrder";
 import Success from "./Success/Success";
+import OrderStatus from "./Orders/OrderStatus";
+import DeliveryMap from "./Maps/DeliveryMap";
 export {
     MainLayout,
     Home,
@@ -46,5 +48,7 @@ export {
     Profile,
     Payment,
     PlaceOrder,
-    Success
+    Success,
+    OrderStatus,
+    DeliveryMap,
 };

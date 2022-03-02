@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
     View,
@@ -6,16 +7,20 @@ import {
     Image
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { useDispatch, useSelector } from 'react-redux';
 import { FooterTotal, Header, Iconlabel, StepperIncrement, TextIconButton } from '../../Components';
 import { COLORS, dummyData, FONTS, icons, images, SIZES } from '../../constants';
+import { increaseQty, reduceQty, removeFromCart } from '../../stores/cart/cartActions';
 
 const CartTab = ({navigation}) => {
-    const [cartList, setCartList] = React.useState(dummyData.menu)
+    const cartList = useSelector(state=>state.productReducer.cartItems);
+    const totalCost = useSelector(state=>state.productReducer.cartTotal);
+    const dispatch = useDispatch();
     return (
         <View
         style={{
             flex:1,
-            backgroundColor:COLORS.white
+            backgroundColor:COLORS.white,
         }}
         >
             <Header
@@ -30,6 +35,7 @@ const CartTab = ({navigation}) => {
             isBackPresent={true}
             navigation={navigation}
             />
+            
             <SwipeListView
             data={cartList}
             keyExtractor={item=>`${item.id}`}
@@ -42,7 +48,7 @@ const CartTab = ({navigation}) => {
             rightOpenValue={-75}
             renderHiddenItem={(data,roadMap)=>(
                 <TextIconButton
-                iconRight={icons.setting}
+                iconRight={icons.delete_icon}
                 containerStyle={{
                     flex:1,
                     justifyContent:'flex-end',
@@ -51,15 +57,15 @@ const CartTab = ({navigation}) => {
                 }}
                 iconStyle={{
                     marginRight:10,
-                    tintColor:COLORS.white
+                    tintColor:COLORS.white,
                 }}
                 onPress={()=>{
-                    console.log("removes")
+                    dispatch(removeFromCart({id:data.item.id}));
                 }}
                 />
             )}
-            renderItem={(data,index)=>(
-                <View
+            renderItem={(data,index)=>{
+               return (<View
                 style={{
                     height:80,
                     backgroundColor:COLORS.lightGray2,
@@ -74,7 +80,7 @@ const CartTab = ({navigation}) => {
                     }}
                     >
                         <Image
-                        source={dummyData.categories[0].icon}
+                        source={data.item.image}
                         resizeMode="contain"
                         style={{
                             width:'100%',
@@ -95,7 +101,7 @@ const CartTab = ({navigation}) => {
                         <Text style={{
                             ...FONTS.h3,
                             color:COLORS.primary
-                        }} >$ {data.index}</Text>
+                        }} >$ {data.item.price}</Text>
                     </View>
                     <StepperIncrement
                     containerStyle={{
@@ -103,14 +109,18 @@ const CartTab = ({navigation}) => {
                         width:125,
                         backgroundColor:COLORS.white
                     }}
+                    value={data.item.qty}
+                    onMinus={()=>{
+                        dispatch(reduceQty({id:data.item.id}))
+                    }}
+                    onAdd={
+                        ()=>dispatch(increaseQty({id:data.item.id}))
+                    }
                     />
                 </View>
-            )}
+                )}}
             />
             <FooterTotal
-            subTotal={100}
-            shippingFee={120}
-            total={1250}
             onPress={()=>{
                 navigation.navigate('payment')
             }}

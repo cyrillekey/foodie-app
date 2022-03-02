@@ -124,11 +124,6 @@ const OnBoarding =({navigation})=>{
             {renderHeaderLogo()}
             <Animated.FlatList
                 ref={flatListRef}
-                onEndReached={
-                    ()=>{
-                        console.log("end")
-                    }
-                }
                 horizontal
                 pagingEnabled
                 data={constants.onboarding_screens}

@@ -3,7 +3,7 @@ import React from 'react'
 import { COLORS, constants, FONTS, images, SIZES } from '../../constants';
 import { TextButton } from '../../Components';
 
-const Success = ({}) => {
+const Success = ({navigation}) => {
   return (
     <View
     style={{
@@ -46,7 +46,9 @@ const Success = ({}) => {
                 marginBottom:SIZES.padding,
                 borderRadius:SIZES.radius
             }}
-            
+            onPress={()=>{
+                navigation.navigate('orderStatus')
+            }}
         />
     </View>
   );

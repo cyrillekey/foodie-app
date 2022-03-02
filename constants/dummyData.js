@@ -67,7 +67,6 @@ const wrapSandwich = {
     isFavourite: false,
     image: require("../assets/dummyData/wrap_sandwich.png")
 }
-
 const menu = [
     {
         id: 1,
@@ -80,7 +79,7 @@ const menu = [
         id: 2,
         name: "Nearby you",
         list: [
-            hamburger, vegBiryani, wrapSandwich,
+            hamburger, vegBiryani, wrapSandwich,hotTacos
         ]
     },
     {
