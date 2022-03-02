@@ -2,7 +2,7 @@ import { View, Text, PermissionsAndroid, StyleSheet } from 'react-native'
 import React from 'react';
 import Geolocation from 'react-native-geolocation-service'
 import { COLORS, FONTS, SIZES } from '../../constants';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Header } from '../../Components';
 
 const PickAddress = ({navigation}) => {
@@ -65,19 +65,21 @@ const PickAddress = ({navigation}) => {
         onRegionChangeComplete={(value)=>{
             setMark({latitude:value.latitude,longitude:value.longitude})
         }}
-        onPress={(value)=>{
-            console.log(value)
-            //setMark({latitude:value.latitude,longitude:value.longitude})
+        onPress={(e)=>{
+            setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude})
         }}
         mapType="standard"
         userInterfaceStyle='dark'
         provider={PROVIDER_GOOGLE}
-        showsUserLocation={true}
         style={{
             marginTop:SIZES.padding,
             height:SIZES.height,
             width:SIZES.width
         }}
+        showsScale={true}
+        showsCompass={true}
+        showsIndoors={true}
+        showsTraffic={true}
         showsBuildings={true}
         loadingEnabled={true}
         >
