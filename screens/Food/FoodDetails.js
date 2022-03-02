@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
 import { COLORS ,SIZES,icons, FONTS,images} from '../../constants'
 import { addToCart } from '../../stores/cart/cartActions'
+import { addFavourite, removeFavourite } from '../../stores/products/productActions'
 const FoodDetails = ({route,navigation}) => {
     const food = useSelector(state=>state.productReducer.products.find(element=>element.id === route.params.id));
     const dispatch = useDispatch();
@@ -88,7 +89,17 @@ const FoodDetails = ({route,navigation}) => {
                             {food.calories} Calories
                         </Text>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={
+                        ()=>{
+                            if(food.isFavourite){
+                                dispatch(removeFavourite({id:food.id}))
+                            }else{
+                                dispatch(addFavourite({id:food.id}))
+                            }
+                        }
+                    }
+                    >
                     <Image
                     source={icons.love}
                     style={{

@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { FooterTotal, Header, Iconlabel, StepperIncrement, TextIconButton } from '../../Components';
-import { COLORS, dummyData, FONTS, icons, images, SIZES } from '../../constants';
+import { FooterTotal, Header, TextButton, StepperIncrement, TextIconButton } from '../../Components';
+import { COLORS, constants, FONTS, icons,images,SIZES } from '../../constants';
 import { increaseQty, reduceQty, removeFromCart } from '../../stores/cart/cartActions';
 
 const CartTab = ({navigation}) => {
@@ -17,6 +17,7 @@ const CartTab = ({navigation}) => {
     const totalCost = useSelector(state=>state.productReducer.cartTotal);
     const dispatch = useDispatch();
     return (
+            cartList.length > 0 ?
         <View
         style={{
             flex:1,
@@ -35,14 +36,13 @@ const CartTab = ({navigation}) => {
             isBackPresent={true}
             navigation={navigation}
             />
-            
             <SwipeListView
             data={cartList}
             keyExtractor={item=>`${item.id}`}
             contentContainerStyle={{
                 marginTop:SIZES.radius,
                 paddingHorizontal:SIZES.padding,
-                paddingBottom:SIZES.padding*2
+                paddingBottom:SIZES.padding * 2,
             }}
             disableRightSwipe
             rightOpenValue={-75}
@@ -53,7 +53,7 @@ const CartTab = ({navigation}) => {
                     flex:1,
                     justifyContent:'flex-end',
                     backgroundColor:COLORS.primary,
-                    ...styles.cartItemContainer
+                    ...styles.cartItemContainer,
                 }}
                 iconStyle={{
                     marginRight:10,
@@ -69,14 +69,14 @@ const CartTab = ({navigation}) => {
                 style={{
                     height:80,
                     backgroundColor:COLORS.lightGray2,
-                    ...styles.cartItemContainer
+                    ...styles.cartItemContainer,
                 }}
                 >
                     <View
                     style={{
                         width:90,
                         height:80,
-                        marginLeft:-10
+                        marginLeft:-10,
                     }}
                     >
                         <Image
@@ -86,13 +86,13 @@ const CartTab = ({navigation}) => {
                             width:'100%',
                             height:'100%',
                             position:'absolute',
-                            top:10
+                            top:10,
                         }}
                         />
                     </View>
                     <View
                     style={{
-                        flex:1
+                        flex:1,
                     }}
                     >
                         <Text
@@ -107,11 +107,11 @@ const CartTab = ({navigation}) => {
                     containerStyle={{
                         height:50,
                         width:125,
-                        backgroundColor:COLORS.white
+                        backgroundColor:COLORS.white,
                     }}
                     value={data.item.qty}
                     onMinus={()=>{
-                        dispatch(reduceQty({id:data.item.id}))
+                        dispatch(reduceQty({id:data.item.id}));
                     }}
                     onAdd={
                         ()=>dispatch(increaseQty({id:data.item.id}))
@@ -122,8 +122,66 @@ const CartTab = ({navigation}) => {
             />
             <FooterTotal
             onPress={()=>{
-                navigation.navigate('payment')
+                navigation.navigate('payment');
             }}
+            />
+        </View>
+        : <View
+        style={{
+            flex:1,
+            paddingHorizontal:SIZES.padding,
+            backgroundColor:COLORS.white,
+        }}
+        >
+            <Header
+            containerStye={{
+            height:50,
+            marginTop:SIZES.padding,
+            alignItems:'center',
+
+            }}
+            title={'Cart'}
+            isBackPresent={true}
+            navigation={navigation}
+            isCartpresent={false}
+            />
+            <View
+            style={{
+               flex:1,
+               alignItems:'center',
+               justifyContent:'center',
+            }}
+            >
+                <Image
+                source={images.empty_cart}
+                resizeMode="contain"
+                style={{
+                    width:150,
+                    height:150,
+                }}
+                />
+                <Text style={{
+                    marginTop:SIZES.padding,
+                    ...FONTS.h1,
+                }}>Empty Cart!</Text>
+                <Text
+                style={{
+                    textAlign:'center',
+                    marginTop:SIZES.base,
+                    ...FONTS.body3,color:COLORS.darkGray,
+                }}
+                >Begin Shopping</Text>
+            </View>
+            <TextButton
+                label="Begin Shopping"
+                buttonContainerStyle={{
+                    height:55,
+                    marginBottom:SIZES.padding,
+                    borderRadius:SIZES.radius,
+                }}
+                onPress={()=>{
+                    navigation.navigate('Home');
+                }}
             />
         </View>
     )

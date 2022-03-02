@@ -61,6 +61,18 @@ const productReducer = (state = initialState,action )=>{
             let indexOfAdd = state.cartItems.indexOf(itemAdd);
             tempCartAdd[indexOfAdd].qty += 1;
             return {...state,cartItems:tempCartAdd,qty:state.qty + 1,cartTotal:state.cartTotal+itemAdd.price};
+        case productActions.ADD_FAVOURITE:
+            if (state.favourites.length > 0){
+                let favItem = state.products.find(product=>product.id == action.payload.id);
+                favItem.isFavourite = true;
+                return {...state,favourites:state.favourites.concat(favItem)};
+            } else {
+                let favItem= state.products.find(product=>product.id == action.payload.id);
+                favItem.isFavourite = true;
+                return {...state,favourites:[favItem]};
+            }
+        case productActions.REMOVE_FAVOURITE:
+            return state;
         default:
             return state;
     }
