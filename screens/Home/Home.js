@@ -156,6 +156,7 @@ const Home = (navigation) => {
                     marginTop:SIZES.base,
                     alignItems:'center'
                 }}
+                onPress={()=>navigation.navigate('pickAddress')}
                 >
                     <Text style={{...FONTS.h3}}>
                         {dummyData.myProfile.address}

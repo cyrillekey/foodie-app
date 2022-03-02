@@ -6,7 +6,7 @@ import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from "redux-thunk";
 import CustomDrawer from './navigation/CustomDrawer';
-import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap} from "./screens";
+import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress} from "./screens";
 // import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
 import rootReducer from "./stores/rootReducer";
@@ -40,6 +40,7 @@ const App = () => {
                 <Stack.Screen name="success" component={Success}/>
                 <Stack.Screen name="orderStatus" component={OrderStatus} />
                 <Stack.Screen name="deliveryMap" component={DeliveryMap} />
+                <Stack.Screen name="pickAddress" component={PickAddress}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>
