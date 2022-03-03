@@ -3,16 +3,20 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStore,applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import thunk from "redux-thunk";
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress} from "./screens";
+
 // import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
 import rootReducer from "./stores/rootReducer";
 const Stack = createStackNavigator();
 const store = createStore(rootReducer,applyMiddleware(thunk));
 const App = () => {
+
+    // const dispatch = useDispatch();
+    // dispatch(saveAddress(setLocation()));
     return (
         <Provider store={store}>
             {/* <PersistGate loading={null} persistor={persistor}> */}

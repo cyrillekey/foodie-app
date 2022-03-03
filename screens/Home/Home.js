@@ -7,18 +7,13 @@ import {
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
 import { useSelector } from 'react-redux';
+import { getAddressName } from '../../constants/util';
 
 const Home = (navigation) => {
-    //const [selectedCatId, setselectedCatId] = React.useState(1);
-    //const [selectedMenu, setselectedMenu] = React.useState(1);
     const menu = useSelector(state=>state.productReducer.products);
-    // React.useEffect(()=>{
-    //     // handleCategoryChange(selectedCatId,selectedMenu)
-    // },[]);
-    // const handleCategoryChange=(selectedCatId,selectedMenu)=>{
-    //     let selectedMenut=dummyData.menu.push.find(a=>a.id==selectedMenu);
-    //     setmenu(selectedMenut?.list.filter(a => a.categories.includes(selectedCatId)))
-    // }
+    const address = useSelector(state=>state.userReducer.address)
+    const [form,setForm]=React.useState("");
+    getAddressName(address.latitude,address.longitude,setForm)
     const  renderSearch=()=>{
         return (
             <View style={{
@@ -138,10 +133,17 @@ const Home = (navigation) => {
     }
     const renderDelivery=()=>{
         return (
-            <View style={{
+            <TouchableOpacity style={{
                 marginTop:SIZES.padding,
                 marginHorizontal:SIZES.padding
-            }}>
+            }}
+            onPress={()=>navigation.navigate('pickAddress')}
+            >
+                <View
+                style={{
+                    flexDirection:'row'
+                }}
+                >
                 <Text
                 style={{
                     ...FONTS.h3,
@@ -150,18 +152,7 @@ const Home = (navigation) => {
                 >
                     Delivery To
                 </Text>
-                <TouchableOpacity
-                style={{
-                    flexDirection:'row',
-                    marginTop:SIZES.base,
-                    alignItems:'center'
-                }}
-                onPress={()=>navigation.navigate('pickAddress')}
-                >
-                    <Text style={{...FONTS.h3}}>
-                        {dummyData.myProfile.address}
-                    </Text>
-                    <Image
+                <Image
                     source={icons.down_arrow}
                     style={{
                         height:20,
@@ -169,8 +160,19 @@ const Home = (navigation) => {
                         marginLeft:SIZES.base,
                     }}
                     />
-                    </TouchableOpacity>
-            </View>
+                </View>
+                <View
+                style={{
+                    flexDirection:'row',
+                    marginTop:SIZES.base,
+                    alignItems:'center'
+                }}
+                >
+                    <Text style={{...FONTS.h3}}>
+                        {form}
+                    </Text>
+                    </View>
+            </TouchableOpacity>
         );
     }
     return (

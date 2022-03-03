@@ -4,54 +4,19 @@ import React from 'react';
 import Geolocation from 'react-native-geolocation-service'
 import { COLORS, FONTS, SIZES } from '../../constants';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Header } from '../../Components';
+import { Header, TextButton } from '../../Components';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveAddress } from '../../stores/user/userActions';
 const PickAddress = ({navigation}) => {
     const mapView = React.useRef();
-    const [location,setLocation] = React.useState(null);
+    const address= useSelector(state=>state.userReducer.address);
+    const [location,setLocation] = React.useState(address);
     const [mark,setMark] = React.useState({
-        latitude:0,
-        longitude:0
+        latitude:address.latitude,
+        longitude:address.longitude,
     });
-    // const resuesr = async ()=>{
-    //     try{
-    //         const granted= await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,{
-    //             title:'Foodie Use Location to determine where to deliver food'
-    //         });
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
-//    resuesr()
-   const getAddress=()=>{
-
-    // eslint-disable-next-line quotes
-    // fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" +location.latitude+"," + location.longitude + "&key=AIzaSyDWR7R8I0jiBnleKRKLVb6r8vr2WrCBClQ").then((response) => response.json()).then((responseJson) => {
-    //   console.log(
-    //      JSON.stringify(responseJson.results[0].formatted_address)
-    //       .replace(/"/g, "")
-    //      );
-    //    });
-        
-        axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" +location.latitude+"," + location.longitude + "&key=AIzaSyDWR7R8I0jiBnleKRKLVb6r8vr2WrCBClQ").then(response=>{
-            console.log("worls")
-            console.log(response)
-        }).catch(err=>{
-            console.log(err)
-        })
-    }
-    React.useEffect(()=>{
-        Geolocation.getCurrentPosition(
-            (position) => {
-              setLocation({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 });
-              setMark({latitude:position.coords.latitude,longitude:position.coords.longitude})
-            },
-            (error) => {
-              console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
-    },[]);
+    const dispatch = useDispatch();
   return (
     <View
     style={{
@@ -76,10 +41,11 @@ const PickAddress = ({navigation}) => {
         }
         onRegionChangeComplete={(value)=>{
             setMark({latitude:value.latitude,longitude:value.longitude})
+            setLocation(value)
         }}
         onPress={(e)=>{
             setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude})
-            getAddress()
+            setLocation({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude,latitudeDelta:0,longitudeDelta:0})
         }}
         mapType="standard"
         userInterfaceStyle='dark'
@@ -101,7 +67,37 @@ const PickAddress = ({navigation}) => {
                 coordinate={mark}
                 title="Delivery"
             />
+            
             </MapView>
+        <View
+        style={{
+            padding:SIZES.padding,
+            borderTopLeftRadius:SIZES.padding,
+            borderTopRightRadius:SIZES.paddings,
+            backgroundColor:COLORS.white,
+            position:"absolute",
+            width:'100%',
+            bottom:0
+        }}
+        >
+        <Text style={{
+            ...FONTS.h3,
+            textAlign:'center'
+        }}>Pick Delivery Location</Text>
+        <TextButton
+            buttonContainerStyle={{
+                marginTop:SIZES.padding,
+                height:45,
+                borderRadius:SIZES.radius,
+                marginBottom:SIZES.padding
+            }}
+            label="Pick Delivery Location"
+            onPress={()=>{
+                dispatch(saveAddress(location))
+                navigation.pop()
+            }}
+        />
+        </View>
     </View>
   );
 };

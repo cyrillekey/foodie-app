@@ -42,7 +42,6 @@ const productReducer = (state = initialState,action )=>{
             const tempCart = [...state.cartItems];
             let tempCost =exist.qty * exist.price;
             let tempQty = exist.qty;
-            console.log(index)
             tempCart.splice(index,1);
             return {...state,cartItems:tempCart,qty:state.qty - tempQty,cartTotal:state.cartTotal - tempCost};
         case cartActions.REDUCE_QTY:

@@ -4,11 +4,24 @@ import { View,Text, Image, ImageBackground } from "react-native"
 import Animated ,{useSharedValue } from "react-native-reanimated";
 import { FONTS, SIZES ,images, COLORS, constants} from "../../constants";
 import { TextButton } from "../../Components";
-import { NavigationContainer } from "@react-navigation/native";
-const OnBoarding =({navigation})=>{
-    const scrollX = new Animated.Value(8)
-    const flatListRef=React.useRef()
-    const Dots=()=>{
+import { useDispatch } from "react-redux";
+import { saveAddress } from "../../stores/user/userActions";
+import Geolocation from "react-native-geolocation-service";
+const OnBoarding = ({navigation})=>{
+    const scrollX = new Animated.Value(8);
+    const flatListRef = React.useRef();
+    const dispatch = useDispatch();
+    Geolocation.getCurrentPosition(
+        (position) => {
+          dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
+        },
+        (error) => {
+          console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+    //dispatch(saveAddress(setLocatiosn()))
+    const Dots = ()=>{
         return (
             <View
                 style={{
