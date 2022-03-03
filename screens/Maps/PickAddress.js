@@ -1,10 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import { View, Text, PermissionsAndroid, StyleSheet } from 'react-native'
 import React from 'react';
 import Geolocation from 'react-native-geolocation-service'
 import { COLORS, FONTS, SIZES } from '../../constants';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Header } from '../../Components';
-
+import axios from 'axios';
 const PickAddress = ({navigation}) => {
     const mapView = React.useRef();
     const [location,setLocation] = React.useState(null);
@@ -22,7 +23,23 @@ const PickAddress = ({navigation}) => {
     //     }
     // }
 //    resuesr()
+   const getAddress=()=>{
 
+    // eslint-disable-next-line quotes
+    // fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" +location.latitude+"," + location.longitude + "&key=AIzaSyDWR7R8I0jiBnleKRKLVb6r8vr2WrCBClQ").then((response) => response.json()).then((responseJson) => {
+    //   console.log(
+    //      JSON.stringify(responseJson.results[0].formatted_address)
+    //       .replace(/"/g, "")
+    //      );
+    //    });
+        
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" +location.latitude+"," + location.longitude + "&key=AIzaSyDWR7R8I0jiBnleKRKLVb6r8vr2WrCBClQ").then(response=>{
+            console.log("worls")
+            console.log(response)
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
     React.useEffect(()=>{
         Geolocation.getCurrentPosition(
             (position) => {
@@ -34,16 +51,11 @@ const PickAddress = ({navigation}) => {
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
-        
     },[]);
-    console.log(location)
   return (
     <View
     style={{
         flex:1,
-        alignItems:'center',
-        height:SIZES.height,
-        width:SIZES.width,
         backgroundColor:COLORS.white
     }}
     >
@@ -67,14 +79,16 @@ const PickAddress = ({navigation}) => {
         }}
         onPress={(e)=>{
             setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude})
+            getAddress()
         }}
         mapType="standard"
         userInterfaceStyle='dark'
         provider={PROVIDER_GOOGLE}
         style={{
-            marginTop:SIZES.padding,
-            height:SIZES.height,
-            width:SIZES.width
+            marginTop:SIZES.base,
+            height:SIZES.height*0.90,
+            width:SIZES.width,
+            marginBottom:SIZES.padding
         }}
         showsScale={true}
         showsCompass={true}

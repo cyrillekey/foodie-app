@@ -8,6 +8,7 @@ import { addToCart } from '../../stores/cart/cartActions'
 import { addFavourite, removeFavourite } from '../../stores/products/productActions'
 const FoodDetails = ({route,navigation}) => {
     const food = useSelector(state=>state.productReducer.products.find(element=>element.id === route.params.id));
+    const isFav =useSelector(state=>state.productReducer.favourites.find(element=>element.id == route.params.id))
     const dispatch = useDispatch();
     const [count,setCount]=React.useState(1)
   return (
@@ -92,7 +93,7 @@ const FoodDetails = ({route,navigation}) => {
                     <TouchableOpacity
                     onPress={
                         ()=>{
-                            if(food.isFavourite){
+                            if(isFav){
                                 dispatch(removeFavourite({id:food.id}))
                             }else{
                                 dispatch(addFavourite({id:food.id}))
@@ -105,7 +106,7 @@ const FoodDetails = ({route,navigation}) => {
                     style={{
                         height:30,
                         width:30,
-                        tintColor:food.isFavourite ? COLORS.red : COLORS.gray,
+                        tintColor:isFav ? COLORS.red : COLORS.gray,
                     }}
                     />
                     </TouchableOpacity>

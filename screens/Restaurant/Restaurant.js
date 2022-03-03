@@ -12,8 +12,9 @@ const Restaurant = () => {
        data={dummyData.restaurant}
        keyExtractor={item=>`${item.id}`}
        contentContainerStyle={{
-         paddingHorizontal:SIZES.padding ,
-         paddingBottom:38
+         paddingHorizontal:SIZES.radius,
+         paddingBottom:38,
+         marginTop:SIZES.padding
        }}
        renderItem={({item,index})=>(
          <TouchableOpacity

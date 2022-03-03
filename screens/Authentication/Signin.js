@@ -14,6 +14,7 @@ const Signin = ({navigation})=>{
         passWordvalid:false,
         emailValid:false
     });
+    const [remeberMe,setRememberMe]= React.useState(false);
     const validateEmail = (email)=> {
         const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!res.test(String(email).toLowerCase())){
@@ -23,12 +24,15 @@ const Signin = ({navigation})=>{
         }
       };
     const validatePassword = (value)=>{
-        if(value.length>=6){
+        if (value.length >= 6){
             setFrom({...form,passwordError:'',passWordvalid:true})
         } else {
             setFrom({...form,passwordError:'Password to short',passWordvalid:false})
         }
     };
+    const isEnabled =()=>{
+        return form.passWordvalid && form.emailValid
+    }
     return (
         <AuthLayout
             title="Lets join"
@@ -102,21 +106,21 @@ const Signin = ({navigation})=>{
                 }}>
                     <Switch
                         onValueChange={(value)=>{
-                            console.log(value)
+                            setRememberMe(!remeberMe);
                         }}
-                        value={false}
+                        value={remeberMe}
                     />
                     <TextButton
                         label="Forgot Password"
                         buttonContainerStyle={{
-                            backgroundColor:null
+                            backgroundColor:null,
                         }}
                         labelStyle={{
                             ...FONTS.body4,
-                            color:COLORS.gray
+                            color:COLORS.gray,
                         }}
                         onPress={()=>{
-                            navigation.navigate("forgotpassword")
+                            navigation.navigate('forgotpassword');
                         }}
                     />
                 </View>
@@ -128,38 +132,38 @@ const Signin = ({navigation})=>{
                         marginTop:SIZES.padding,
                         borderRadius:SIZES.radius,
                     }}
-                    disabled={!form.passWordvalid && !form.emailValid}
+                    disabled={isEnabled() ? false : true }
                     onPress={()=>{
-                        navigation.navigate('Home')
+                        navigation.navigate('Home');
                     }}
                 />
-                <View 
+                <View
                     style={{
                        flexDirection:'row',
                        marginTop:SIZES.radius,
-                       justifyContent:'center' 
+                       justifyContent:'center',
                     }}
                 >
                     <Text
                     style={{
                         ...FONTS.body3,
-                        color:COLORS.darkGray
+                        color:COLORS.darkGray,
                     }}
                     >
-                    Don't have and account? 
+                    Don't have and account?
                     </Text>
                     <TextButton
                         label="Sign Up"
                         buttonContainerStyle={{
                             backgroundColor:null,
-                            marginLeft:SIZES.radius
+                            marginLeft:SIZES.radius,
                         }}
                         labelStyle={{
                             ...FONTS.h3,
-                            color:COLORS.primary
+                            color:COLORS.primary,
                         }}
                         onPress={()=>{
-                            navigation.navigate("SignUp")
+                            navigation.navigate('SignUp');
                         }}
                     />
                 </View>
@@ -170,7 +174,7 @@ const Signin = ({navigation})=>{
                         alignItems:'center',
                         borderRadius:SIZES.radius,
                         backgroundColor:COLORS.blue,
-                        marginTop:SIZES.padding*2,
+                        marginTop:SIZES.padding * 2,
                     }}
                         label="Sign in With Facebook"
                         iconLeft={

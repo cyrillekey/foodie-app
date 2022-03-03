@@ -9,7 +9,7 @@ const TextButton = ({buttonContainerStyle,label,labelStyle,onPress,disabled=fals
         style={{
             alignItems:'center',
             justifyContent:'center',
-            backgroundColor: disabled ? COLORS.gray : COLORS.primary,
+            backgroundColor: disabled ? COLORS.transparentPrimray : COLORS.primary,
             ...buttonContainerStyle,
         }}
         onPress={onPress}

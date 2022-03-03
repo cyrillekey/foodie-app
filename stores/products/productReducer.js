@@ -46,6 +46,7 @@ const productReducer = (state = initialState,action )=>{
             tempCart.splice(index,1);
             return {...state,cartItems:tempCart,qty:state.qty - tempQty,cartTotal:state.cartTotal - tempCost};
         case cartActions.REDUCE_QTY:
+            {
             let item = state.cartItems.find(cart=>cart.id == action.payload.id);
             const tempCartReduce = [...state.cartItems];
             let indexOf = state.cartItems.indexOf(item);
@@ -55,12 +56,15 @@ const productReducer = (state = initialState,action )=>{
             }
             tempCartReduce[indexOf].qty -= 1;
             return {...state,tempCartReduce,cartItems:tempCartReduce,qty:state.qty - 1,cartTotal:state.cartTotal-item.price};
+            }
         case cartActions.INCREASE_QTY:
+            {
             let itemAdd = state.cartItems.find(cart=>cart.id == action.payload.id);
             const tempCartAdd = [...state.cartItems];
             let indexOfAdd = state.cartItems.indexOf(itemAdd);
             tempCartAdd[indexOfAdd].qty += 1;
             return {...state,cartItems:tempCartAdd,qty:state.qty + 1,cartTotal:state.cartTotal+itemAdd.price};
+            }
         case productActions.ADD_FAVOURITE:
             if (state.favourites.length > 0){
                 let favItem = state.products.find(product=>product.id == action.payload.id);
@@ -68,11 +72,15 @@ const productReducer = (state = initialState,action )=>{
                 return {...state,favourites:state.favourites.concat(favItem)};
             } else {
                 let favItem= state.products.find(product=>product.id == action.payload.id);
-                favItem.isFavourite = true;
+                favItem.isFav = true;
                 return {...state,favourites:[favItem]};
             }
         case productActions.REMOVE_FAVOURITE:
-            return state;
+            let item=state.favourites.find(fav=>fav.id==action.payload.id);
+            let indexO = state.favourites.indexOf(item);
+            const tempFav = [...state.favourites];
+            tempFav.splice(indexO,1);
+            return {...state,favourites:tempFav};
         default:
             return state;
     }

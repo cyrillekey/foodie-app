@@ -31,7 +31,7 @@ const hamburger = {
     categories: [1, 2],
     price: 15.99,
     calories: 78,
-    isFavourite: true,
+    isFavourite: false,
     image: require("../assets/dummyData/hamburger.png")
 }
 
@@ -53,7 +53,7 @@ const vegBiryani = {
     categories: [1, 2, 3],
     price: 10.99,
     calories: 78,
-    isFavourite: true,
+    isFavourite: false,
     image: require("../assets/dummyData/veg_biryani.png")
 }
 

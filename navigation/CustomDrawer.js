@@ -100,7 +100,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                         navigation.navigate('MainLayout');
                     }}/>
                     <CustomDrawerItem label={constants.screens.favourite} icon={icons.favourite} onPress={()=>{
-                        dispatch(setTest({test:constants.screens.home}))
+                        //dispatch(setSelectedTab({test:constants.screens.favourite}))
                         navigation.navigate('MainLayout');
                     }}/>
                     <View style={{
