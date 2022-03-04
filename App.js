@@ -7,6 +7,7 @@ import { Provider, useDispatch } from 'react-redux';
 import thunk from "redux-thunk";
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress} from "./screens";
+import SplashScreen from 'react-native-splash-screen';
 
 // import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -15,8 +16,10 @@ const Stack = createStackNavigator();
 const store = createStore(rootReducer,applyMiddleware(thunk));
 const App = () => {
 
-    // const dispatch = useDispatch();
-    // dispatch(saveAddress(setLocation()));
+    React.useEffect(()=>{
+        console.log("hello wordl");
+        SplashScreen.hide();
+    })
     return (
         <Provider store={store}>
             {/* <PersistGate loading={null} persistor={persistor}> */}
