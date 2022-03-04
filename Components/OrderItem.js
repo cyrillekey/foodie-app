@@ -6,7 +6,8 @@ import { TextButton } from '.'
 const OrderItem = ({
     name,
     price,
-    date,qty,status
+    date,qty,status,
+    navigation
 }) => {
   return (
     <View
@@ -87,7 +88,8 @@ const OrderItem = ({
                 borderRadius:SIZES.radius,
                 width:130
             }}
-            label="Re-Order"
+            label="Order Details"
+            onPress={()=>navigation.navigate("orderDetails")}
           />
             <TextButton
             buttonContainerStyle={{
@@ -99,11 +101,14 @@ const OrderItem = ({
             labelStyle={{
                 color:COLORS.primary
             }}
-            label="Rate"
+            label="Track"
+            onPress={()=>{
+               navigation.navigate("orderStatus"); 
+            }}
           />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default OrderItem
+export default OrderItem;

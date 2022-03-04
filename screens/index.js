@@ -29,7 +29,8 @@ import PlaceOrder from "./Orders/PlaceOrder";
 import Success from "./Success/Success";
 import OrderStatus from "./Orders/OrderStatus";
 import DeliveryMap from "./Maps/DeliveryMap";
-import PickAddress from './Maps/PickAddress'
+import PickAddress from './Maps/PickAddress';
+import OrderDetails from "./Orders/OrderDetails";
 export {
     MainLayout,
     Home,
@@ -53,4 +54,5 @@ export {
     OrderStatus,
     DeliveryMap,
     PickAddress,
+    OrderDetails,
 };

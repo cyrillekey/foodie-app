@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import { View,Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { OrderItem, TextButton } from '../../Components'
 import { COLORS, FONTS, SIZES } from '../../constants'
-const Orders = ({navigation}) => {
+const Orders = (navigation) => {
   return (
     <View
     style={{
@@ -51,7 +52,9 @@ const Orders = ({navigation}) => {
           ...FONTS.body3
         }}
         >19 Sep 2021</Text>
-        <OrderItem/>
+        <OrderItem
+          navigation={navigation}
+        />
       </ScrollView>
     </View>
   )

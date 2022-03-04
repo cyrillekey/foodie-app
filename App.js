@@ -6,7 +6,7 @@ import { createStore,applyMiddleware } from 'redux';
 import { Provider, useDispatch } from 'react-redux';
 import thunk from "redux-thunk";
 import CustomDrawer from './navigation/CustomDrawer';
-import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress} from "./screens";
+import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from "./screens";
 import SplashScreen from 'react-native-splash-screen';
 
 // import { store,persistor } from "./stores/store";
@@ -47,6 +47,7 @@ const App = () => {
                 <Stack.Screen name="orderStatus" component={OrderStatus} />
                 <Stack.Screen name="deliveryMap" component={DeliveryMap} />
                 <Stack.Screen name="pickAddress" component={PickAddress}/>
+                <Stack.Screen name="orderDetails" component={OrderDetails}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>
