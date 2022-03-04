@@ -8,8 +8,7 @@ return axios
       `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}`,
     )
     .then(response => {
-      
-      setAdd(JSON.parse(convert.xml2json(response.data)).elements[0].elements[0].elements[0].text)
+      setAdd(JSON.parse(convert.xml2json(response.data)).elements[0].elements[0].elements[0].text);
     //  parseString(response.data,(err, result) => {
     //    if (!err){
     //     setAdd(`${result.reversegeocode.addressparts[0].town[0]}, ${result.reversegeocode.addressparts[0].state[0]}, ${result.reversegeocode.addressparts[0].country[0]}`);
@@ -21,12 +20,11 @@ return axios
     .catch(err => {
       console.log(err);
     });
-    
 };
 
 export const askForLocationPermission = async () => {
   try {
-    const granted = await PermissionsAndroid.request(
+    await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       {
         title: 'Foodie Use Location to determine where to deliver food',
@@ -37,10 +35,8 @@ export const askForLocationPermission = async () => {
   }
 };
 export const setLocation = ()=>{
-  var address="";
    Geolocation.getCurrentPosition(
     (position) => {
-      address=position.coords
       return {latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 };
       //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
     },
@@ -48,5 +44,5 @@ export const setLocation = ()=>{
       console.log(error.code, error.message);
     },
     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-); 
+);
 };

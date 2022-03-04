@@ -40,7 +40,7 @@ const Signin = ({navigation})=>{
         >
             <View style={{
                 flex:1,
-                marginTop:SIZES.padding * 2,
+                marginTop:SIZES.padding * 2
             }}>
                 <FormInput
                 label="Email"
@@ -189,13 +189,13 @@ const Signin = ({navigation})=>{
                             color:COLORS.white
                         }}
                         onPress={()=>{
-                            console.log("exmpa");
+                            console.log('exmpa');
                         }}
                     />
                 </View>
-            </View> 
+            </View>
             </AuthLayout>
     );
-}
+};
 
 export default Signin;

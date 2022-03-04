@@ -1,21 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
-import { View,Text ,KeyboardAvoidingView,Image, SafeAreaView} from "react-native";
-import { COLORS, SIZES,images, FONTS } from "../../constants";
-import {KeyboardAvoidingScrollView} from 'react-native-keyboard-avoiding-scroll-view';
-
-
+import React from 'react';
+import { View,Text,Image} from 'react-native';
+import { COLORS, SIZES,images, FONTS } from '../../constants';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
     return (
-            <KeyboardAvoidingScrollView
-            behaviour="padding"
-            keyboardDismissMode="on-drag"
-            en
-            contentContainerStyle={{
+            <View
+            style={{
                 flex:1,
-                paddingHorizontal:SIZES.padding,
+                paddingVertical:SIZES.padding,
+                backgroundColor:COLORS.white,
             }}>
-                <View style={{
+                <KeyboardAwareScrollView
+                keyboardDismissMode="on-drag"
+                contentContainerStyle={{
+                    flex:1,
+                    paddingHorizontal:SIZES.padding,
+                }}>
+                    <View style={{
                     alignItems:'center',
                 }}>
                     <Image
@@ -24,18 +26,20 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                      style={{
                         height:100,
                          width:200,
+                         marginTop:SIZES.padding,
                      }}
                     />
                 </View>
                 <View
                 style={{
                     marginTop:SIZES.padding,
-                    ...titlecontainerStyle
-                }}>
-                    <Text
+                    ...titlecontainerStyle,
+                }}
+                >
+                <Text
                         style={{
                             textAlign:'center',
-                            ...FONTS.h2
+                            ...FONTS.h2,
                         }}
                     >
                         {title}
@@ -50,7 +54,8 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                     </Text>
                 </View>
                 {children}
-            </KeyboardAvoidingScrollView>
+                </KeyboardAwareScrollView>
+            </View>
     );
 };
 export default AuthLayout;

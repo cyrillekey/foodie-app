@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import React from 'react'
 import { Text, View } from 'react-native';
@@ -13,29 +14,53 @@ const SignUp=({navigation})=>{
             <View
                 style={{
                     flex:1,
-                    marginTop:SIZES.padding * 1.5
                 }}
             >
                 <FormInput
                     label="Email"
                     placeholder="Enter mail"
-                    keyboardType='email-address'
-                    autoCompleteType='email'
-                    errorMsg='invalid email'
+                    keyboardType="email-address"
+                    autoCompleteType="email"
+                    errorMsg="invalid email"
                     onChange={(text)=>{
-                        console.log(text)
+                        console.log(text);
                     }}
                 />
+                <FormInput
+                label="Phone Number"
+                placeholder="+254712345678"
+                autoCompleteType="tel"
+                keyboardType="phone-pad"
+                onChange={(text)=>{
+                    console.log(text);
+                }}
+                />
+                <FormInput
+                label="Password"
+                placeholder="********"
+                secureTextEntry={true}
+                onChange = {(value)=>{
+                    console.log(value);
+                }}
+                />
+                 <FormInput
+                label="Password"
+                placeholder="********"
+                secureTextEntry={true}
+                onChange = {(value)=>{
+                    console.log(value);
+                }}
+                />
                 <TextButton
-                    label={"Otp Section"}
+                    label={'Sign Up'}
                     buttonContainerStyle={{
                         height:55,
                         borderRadius:SIZES.radius,
                         alignItems:'center',
-                        marginTop:SIZES.padding
+                        marginTop:SIZES.padding,
                     }}
                     onPress={()=>{
-                        navigation.navigate("Otp")
+                        navigation.navigate('Otp');
                     }}
                 />
             </View>

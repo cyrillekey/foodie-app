@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text,TextInput,Image,TouchableOpacity } from 'react-native'
+import { View, Text} from 'react-native';
 import React from 'react';
-import { COLORS, FONTS, SIZES,icons } from '../../constants';
+import { COLORS, FONTS, SIZES} from '../../constants';
 import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Header, TextButton } from '../../Components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { saveAddress } from '../../stores/user/userActions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const PickAddress = ({navigation}) => {
     const mapView = React.useRef();
-    const address= useSelector(state=>state.userReducer.address);
+    const address = useSelector(state=>state.userReducer.address);
     const [location,setLocation] = React.useState(address);
     const [mark,setMark] = React.useState({
         latitude:address.latitude,
@@ -20,7 +20,7 @@ const PickAddress = ({navigation}) => {
     <View
     style={{
         flex:1,
-        backgroundColor:COLORS.white
+        backgroundColor:COLORS.white,
     }}
     >
         <Header
@@ -28,7 +28,7 @@ const PickAddress = ({navigation}) => {
         isBackPresent={true}
         containerStye={{
             marginTop:SIZES.padding,
-            paddingHorizontal:SIZES.padding
+            paddingHorizontal:SIZES.padding,
         }}
         isCartpresent={false}
         navigation={navigation}
@@ -44,10 +44,10 @@ const PickAddress = ({navigation}) => {
                 position:'absolute',
                 top:80,
                 zIndex:1,
-                width:'90%'
+                width:'90%',
             }}>
                 <GooglePlacesAutocomplete
-            placeholder='Search'
+            placeholder="Search"
             styles={{
                 marginTop:SIZES.padding,
             }}
@@ -56,7 +56,7 @@ const PickAddress = ({navigation}) => {
                     color:'black',
                     ...FONTS.body3,
                 flex:1},
-                placeholderTextColor:COLORS.black
+                placeholderTextColor:COLORS.black,
             }}
             query={{
                 key: 'YOUR API KEY',
@@ -70,18 +70,18 @@ const PickAddress = ({navigation}) => {
             location
         }
         onRegionChangeComplete={(value)=>{
-            setMark({latitude:value.latitude,longitude:value.longitude})
-            setLocation(value)
+            setMark({latitude:value.latitude,longitude:value.longitude});
+            setLocation(value);
         }}
         onPress={(e)=>{
-            setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude})
-            setLocation({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude,latitudeDelta:0,longitudeDelta:0})
+            setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude});
+            setLocation({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude,latitudeDelta:0,longitudeDelta:0});
         }}
         mapType="standard"
-        userInterfaceStyle='dark'
+        userInterfaceStyle="dark"
         provider={PROVIDER_GOOGLE}
         style={{
-            height:SIZES.height*0.90,
+            height:SIZES.height * 0.90,
             width:SIZES.width,
             marginBottom:SIZES.padding,
         }}
@@ -96,7 +96,6 @@ const PickAddress = ({navigation}) => {
                 coordinate={mark}
                 title="Delivery"
             />
-            
             </MapView>
         <View
         style={{
@@ -106,24 +105,24 @@ const PickAddress = ({navigation}) => {
             backgroundColor:COLORS.white,
             width:'100%',
             bottom:0,
-            position:'absolute'
+            position:'absolute',
         }}
         >
         <Text style={{
             ...FONTS.h3,
-            textAlign:'center'
+            textAlign:'center',
         }}>Pick Delivery Location</Text>
         <TextButton
             buttonContainerStyle={{
                 marginTop:SIZES.base * 2,
                 height:45,
                 borderRadius:SIZES.radius,
-                marginBottom:SIZES.base
+                marginBottom:SIZES.base,
             }}
             label="Pick Delivery Location"
             onPress={()=>{
-                dispatch(saveAddress(location))
-                navigation.pop()
+                dispatch(saveAddress(location));
+                navigation.pop();
             }}
         />
         </View>

@@ -2,7 +2,7 @@
 import React from 'react';
 import {
     View,
-    Text,Image, TextInput, TouchableOpacity, FlatList
+    Text,Image, TextInput, TouchableOpacity, FlatList,
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
@@ -11,10 +11,10 @@ import { getAddressName } from '../../constants/util';
 
 const Home = (navigation) => {
     const menu = useSelector(state=>state.productReducer.products);
-    const address = useSelector(state=>state.userReducer.address)
-    const [form,setForm]=React.useState("");
-    getAddressName(address.latitude,address.longitude,setForm)
-    const  renderSearch=()=>{
+    const address = useSelector(state=>state.userReducer.address);
+    const [form,setForm] = React.useState(' ');
+    getAddressName(address.latitude,address.longitude,setForm);
+    const  renderSearch = ()=>{
         return (
             <View style={{
                 flexDirection:'row',
@@ -57,9 +57,9 @@ const Home = (navigation) => {
                     />
                 </TouchableOpacity>
             </View>
-        )
-    }
-    const renderMenuTypes=()=>{
+        );
+    };
+    const renderMenuTypes = ()=>{
         return (
             <FlatList
             horizontal
@@ -89,8 +89,8 @@ const Home = (navigation) => {
             )}
             />
         );
-    }
-    const renderPopularNearYou=()=>{
+    };
+    const renderPopularNearYou = ()=>{
         return (
                     <FlatList
                     horizontal
@@ -103,8 +103,8 @@ const Home = (navigation) => {
                             flexDirection:'row',
                             height:50,
                             marginTop:SIZES.padding,
-                            marginLeft:index==0 ?SIZES.padding :SIZES.radius,
-                            marginRight:index==dummyData.categories.length-1 ? SIZES.padding :SIZES.radius,
+                            marginLeft:index  === 0 ? SIZES.padding : SIZES.radius,
+                            marginRight:index === dummyData.categories.length - 1 ? SIZES.padding : SIZES.radius,
                             paddingHorizontal:1,
                             borderRadius:SIZES.radius,
                             backgroundColor:COLORS.primary,
@@ -122,7 +122,7 @@ const Home = (navigation) => {
                                 alignSelf:'center',
                                 marginRight:SIZES.base,
                                 ...FONTS.h3,
-                                color:COLORS.white
+                                color:COLORS.white,
                             }}>
                                 {item.name}
                             </Text>
@@ -130,18 +130,18 @@ const Home = (navigation) => {
                         )}
                     />
         );
-    }
-    const renderDelivery=()=>{
+    };
+    const renderDelivery = ()=>{
         return (
             <TouchableOpacity style={{
                 marginTop:SIZES.padding,
-                marginHorizontal:SIZES.padding
+                marginHorizontal:SIZES.padding,
             }}
             onPress={()=>navigation.navigate('pickAddress')}
             >
                 <View
                 style={{
-                    flexDirection:'row'
+                    flexDirection:'row',
                 }}
                 >
                 <Text
@@ -165,7 +165,7 @@ const Home = (navigation) => {
                 style={{
                     flexDirection:'row',
                     marginTop:SIZES.base,
-                    alignItems:'center'
+                    alignItems:'center',
                 }}
                 >
                     <Text style={{...FONTS.h3}}>
@@ -174,7 +174,7 @@ const Home = (navigation) => {
                     </View>
             </TouchableOpacity>
         );
-    }
+    };
     return (
         <View
             style={{
@@ -198,7 +198,7 @@ const Home = (navigation) => {
                                 height:130,
                                 alignItems:'center',
                                 marginHorizontal:SIZES.padding,
-                                marginBottom:SIZES.radius
+                                marginBottom:SIZES.radius,
                             }}
                             imageStyle={{
                                 marginTop:20,
@@ -208,16 +208,16 @@ const Home = (navigation) => {
                             item={item}
                             onPress={()=>{
                                 //console.log(navigation)
-                                navigation.navigate("fooddetails",{
-                                    id:item.id
-                                })
+                                navigation.navigate('fooddetails',{
+                                    id:item.id,
+                                });
                             }}
                         />
                     );
                 }}
             />
         </View>
-    )
-}
+    );
+};
 
 export default Home;
