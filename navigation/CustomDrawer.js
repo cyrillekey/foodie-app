@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { Image, TouchableOpacity, View,Text } from 'react-native';
+import { Image, TouchableOpacity, View,Text} from 'react-native';
 import { createDrawerNavigator,DrawerContentScrollView } from '@react-navigation/drawer';
 import {COLORS, SIZES,icons, dummyData, FONTS, constants} from '../constants';
 import { MainLayout } from '../screens';
@@ -113,7 +113,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                     <CustomDrawerItem label="Settings" icon={icons.setting}/>
                 </View>
                 <View style={{marginBottom:SIZES.padding}}>
-                <CustomDrawerItem label="Logout" icon={icons.logout}/>
+                <CustomDrawerItem label="Logout" icon={icons.logout} onPress={()=>{}}/>
                 </View>
             </View>
         </DrawerContentScrollView>

@@ -4,7 +4,7 @@ import React from 'react'
 import { Text, View } from 'react-native';
 import { AuthLayout } from '..';
 import { FormInput, TextButton } from '../../Components';
-import { SIZES } from '../../constants';
+import { SIZES ,FONTS,COLORS} from '../../constants';
 const SignUp=({navigation})=>{
     return (
         <AuthLayout
@@ -14,6 +14,7 @@ const SignUp=({navigation})=>{
             <View
                 style={{
                     flex:1,
+                    marginTop:SIZES.padding,
                 }}
             >
                 <FormInput
@@ -25,6 +26,9 @@ const SignUp=({navigation})=>{
                     onChange={(text)=>{
                         console.log(text);
                     }}
+                    containerStyle={{
+                        marginTop:SIZES.padding,
+                    }}
                 />
                 <FormInput
                 label="Phone Number"
@@ -34,6 +38,9 @@ const SignUp=({navigation})=>{
                 onChange={(text)=>{
                     console.log(text);
                 }}
+                containerStyle={{
+                    marginTop:SIZES.padding,
+                }}
                 />
                 <FormInput
                 label="Password"
@@ -42,13 +49,8 @@ const SignUp=({navigation})=>{
                 onChange = {(value)=>{
                     console.log(value);
                 }}
-                />
-                 <FormInput
-                label="Password"
-                placeholder="********"
-                secureTextEntry={true}
-                onChange = {(value)=>{
-                    console.log(value);
+                containerStyle={{
+                    marginTop:SIZES.padding,
                 }}
                 />
                 <TextButton
@@ -63,6 +65,37 @@ const SignUp=({navigation})=>{
                         navigation.navigate('Otp');
                     }}
                 />
+                <View
+                    style={{
+                       flexDirection:'row',
+                       marginTop:SIZES.radius,
+                       justifyContent:'center',
+                       marginBottom:SIZES.padding * 2
+                    }}
+                >
+                    <Text
+                    style={{
+                        ...FONTS.body3,
+                        color:COLORS.darkGray,
+                    }}
+                    >
+                    Already Have an account?
+                    </Text>
+                    <TextButton
+                        label="Sign Up"
+                        buttonContainerStyle={{
+                            backgroundColor:null,
+                            marginLeft:SIZES.radius,
+                        }}
+                        labelStyle={{
+                            ...FONTS.h3,
+                            color:COLORS.primary,
+                        }}
+                        onPress={()=>{
+                            navigation.navigate('SignIn');
+                        }}
+                    />
+                </View>
             </View>
         </AuthLayout>
     );
