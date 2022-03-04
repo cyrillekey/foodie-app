@@ -2,7 +2,7 @@
 import React from 'react';
 import {
     View,
-    Text,Image, TextInput, TouchableOpacity, FlatList,
+    Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator,
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
@@ -12,7 +12,7 @@ import { getAddressName } from '../../constants/util';
 const Home = (navigation) => {
     const menu = useSelector(state=>state.productReducer.products);
     const address = useSelector(state=>state.userReducer.address);
-    const [form,setForm] = React.useState(' ');
+    const [form,setForm] = React.useState(<ActivityIndicator/>);
     getAddressName(address.latitude,address.longitude,setForm);
     const  renderSearch = ()=>{
         return (

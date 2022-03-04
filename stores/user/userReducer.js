@@ -1,11 +1,13 @@
 import * as userActions from './userActionTypes';
-
+import { dummyData } from '../../constants';
 const initialState = {
     user:[],
     address:{
         latitude:0,
         longitude:0,
     },
+    paymentMethods:dummyData.allCards,
+    selectedCard:{},
 };
 
 const userReducer = (state = initialState,action)=>{
@@ -13,6 +15,11 @@ const userReducer = (state = initialState,action)=>{
         case userActions.SAVE_ADDRESS:
             return {
                 ...state,address:action.payload,
+            };
+        case userActions.SAVE_CARD:
+            let card = state.paymentMethods.find(c=>c.id==action.payload.id);
+            return {
+                ...state,selectedCard:card,
             };
         default:
             return state;

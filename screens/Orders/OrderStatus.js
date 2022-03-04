@@ -21,6 +21,7 @@ const OrderStatus = ({navigation}) => {
             marginTop:SIZES.padding
         }}
         isCartpresent={false}
+        navigation={navigation}
       />
       <View
       style={{

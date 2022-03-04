@@ -47,7 +47,7 @@ const Success = ({navigation}) => {
                 borderRadius:SIZES.radius
             }}
             onPress={()=>{
-                navigation.navigate('orderStatus')
+                navigation.navigate('Home')
             }}
         />
     </View>

@@ -17,9 +17,8 @@ const store = createStore(rootReducer,applyMiddleware(thunk));
 const App = () => {
 
     React.useEffect(()=>{
-        console.log("hello wordl");
         SplashScreen.hide();
-    })
+    });
     return (
         <Provider store={store}>
             {/* <PersistGate loading={null} persistor={persistor}> */}
