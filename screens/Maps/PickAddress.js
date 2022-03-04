@@ -1,13 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, PermissionsAndroid, StyleSheet } from 'react-native'
+import { View, Text,TextInput,Image,TouchableOpacity } from 'react-native'
 import React from 'react';
-import Geolocation from 'react-native-geolocation-service'
-import { COLORS, FONTS, SIZES } from '../../constants';
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { COLORS, FONTS, SIZES,icons } from '../../constants';
+import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Header, TextButton } from '../../Components';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveAddress } from '../../stores/user/userActions';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const PickAddress = ({navigation}) => {
     const mapView = React.useRef();
     const address= useSelector(state=>state.userReducer.address);
@@ -34,6 +33,37 @@ const PickAddress = ({navigation}) => {
         isCartpresent={false}
         navigation={navigation}
         />
+         <View style={{
+                flexDirection:'row',
+                height:50,
+                alignItems:'center',
+                marginHorizontal:SIZES.padding,
+                paddingHorizontal:SIZES.radius,
+                borderRadius:SIZES.radius,
+                backgroundColor:COLORS.lightGray2,
+                position:'absolute',
+                top:80,
+                zIndex:1,
+                width:'90%'
+            }}>
+                <GooglePlacesAutocomplete
+            placeholder='Search'
+            styles={{
+                marginTop:SIZES.padding,
+            }}
+            textInputProps={{
+                style:{marginLeft:SIZES.radius,
+                    color:'black',
+                    ...FONTS.body3,
+                flex:1},
+                placeholderTextColor:COLORS.black
+            }}
+            query={{
+                key: 'YOUR API KEY',
+                language: 'en',
+              }}
+        />
+            </View>
         <MapView
         ref={mapView}
         initialRegion={
@@ -51,10 +81,9 @@ const PickAddress = ({navigation}) => {
         userInterfaceStyle='dark'
         provider={PROVIDER_GOOGLE}
         style={{
-            marginTop:SIZES.base,
             height:SIZES.height*0.90,
             width:SIZES.width,
-            marginBottom:SIZES.padding
+            marginBottom:SIZES.padding,
         }}
         showsScale={true}
         showsCompass={true}
@@ -73,11 +102,11 @@ const PickAddress = ({navigation}) => {
         style={{
             padding:SIZES.padding,
             borderTopLeftRadius:SIZES.padding,
-            borderTopRightRadius:SIZES.paddings,
+            borderTopRightRadius:SIZES.padding,
             backgroundColor:COLORS.white,
-            position:"absolute",
             width:'100%',
-            bottom:0
+            bottom:0,
+            position:'absolute'
         }}
         >
         <Text style={{
@@ -86,10 +115,10 @@ const PickAddress = ({navigation}) => {
         }}>Pick Delivery Location</Text>
         <TextButton
             buttonContainerStyle={{
-                marginTop:SIZES.padding,
+                marginTop:SIZES.base * 2,
                 height:45,
                 borderRadius:SIZES.radius,
-                marginBottom:SIZES.padding
+                marginBottom:SIZES.base
             }}
             label="Pick Delivery Location"
             onPress={()=>{
