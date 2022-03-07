@@ -75,7 +75,7 @@ const PickAddress = ({navigation}) => {
         }}
         onPress={(e)=>{
             setMark({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude});
-            setLocation({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude,latitudeDelta:0,longitudeDelta:0});
+            setLocation({latitude:e.nativeEvent.coordinate.latitude,longitude:e.nativeEvent.coordinate.longitude,latitudeDelta:0.02,longitudeDelta:0.02});
         }}
         mapType="standard"
         userInterfaceStyle="dark"

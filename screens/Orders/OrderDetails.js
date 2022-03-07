@@ -1,8 +1,9 @@
-import { View, Text } from 'react-native'
+import { View, Text ,Image} from 'react-native'
 import React from 'react'
-import { COLORS, SIZES } from '../../constants';
+import { COLORS, FONTS, icons, SIZES } from '../../constants';
 import { Header } from '../../Components';
-import MapView, { PROVIDER_GOOGLE ,Polyline, Marker} from 'react-native-maps';
+import QRCode from 'react-native-qrcode-svg';
+import LinearGradient from 'react-native-linear-gradient';
 
 const OrderDetails = ({navigation}) => {
     console.log(navigation)
@@ -12,8 +13,7 @@ const OrderDetails = ({navigation}) => {
         flex:1,
         backgroundColor:COLORS.white
     }}
-    >
-        <Header
+    ><Header
             title="#4525445"
             containerStye={{
                 marginTop:SIZES.padding,
@@ -23,58 +23,114 @@ const OrderDetails = ({navigation}) => {
             isCartpresent={false}
             navigation={navigation}
         />
-        <MapView
-            showsBuildings={true}
-            provider={PROVIDER_GOOGLE}
+        <View
+        style={{
+            marginTop:SIZES.padding * 2,
+            borderRadius:SIZES.radius,
+            justifyContent:'center',
+            alignItems:'center',
+        }}
+        >
+            <QRCode
+              value='12545'
+              size={250}
+            />
+            <Text
             style={{
-                borderRadius:SIZES.padding,
-                height:SIZES.height * 0.90,
+                ...FONTS.h3,
+                textAlign:'center',
                 marginTop:SIZES.padding
             }}
-            region={{
-                latitude: -1.244605, longitude: 36.6630327,latitudeDelta:0,longitudeDelta:0
-            }}
-            maxZoomLevel={14}
-            >
-            <Marker
-            coordinate={{
-                latitude: -1.244605, longitude: 36.6630327,latitudeDelta:0,longitudeDelta:0
-            }}
-            />
-            <Marker
-            coordinate={{ latitude: -1.244605, longitude: 36.5630327 }}
-            pinColor="#00FF00"
-            />
-            <Polyline
-		coordinates={[
-			{ latitude: -1.244605, longitude: 36.6630327 },
-			{ latitude: -1.244605, longitude: 36.5630327 },
-		]}
-		strokeColor={COLORS.primary} // fallback for when `strokeColors` is not supported by the map-provider
-		strokeColors={[
-			'#7F0000',
-			'#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-			'#B24112',
-			'#E5845C',
-			'#238C23',
-			'#7F0000'
-		]}
-		strokeWidth={6}
-	/>
-            </MapView>
-        
+            >Scan to confirm Order Received</Text>
+        </View>
         <View
         style={{
             position:"absolute",
             bottom:0,
-            borderTopLeftRadius:SIZES.radius,
-            borderTopRightRadius:SIZES.radius,
-            paddingVertical:SIZES.padding,
-            backgroundColor:COLORS.white,
-            width:'100%'
+            width:'100%',
         }}
         >
-            <Text>Hello wordl</Text>
+            <LinearGradient
+                start={{x:0,y:0}}
+                end={{x:0,y:1}}
+                colors={[
+                    COLORS.transparent,
+                    COLORS.lightGray1
+                ]}
+                style={{
+                    position:'absolute',
+                    top:-20,
+                    left:0,
+                    right:0,
+                    height:50,
+                }}
+            />
+            <View
+            style={{
+                padding:SIZES.padding,
+                borderTopLeftRadius:30,
+                borderTopRightRadius:30,
+                backgroundColor:COLORS.white,
+            }}
+            >
+            <View
+            style={{
+                flexDirection:'row',
+                alignItems:'center',
+            }}
+            >
+            <Image
+            source={icons.clock}
+            style={{
+                width:40,
+                height:40,
+                tintColor:COLORS.black
+            }}
+            />
+            <View
+                style={{
+                    marginLeft:SIZES.padding
+                }}
+            >
+                <Text
+                style={{
+                    ...FONTS.body4,
+                    color:COLORS.gray,
+                }}
+                >Delivery Time</Text>
+                <Text style={{...FONTS.h3}}>8 mins</Text>
+            </View>
+            </View>
+            <View
+            style={{
+                flexDirection:'row',
+                alignItems:'center',
+                marginTop:SIZES.padding
+            }}
+            >
+            <Image
+            source={icons.location}
+            style={{
+                width:40,
+                height:40,
+                tintColor:COLORS.black
+            }}
+            />
+            <View
+                style={{
+                    marginLeft:SIZES.padding
+                }}
+            >
+                <Text
+                style={{
+                    ...FONTS.body4,
+                    color:COLORS.gray
+                }}
+                >Delivery Time</Text>
+                <Text style={{...FONTS.h3}}>8 mins</Text>
+            </View>
+            </View>
+            </View>
         </View>
     </View>
   );
