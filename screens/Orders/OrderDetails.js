@@ -6,7 +6,6 @@ import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 const OrderDetails = ({navigation}) => {
-    console.log(navigation)
   return (
     <View
     style={{
