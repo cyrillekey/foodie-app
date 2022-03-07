@@ -1,7 +1,7 @@
-import { View, Text ,Image} from 'react-native'
+import { View, Text ,Image,ScrollView} from 'react-native'
 import React from 'react'
-import { COLORS, FONTS, icons, SIZES } from '../../constants';
-import { Header } from '../../Components';
+import { COLORS, FONTS, icons, SIZES ,dummyData} from '../../constants';
+import { Header ,LineDivider} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -33,7 +33,7 @@ const OrderDetails = ({navigation}) => {
         >
             <QRCode
               value='12545'
-              size={250}
+              size={220}
             />
             <Text
             style={{
@@ -48,6 +48,7 @@ const OrderDetails = ({navigation}) => {
             position:"absolute",
             bottom:0,
             width:'100%',
+            height:300
         }}
         >
             <LinearGradient
@@ -65,7 +66,8 @@ const OrderDetails = ({navigation}) => {
                     height:50,
                 }}
             />
-            <View
+            <ScrollView
+            bounces={true}
             style={{
                 padding:SIZES.padding,
                 borderTopLeftRadius:30,
@@ -73,18 +75,21 @@ const OrderDetails = ({navigation}) => {
                 backgroundColor:COLORS.white,
             }}
             >
-            <View
+                <Text style={{...FONTS.h3,marginLeft:SIZES.padding}}>Order items</Text>
+                {
+                    dummyData.menu[1].list.map(item=>(
+                        <View
             style={{
                 flexDirection:'row',
                 alignItems:'center',
+                marginTop:SIZES.radius
             }}
             >
             <Image
-            source={icons.clock}
+            source={item.image}
             style={{
                 width:40,
                 height:40,
-                tintColor:COLORS.black
             }}
             />
             <View
@@ -97,15 +102,23 @@ const OrderDetails = ({navigation}) => {
                     ...FONTS.body4,
                     color:COLORS.gray,
                 }}
-                >Delivery Time</Text>
-                <Text style={{...FONTS.h3}}>8 mins</Text>
+                >{item.name}</Text>
+                <Text style={{...FONTS.h3}}>Qty: 4</Text>
             </View>
             </View>
+                    ))
+                }
+            <LineDivider
+            lineStyle={{
+                marginTop:SIZES.padding
+            }}
+            />
             <View
             style={{
                 flexDirection:'row',
                 alignItems:'center',
-                marginTop:SIZES.padding
+                marginTop:SIZES.padding,
+                marginBottom:SIZES.padding
             }}
             >
             <Image
@@ -130,7 +143,7 @@ const OrderDetails = ({navigation}) => {
                 <Text style={{...FONTS.h3}}>8 mins</Text>
             </View>
             </View>
-            </View>
+            </ScrollView>
         </View>
     </View>
   );
