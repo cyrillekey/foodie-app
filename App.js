@@ -8,15 +8,27 @@ import thunk from "redux-thunk";
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from "./screens";
 import SplashScreen from 'react-native-splash-screen';
-
+import {PermissionsAndroid} from 'react-native';
 // import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
 import rootReducer from "./stores/rootReducer";
 const Stack = createStackNavigator();
 const store = createStore(rootReducer,applyMiddleware(thunk));
 const App = () => {
-
+    const askForLocationPermission = async () => {
+        try {
+          await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Foodie Use Location to determine where to deliver food',
+            },
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      };
     React.useEffect(()=>{
+        askForLocationPermission();
         SplashScreen.hide();
     });
     return (
