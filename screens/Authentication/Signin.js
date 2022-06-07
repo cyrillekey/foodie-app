@@ -32,7 +32,7 @@ const Signin = ({navigation})=>{
     };
     const isEnabled =()=>{
         return form.passWordvalid && form.emailValid
-    }
+    };
     return (
         <AuthLayout
             title="Lets join"
@@ -40,7 +40,7 @@ const Signin = ({navigation})=>{
         >
             <View style={{
                 flex:1,
-                marginTop:SIZES.padding * 2
+                marginTop:SIZES.padding * 2,
             }}>
                 <FormInput
                 label="Email"

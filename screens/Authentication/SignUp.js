@@ -6,40 +6,62 @@ import { AuthLayout } from '..';
 import { FormInput, TextButton } from '../../Components';
 import { SIZES ,FONTS,COLORS} from '../../constants';
 import axios from 'axios';
-const SignUp=({navigation})=>{
-    const [form,setForm]=React.useState({
-        email:"",
-        phone:"",
-        password:""
+const SignUp = ({navigation})=>{
+    const [see,setSee] = React.useState(true);
+    const [form,setForm] = React.useState({
+        email:'',
+        phone:'',
+        password:'',
+        emailError:'',
+        passwordError:'',
+        passWordvalid:'',
+        emailValid:'',
     });
-    const signUp=()=>{
+    const signUp = ()=>{
         var data = JSON.stringify({
-              "user_name": form.email,
-              "user_mail":form.email,
-              "password": form.password,
-              "user_phone": form.phone,
-              "accountType": "CUSTOMER"
+              'user_name': form.email,
+              'user_mail':form.email,
+              'password': form.password,
+              'user_phone': form.phone,
+              'accountType': 'CUSTOMER',
           });
-          
           var config = {
             method: 'post',
-            url: "https://foodieback.herokuapp.com/register",
-            headers: { 
-              'Content-Type': 'application/json'
+            url: 'https://foodieback.herokuapp.com/register',
+            headers: {
+              'Content-Type': 'application/json',
             },
-            data : data
+            data : data,
           };
-          
           axios(config)
           .then(function (response) {
-            if(response.status=="201"){
-                navigation.navigate("Otp");
+            if (response.status === '201'){
+                navigation.navigate('Otp');
             }
           })
           .catch(function (error) {
             console.log(error);
           });
-    }
+    };
+    const [remeberMe,setRememberMe]= React.useState(false);
+    const validateEmail = (email)=> {
+        const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!res.test(String(email).toLowerCase())){
+            setForm({...form,emailError:'Invalid Email',emailValid:false})
+        } else {
+            setForm({...form,emailError:'',emailValid:true})
+        }
+      };
+    const validatePassword = (value)=>{
+        if (value.length >= 6){
+            setForm({...form,passwordError:'',passWordvalid:true})
+        } else {
+            setForm({...form,passwordError:'Password to short',passWordvalid:false})
+        }
+    };
+    const isEnabled =()=>{
+        return form.passWordvalid && form.emailValid
+    };
     return (
         <AuthLayout
             title="Sign Uo"
@@ -56,9 +78,9 @@ const SignUp=({navigation})=>{
                     placeholder="Enter mail"
                     keyboardType="email-address"
                     autoCompleteType="email"
-                    errorMsg="invalid email"
+                    errorMsg={form.emailError}
                     onChange={(text)=>{
-                        setForm({...form,email:text});
+                        validateEmail(text);
                     }}
                     containerStyle={{
                         marginTop:SIZES.padding,
@@ -80,8 +102,9 @@ const SignUp=({navigation})=>{
                 label="Password"
                 placeholder="********"
                 secureTextEntry={true}
+                errorMsg={form.emailError}
                 onChange = {(value)=>{
-                    setForm({...form,password:value});
+                    validatePassword(value);
                 }}
                 containerStyle={{
                     marginTop:SIZES.padding,
@@ -95,9 +118,9 @@ const SignUp=({navigation})=>{
                         alignItems:'center',
                         marginTop:SIZES.padding,
                     }}
+                    disabled={isEnabled() ? false : true}
                     onPress={()=>{
-                        signUp()
-                        //navigation.navigate('Otp');
+                        signUp();
                     }}
                 />
                 <View
