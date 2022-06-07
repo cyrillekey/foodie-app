@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
@@ -6,13 +7,16 @@ import {
   TouchableOpacity,
   Switch,
   Text,
-  Button,
+  ActivityIndicator,
 } from 'react-native';
 import {AuthLayout} from '..';
-import {FormInput, TextButton, TextIconButton} from '../../Components';
+import {FormInput, TextButton, TextIconButton,AlertDialog} from '../../Components';
 import {SIZES, icons, COLORS, FONTS} from '../../constants';
-
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { saveToken, saveUser } from '../../stores/user/userActions';
 const Signin = ({navigation}) => {
+  const dispatch = useDispatch();
   const [see, setSee] = React.useState(true);
   const [form, setFrom] = React.useState({
     password: '',
@@ -21,30 +25,70 @@ const Signin = ({navigation}) => {
     passwordError: '',
     passWordvalid: false,
     emailValid: false,
+    submittin:false,
   });
+  const [label,setLabel] = React.useState('Sign In');
   const [remeberMe, setRememberMe] = React.useState(false);
   const validateEmail = email => {
     const res =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!res.test(String(email).toLowerCase())) {
-      setFrom({...form, emailError: 'Invalid Email', emailValid: false});
+      setFrom({...form, emailError: 'Invalid Email', emailValid: false,email:email});
     } else {
-      setFrom({...form, emailError: '', emailValid: true});
+      setFrom({...form, emailError: '', emailValid: true,email:email});
     }
   };
+  const [dialog,setDialog] = React.useState({
+    show:false,
+    title:'',
+    message:'',
+  });
   const validatePassword = value => {
     if (value.length >= 6) {
-      setFrom({...form, passwordError: '', passWordvalid: true});
+      setFrom({...form, passwordError: '', passWordvalid: true,password:value});
     } else {
       setFrom({
         ...form,
         passwordError: 'Password to short',
         passWordvalid: false,
+        password:value,
       });
     }
   };
   const isEnabled = () => {
-    return form.passWordvalid && form.emailValid;
+    return form.passWordvalid && form.emailValid && form.submittin === false;
+  };
+  const login = () =>{
+    setFrom({...form,submittin:true});
+    setLabel(<View>
+      <ActivityIndicator color="#fff" style="large" />
+    </View>);
+    var data = JSON.stringify({
+      user_mail:form.email,
+      user_password:form.password,
+    });
+    axios({
+      method:'POST',
+      url: 'https://foodieback.herokuapp.com/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data:data,
+    }).then(response=>{
+      setFrom({...form,submittin:false});
+    setLabel('Sign In');
+      if (response.status === 200){
+        dispatch(saveUser({user:response.data.customer}));
+        dispatch(saveToken({token:response.data.token}));
+        navigation.navigate('Home');
+      } else {
+        setDialog({...dialog,show:true,title:'Error occured',message:response.response.data.message});
+      }
+    }).catch(response=>{
+      setFrom({...form,submittin:false});
+    setLabel('Sign In');
+      setDialog({...dialog,show:true,title:'Error occured',message:response.response.data.message});
+    });
   };
   return (
     <AuthLayout title="Lets join" sutitle="Do uou want tno">
@@ -53,6 +97,14 @@ const Signin = ({navigation}) => {
           flex: 1,
           marginTop: SIZES.padding * 2,
         }}>
+          <AlertDialog
+          see={dialog.show}
+          title={dialog.title}
+          message={dialog.message}
+          secondLabel="OK"
+          secondOption={()=>setDialog({...dialog,show:false})}
+          cancelOption={()=>setDialog({...dialog,show:false})}
+          />
         <FormInput
           label="Email"
           placeholder="Enter Email"
@@ -136,7 +188,7 @@ const Signin = ({navigation}) => {
           />
         </View>
         <TextButton
-          label="Sign In"
+          label={label}
           buttonContainerStyle={{
             height: 55,
             alignItems: 'center',
@@ -145,7 +197,8 @@ const Signin = ({navigation}) => {
           }}
           disabled={isEnabled() ? false : true}
           onPress={() => {
-            navigation.navigate('Home');
+           login();
+           // navigation.navigate('Home');
           }}
         />
         <View

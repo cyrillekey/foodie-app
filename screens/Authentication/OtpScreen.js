@@ -64,10 +64,12 @@ const OtpScreen = ({navigation}) => {
     };
     axios(config)
       .then(response => {
+        setClicked(false);
+        setLabel('Continue');
         if (response.status === 200){
           dispatch(saveToken({token:response.data.token}));
-          dispatch(saveUser({user:response.data.user}));
-          navigation.navigate('Home');
+          dispatch(saveUser({user:response.data.customer}));
+          navigation.replace('Home');
         }
       })
       .catch(response => {

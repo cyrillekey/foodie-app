@@ -84,7 +84,7 @@ const SignUp = ({navigation}) => {
     const res =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!res.test(String(text).toLowerCase())) {
-      setForm({...form, emailError: 'Invalid Email', emailValid: false});
+      setForm({...form, emailError: 'Invalid Email', emailValid: false,email:text});
     } else {
       setForm({...form, emailError: '', emailValid: true,email:text});
     }
@@ -97,6 +97,7 @@ const SignUp = ({navigation}) => {
         ...form,
         passwordError: 'Password to short',
         passWordvalid: false,
+        password:value,
       });
     }
   };

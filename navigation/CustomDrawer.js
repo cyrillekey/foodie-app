@@ -11,7 +11,6 @@ import { setSelectedTab, setTest } from '../stores/tab/tabActions';
 
 const Drawer = createDrawerNavigator();
 const CustomDrawerItem = ({label,icon,isFocus,onPress})=>{
-    
     return (
         <TouchableOpacity style={{
             flexDirection:'row',
@@ -43,6 +42,7 @@ const CustomDrawerItem = ({label,icon,isFocus,onPress})=>{
     );
 };
 const CustomDrawerComponent = ({navigation,selectedTab})=>{
+    const user = useSelector(state=>state.userReducer.user);
     const dispatch = useDispatch();
     return (
         <DrawerContentScrollView
@@ -73,7 +73,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                             style={{
                                 color:COLORS.white,...FONTS.h3,
                             }}
-                        >{dummyData.myProfile.name}</Text>
+                        >{user.user_name}</Text>
                         <Text style={{color:COLORS.white,...FONTS.body4}}>View Profile</Text>
                     </View>
                 </TouchableOpacity>
@@ -119,8 +119,8 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
         </DrawerContentScrollView>
     );};
 const CustomDrawer = ({selectedTab,setSelectedTab}) =>{
-    const [progress,setProgress]=React.useState(new Animated.Value(0));
-    const scale=Animated.interpolateNode(progress,{
+    const [progress,setProgress] = React.useState(new Animated.Value(0));
+    const scale = Animated.interpolateNode(progress,{
         inputRange:[0,1],
         outputRange:[1,0.8],
     });
