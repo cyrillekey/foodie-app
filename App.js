@@ -9,11 +9,9 @@ import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from "./screens";
 import SplashScreen from 'react-native-splash-screen';
 import {PermissionsAndroid} from 'react-native';
-// import { store,persistor } from "./stores/store";
+ import { store,persistor } from "./stores/store";
 import { PersistGate } from "redux-persist/integration/react";
-import rootReducer from "./stores/rootReducer";
 const Stack = createStackNavigator();
-const store = createStore(rootReducer,applyMiddleware(thunk));
 const App = () => {
     const askForLocationPermission = async () => {
         try {
@@ -33,7 +31,7 @@ const App = () => {
     });
     return (
         <Provider store={store}>
-            {/* <PersistGate loading={null} persistor={persistor}> */}
+            <PersistGate loading={null} persistor={persistor}>
             <GestureHandlerRootView style={{flex:1}}>
         <NavigationContainer>
             <Stack.Navigator
@@ -63,9 +61,8 @@ const App = () => {
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>
-        {/* </PersistGate> */}
+         </PersistGate>
         </Provider>
-    )
-}
-
+    );
+};
 export default App;

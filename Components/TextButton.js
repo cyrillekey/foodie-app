@@ -18,12 +18,12 @@ const TextButton = ({buttonContainerStyle,label,labelStyle,onPress,disabled=fals
             style={{
                 ...FONTS.h3,
                 color:COLORS.white,
-                ...labelStyle
+                ...labelStyle,
             }}
             >
                 {label}
             </Text>
-            {label2 !="" &&
+            {label2 !== '' &&
             <Text
                 style={{
                     flex:1,

@@ -1,11 +1,12 @@
 import * as userActions from './userActionTypes';
 import { dummyData } from '../../constants';
 const initialState = {
-    user:[],
+    user:{},
     address:{
         latitude:0,
         longitude:0,
     },
+    jwtToken:'',
     paymentMethods:dummyData.allCards,
     selectedCard:{},
 };
@@ -17,10 +18,15 @@ const userReducer = (state = initialState,action)=>{
                 ...state,address:action.payload,
             };
         case userActions.SAVE_CARD:
-            let card = state.paymentMethods.find(c=>c.id==action.payload.id);
+            let card = state.paymentMethods.find(c=>c.id == action.payload.id);
             return {
                 ...state,selectedCard:card,
             };
+        case userActions.SAVE_USER:
+            let user = action.payload.user;
+            return {...state,user:user};
+        case userActions.SAVE_TOKEN:
+            return {...state,jwtToken:action.payload.token};
         default:
             return state;
     }

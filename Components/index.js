@@ -11,6 +11,7 @@ import StepperIncrement from "./StepperIncrement";
 import FooterTotal from "./FooterTotal";
 import CardItem from "./CardItem";
 import OrderItem from "./OrderItem";
+import AlertDialog from './Dialog';
 export {
     Header,
     HorizontalFoodCard,
@@ -24,6 +25,6 @@ export {
     StepperIncrement,
     FooterTotal,
     CardItem,
-    OrderItem
-    
+    OrderItem,
+    AlertDialog,
 };
