@@ -108,7 +108,7 @@ const Home = (navigation) => {
                     <FlatList
                     horizontal
                     data={categories}
-                    key={item=>`${item.id}`}
+                    key={item=>`${item.cat_id}`}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item,index})=>(
@@ -123,7 +123,7 @@ const Home = (navigation) => {
                             backgroundColor:COLORS.primary,
                         }}>
                             <Image
-                                source={item.icon}
+                                source={item.cat_icon}
                                 style={{
                                     marginTop:5,
                                     height:50,
@@ -137,7 +137,7 @@ const Home = (navigation) => {
                                 ...FONTS.h3,
                                 color:COLORS.white,
                             }}>
-                                {item.name}
+                                {item.cat_name}
                             </Text>
                         </TouchableOpacity>
                         )}
