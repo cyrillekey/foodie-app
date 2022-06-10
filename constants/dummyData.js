@@ -1,28 +1,28 @@
-import { icons, images } from "./";
+import { icons, images } from './';
 
 const myProfile = {
-    name: "ByProgrammers",
+    name: 'ByProgrammers',
     profile_image: images.profile,
-    address: "No. 88, Jln Padungan, Kuching"
+    address: 'No. 88, Jln Padungan, Kuching',
 }
 
 const categories = [
     {
         id: 1,
-        name: "Fast Food",
-        icon: icons.burger
+        name: 'Fast Food',
+        icon: icons.burger,
     },
     {
         id: 2,
-        name: "Fruit Item",
-        icon: icons.cherry
+        name: 'Fruit Item',
+        icon: icons.cherry,
     },
     {
         id: 3,
-        name: "Rice Item",
-        icon: icons.rice
-    }
-]
+        name: 'Rice Item',
+        icon: icons.rice,
+    },
+];
 
 const hamburger = {
     id: 1,

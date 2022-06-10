@@ -1,3 +1,4 @@
 export const ADD_PRODUCTS = 'ADD_PRODUCTS';
 export const ADD_FAVOURITE = 'ADD_FAVOURITE';
 export const REMOVE_FAVOURITE = 'REMOVE_FAVOURITE';
+export const SAVE_CATEGORY = 'SAVE_CATEGORY';

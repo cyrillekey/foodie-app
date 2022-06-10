@@ -10,11 +10,12 @@ const initialState = {
     cartTotal:0,
     shippingCost:6,
     cartDiscount:0,
+    categories:[],
 };
 const productReducer = (state = initialState,action )=>{
     switch (action.type) {
         case productActions.ADD_PRODUCTS:
-            break;
+            return {...state,product:action.payload.food};
         case cartActions.ADD_TO_CART:
             if (state.cartItems.length > 0){
             let exist = state.cartItems.find(cart=>cart.id == action.payload.id);
@@ -50,7 +51,7 @@ const productReducer = (state = initialState,action )=>{
             const tempCartReduce = [...state.cartItems];
             let indexOf = state.cartItems.indexOf(item);
             if (item.qty == 1){
-                action.type=cartActions.REMOVE_FROM_CART
+                action.type = cartActions.REMOVE_FROM_CART;
                 return state;
             }
             tempCartReduce[indexOf].qty -= 1;
@@ -70,16 +71,18 @@ const productReducer = (state = initialState,action )=>{
                 favItem.isFavourite = true;
                 return {...state,favourites:state.favourites.concat(favItem)};
             } else {
-                let favItem= state.products.find(product=>product.id == action.payload.id);
+                let favItem = state.products.find(product=>product.id == action.payload.id);
                 favItem.isFav = true;
                 return {...state,favourites:[favItem]};
             }
         case productActions.REMOVE_FAVOURITE:
-            let item=state.favourites.find(fav=>fav.id==action.payload.id);
+            let item = state.favourites.find(fav=>fav.id==action.payload.id);
             let indexO = state.favourites.indexOf(item);
             const tempFav = [...state.favourites];
             tempFav.splice(indexO,1);
             return {...state,favourites:tempFav};
+        case productActions.SAVE_CATEGORY:
+            return {...state,categories:action.payload.categories};
         default:
             return state;
     }

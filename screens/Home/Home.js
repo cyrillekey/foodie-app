@@ -6,14 +6,27 @@ import {
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { getAddressName } from '../../constants/util';
+import axios  from 'axios';
+import { saveCategory } from '../../stores/products/productActions';
 
 const Home = (navigation) => {
     const menu = useSelector(state=>state.productReducer.products);
     const address = useSelector(state=>state.userReducer.address);
     const [form,setForm] = React.useState(<ActivityIndicator/>);
+    const categories = useSelector(state=>state.productReducer.categories);
+    const dispatch = useDispatch();
     getAddressName(address.latitude,address.longitude,setForm);
+    React.useEffect(()=>{
+        axios.get('https://foodieback.herokuapp.com/get-all-categories').then((result) => {
+            if (result.status === 200){
+            dispatch(saveCategory({categories:result.data}));
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
+    });
     const  renderSearch = ()=>{
         return (
             <View style={{
@@ -94,7 +107,7 @@ const Home = (navigation) => {
         return (
                     <FlatList
                     horizontal
-                    data={dummyData.categories}
+                    data={categories}
                     key={item=>`${item.id}`}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
