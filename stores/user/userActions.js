@@ -1,4 +1,4 @@
-import { REMOVE_USER, SAVE_ADDRESS, SAVE_CARD, SAVE_TOKEN, SAVE_USER } from './userActionTypes';
+import { LOGOUT, REMOVE_USER, SAVE_ADDRESS, SAVE_CARD, SAVE_TOKEN, SAVE_USER } from './userActionTypes';
 
 export const saveAddress = (payload)=>{
     return {type:SAVE_ADDRESS,payload};
@@ -15,4 +15,8 @@ export const saveCard = (payload) =>{
 export const saveToken = (payload) => {
     return {type:SAVE_TOKEN,payload};
 };
+export const logoutUser = (payload) =>{
+    return {type:LOGOUT,payload};
+};
+
 

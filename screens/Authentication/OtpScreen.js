@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import React from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator,Alert} from 'react-native';
 import {AuthLayout} from '..';
-import {TextButton, AlertDialog} from '../../Components';
+import {TextButton} from '../../Components';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
@@ -12,11 +12,6 @@ const OtpScreen = ({navigation}) => {
   const [timer, setTimer] = React.useState(50);
   const [code, setCode] = React.useState('');
   const user = useSelector(state => state.userReducer.user);
-  const [dialog, showDialog] = React.useState({
-    show: false,
-    title: '',
-    message: '',
-  });
   const [label, setLabel] = React.useState('Continue');
   const [clicked, setClicked] = React.useState(true);
   const dispatch = useDispatch();
@@ -75,7 +70,16 @@ const OtpScreen = ({navigation}) => {
       .catch(response => {
         setClicked(false);
         setLabel('Continue');
-        showDialog({...dialog,show:true,title:'Error occured' ,message:response.response.data.message});
+        Alert.alert('Error occured',response.response.data.message,[
+          {
+            text:'Cancel',
+            onPress:()=>console.log('cancel'),
+          },
+          {
+            text:'Ok',
+            onPress:()=>console.log('Ok'),
+          },
+        ]);
       });
   };
   return (
@@ -87,14 +91,6 @@ const OtpScreen = ({navigation}) => {
           flex: 1,
           marginTop: SIZES.padding * 2,
         }}>
-        <AlertDialog
-          see={dialog.show}
-          title={dialog.title}
-          message={dialog.message}
-          secondLabel="OK"
-          cancelOption={() => showDialog({...dialog, show: false})}
-          secondOption={() => showDialog({...dialog, show: false})}
-        />
         <OTPInputView
           code={code}
           pinCount={4}

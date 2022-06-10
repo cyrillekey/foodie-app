@@ -2,7 +2,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from "./screens";
 import SplashScreen from 'react-native-splash-screen';

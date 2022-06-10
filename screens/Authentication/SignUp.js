@@ -7,9 +7,10 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
+  Alert
 } from 'react-native';
 import {AuthLayout} from '..';
-import {FormInput, TextButton,AlertDialog} from '../../Components';
+import {FormInput, TextButton} from '../../Components';
 import {SIZES, FONTS, COLORS, icons} from '../../constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -17,7 +18,6 @@ import { saveUser } from '../../stores/user/userActions';
 const SignUp = ({navigation}) => {
   const [see, setSee] = React.useState(true);
   const [submit, setSubmit] = React.useState('Sign In');
-  const [dialog,showDialog] = React.useState(false);
   const dispath = useDispatch();
   const [form, setForm] = React.useState({
     email: '',
@@ -28,10 +28,6 @@ const SignUp = ({navigation}) => {
     passWordvalid: '',
     emailValid: '',
     submitting: false,
-  });
-  const [error,setError] = React.useState({
-      title:'',
-      message:'',
   });
   const signUp = () => {
     setSubmit(
@@ -67,17 +63,31 @@ const SignUp = ({navigation}) => {
             dispath(saveUser({user:response.data.customer}));
            navigation.navigate('Otp');
         } else {
-          setError({...error,title:'Something Went Wrong!',message:response.data.message});
-          console.log(response.data);
-          showDialog(true);
+          Alert.alert('Something Went Wrong!',response.response.data.message,[
+            {
+              text:'Cancel',
+              onPress:()=>console.log('cancel'),
+            },
+            {
+              text:'Ok',
+              onPress:()=>console.log('Ok'),
+            },
+          ]);
         }
       })
       .catch(function (e) {
         setForm({...form, submitting: false});
         setSubmit('Sign In');
-        setError({...error,title:'Something went Wrong!',message:e.response.data.message});
-        showDialog(true);
-        console.log(e.response.data);
+        Alert.alert('Error occured',e.response.data.message,[
+          {
+            text:'Cancel',
+            onPress:()=>console.log('cancel'),
+          },
+          {
+            text:'Ok',
+            onPress:()=>console.log('Ok'),
+          },
+        ]);
       });
   };
   const validateEmail = (text) => {
@@ -111,14 +121,6 @@ const SignUp = ({navigation}) => {
   };
   return (
     <AuthLayout title="Sign Up" sutitle="Welcome to the land of munchies">
-         <AlertDialog
-        see={dialog}
-        secondLabel={'OK'}
-        title={error.title}
-        message={error.message}
-        secondOption={()=>showDialog(!dialog)}
-        cancelOption={()=>showDialog(!dialog)}
-        />
       <View
         style={{
           flex: 1,

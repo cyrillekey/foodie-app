@@ -27,6 +27,8 @@ const userReducer = (state = initialState,action)=>{
             return {...state,user:user};
         case userActions.SAVE_TOKEN:
             return {...state,jwtToken:action.payload.token};
+        case userActions.LOGOUT:
+            return {...state,user:null};
         default:
             return state;
     }

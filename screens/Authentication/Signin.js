@@ -8,9 +8,10 @@ import {
   Switch,
   Text,
   ActivityIndicator,
+  Alert
 } from 'react-native';
 import {AuthLayout} from '..';
-import {FormInput, TextButton, TextIconButton,AlertDialog} from '../../Components';
+import {FormInput, TextButton, TextIconButton} from '../../Components';
 import {SIZES, icons, COLORS, FONTS} from '../../constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -38,11 +39,6 @@ const Signin = ({navigation}) => {
       setFrom({...form, emailError: '', emailValid: true,email:email});
     }
   };
-  const [dialog,setDialog] = React.useState({
-    show:false,
-    title:'',
-    message:'',
-  });
   const validatePassword = value => {
     if (value.length >= 6) {
       setFrom({...form, passwordError: '', passWordvalid: true,password:value});
@@ -82,12 +78,30 @@ const Signin = ({navigation}) => {
         dispatch(saveToken({token:response.data.token}));
         navigation.navigate('Home');
       } else {
-        setDialog({...dialog,show:true,title:'Error occured',message:response.response.data.message});
+        Alert.alert('Authentication Error',response.response.data.message,[
+          {
+            text:'Cancel',
+            onPress:()=>console.log('cancel'),
+          },
+          {
+            text:'Ok',
+            onPress:()=>console.log('Ok'),
+          },
+        ]);
       }
     }).catch(response=>{
       setFrom({...form,submittin:false});
     setLabel('Sign In');
-      setDialog({...dialog,show:true,title:'Error occured',message:response.response.data.message});
+    Alert.alert('Error occured',response.response.data.message,[
+      {
+        text:'Cancel',
+        onPress:()=>console.log('cancel'),
+      },
+      {
+        text:'Ok',
+        onPress:()=>console.log('Ok'),
+      },
+    ]);
     });
   };
   return (
@@ -97,14 +111,6 @@ const Signin = ({navigation}) => {
           flex: 1,
           marginTop: SIZES.padding * 2,
         }}>
-          <AlertDialog
-          see={dialog.show}
-          title={dialog.title}
-          message={dialog.message}
-          secondLabel="OK"
-          secondOption={()=>setDialog({...dialog,show:false})}
-          cancelOption={()=>setDialog({...dialog,show:false})}
-          />
         <FormInput
           label="Email"
           placeholder="Enter Email"

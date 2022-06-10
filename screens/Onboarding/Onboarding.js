@@ -4,10 +4,16 @@ import { View,Text, Image, ImageBackground } from "react-native"
 import Animated ,{useSharedValue } from "react-native-reanimated";
 import { FONTS, SIZES ,images, COLORS, constants} from "../../constants";
 import { TextButton } from "../../Components";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import { saveAddress } from "../../stores/user/userActions";
 import Geolocation from "react-native-geolocation-service";
 const OnBoarding = ({navigation})=>{
+    const user = useSelector(state=>state.userReducer.user);
+    React.useEffect(()=>{
+        if (user !== null){
+            navigation.navigate('Home');
+        }
+    });
     const scrollX = new Animated.Value(8);
     const flatListRef = React.useRef();
     const dispatch = useDispatch();
@@ -81,14 +87,14 @@ const OnBoarding = ({navigation})=>{
             </View>
         );
     }
-    const renderFooter=()=>{
-        return(
+    const renderFooter = ( )=>{
+        return (
             <View style={{
-                height:120
+                height:120,
             }}>
                 <View style={{
                     flex:1,
-                    justifyContent:'center'
+                    justifyContent:'center',
                 }}>
                     <Dots/>
                 </View>
@@ -97,7 +103,6 @@ const OnBoarding = ({navigation})=>{
                     justifyContent:'space-between',
                     paddingHorizontal:SIZES.padding,
                     marginVertical:SIZES.padding}}>
-                
                 <TextButton
                     label="Skip"
                     buttonContainerStyle={{

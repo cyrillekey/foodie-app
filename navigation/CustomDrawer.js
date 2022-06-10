@@ -8,6 +8,7 @@ import { MainLayout } from '../screens';
 import Animated from 'react-native-reanimated';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab, setTest } from '../stores/tab/tabActions';
+import { logoutUser } from '../stores/user/userActions';
 
 const Drawer = createDrawerNavigator();
 const CustomDrawerItem = ({label,icon,isFocus,onPress})=>{
@@ -73,7 +74,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                             style={{
                                 color:COLORS.white,...FONTS.h3,
                             }}
-                        >{user.user_name}</Text>
+                        >{user?.user_name ?? 'Test'}</Text>
                         <Text style={{color:COLORS.white,...FONTS.body4}}>View Profile</Text>
                     </View>
                 </TouchableOpacity>
@@ -113,7 +114,10 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                     <CustomDrawerItem label="Settings" icon={icons.setting}/>
                 </View>
                 <View style={{marginBottom:SIZES.padding}}>
-                <CustomDrawerItem label="Logout" icon={icons.logout} onPress={()=>{}}/>
+                <CustomDrawerItem label="Logout" icon={icons.logout} onPress={()=>{
+                    dispatch(logoutUser());
+                    navigation.navigate('SignIn');
+                }}/>
                 </View>
             </View>
         </DrawerContentScrollView>

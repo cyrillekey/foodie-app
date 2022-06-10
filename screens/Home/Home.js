@@ -89,7 +89,8 @@ const Home = (navigation) => {
                         marginLeft:SIZES.padding,
                        // marginRight:index==dummyData.menu.length-1 ? SIZES.padding : 0
                     }}
-                    onPress={()=>{}}
+                    onPress={()=>{
+                    }}
                 >
                     <Text style=
                     {{
@@ -112,7 +113,11 @@ const Home = (navigation) => {
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item,index})=>(
-                        <TouchableOpacity style={{
+                        <TouchableOpacity
+                        onPress={()=>{
+                            console.log('Mango');
+                        }}
+                        style={{
                             flexDirection:'row',
                             height:50,
                             marginTop:SIZES.padding,
@@ -120,14 +125,15 @@ const Home = (navigation) => {
                             marginRight:index === dummyData.categories.length - 1 ? SIZES.padding : SIZES.radius,
                             paddingHorizontal:1,
                             borderRadius:SIZES.radius,
-                            backgroundColor:COLORS.primary,
+                            backgroundColor:COLORS.lightGray2,
                         }}>
                             <Image
-                                source={item.cat_icon}
+                                source={{uri:item.cat_icon}}
                                 style={{
-                                    marginTop:5,
-                                    height:50,
-                                    width:50,
+                                    margin:5,
+                                    height:40,
+                                    width:40,
+                                    borderRadius:25,
                                 }
                                 }
                             />
@@ -135,7 +141,6 @@ const Home = (navigation) => {
                                 alignSelf:'center',
                                 marginRight:SIZES.base,
                                 ...FONTS.h3,
-                                color:COLORS.white,
                             }}>
                                 {item.cat_name}
                             </Text>
