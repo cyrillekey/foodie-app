@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { ScrollView, View ,Image, Text, TouchableOpacity} from 'react-native'
+import { ScrollView, View ,Image, Text, TouchableOpacity, ImageBackground} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components';
 import { COLORS ,SIZES,icons, FONTS,images} from '../../constants'
@@ -57,10 +57,16 @@ const FoodDetails = ({route,navigation}) => {
             marginBottom:SIZES.padding,
             paddingHorizontal:SIZES.padding,
         }}>
+            <ImageBackground
+            source={{uri:food.food_image}}
+            imageStyle={{
+                borderRadius:SIZES.radius,
+            }}
+            >
             <View style={{
                 height:200,
                 borderRadius:SIZES.radius,
-                backgroundColor:COLORS.lightGray2,
+               // backgroundColor:COLORS.lightGray2,
             }}>
                 <View
                 style={{
@@ -110,15 +116,16 @@ const FoodDetails = ({route,navigation}) => {
                     />
                     </TouchableOpacity>
                 </View>
-                <Image
+                {/* <Image
                 source={{uri:food.food_image}}
                 resizeMode="cover"
                 style={{
                     height:160,
                     width:'100%',
                 }}
-                />
+                /> */}
             </View>
+            </ImageBackground>
             <View
             style={{
                 marginTop:SIZES.padding,

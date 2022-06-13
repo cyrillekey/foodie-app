@@ -11,8 +11,12 @@ import { useSelector,useDispatch } from 'react-redux';
 import { getAddressName } from '../../constants/util';
 import axios  from 'axios';
 import { addProducts, saveCategory } from '../../stores/products/productActions';
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = (navigation) => {
+    const ShimmperPlaceHolder=createShimmerPlaceholder(LinearGradient);
+    const [fetching,setFetching] = React.useState(true);
     const menu = useSelector(state=>state.productReducer.products);
     const address = useSelector(state=>state.userReducer.address);
     const [form,setForm] = React.useState(<ActivityIndicator/>);
@@ -39,6 +43,7 @@ const Home = (navigation) => {
             if (response.status === 200){
             dispatch(addProducts({food:response.data}));
             }
+            setFetching(false);
         }).catch(error=>{
             console.log(error);
             Alert.alert('Error','Something went horribly wrong trying to fetch food');
@@ -133,6 +138,7 @@ const Home = (navigation) => {
                     renderItem={({item,index})=>(
                         <TouchableOpacity
                         onPress={()=>{
+                            setFetching(true);
                             fetchFood(item.cat_id);
                             setCategory(item.cat_id);
                         }}
@@ -220,6 +226,8 @@ const Home = (navigation) => {
             }}
         >
             {renderSearch()}
+            {
+                fetching === false ?
             <FlatList
                 data={menu}
                 keyExtractor={(item)=>`${item.food_id}`}
@@ -244,7 +252,6 @@ const Home = (navigation) => {
                                 borderRadius:50,
                                 marginRight:10,
                                 marginLeft:5,
-
                             }}
                             item={item}
                             onPress={()=>{
@@ -257,6 +264,33 @@ const Home = (navigation) => {
                     );
                 }}
             />
+            :
+            <FlatList
+                data={dummyData.menu[1].list}
+                keyExtractor={(item)=>`${item.id}`}
+                showsHorizontalScrollIndicator={false}
+                ListHeaderComponent={<View>
+                    {renderDelivery()}
+                    {renderPopularNearYou()}
+                    {renderMenuTypes()}
+                </View>}
+                renderItem={({item,index})=>{
+                    return (
+                        <ShimmperPlaceHolder
+                        width={SIZES.width * 0.85}
+                        style={{
+                            borderRadius:SIZES.radius,
+                            height:130,
+                            alignItems:'center',
+                            marginHorizontal:SIZES.padding,
+                            marginBottom:SIZES.radius,
+                        }}
+                        />
+                    );
+                }}
+            />
+            }
+
         </View>
     );
 };

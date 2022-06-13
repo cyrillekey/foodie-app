@@ -81,13 +81,12 @@ const CartTab = ({navigation}) => {
                     >
                         <Image
                         source={{uri:data.item.food_image}}
-                        resizeMode="contain"
                         style={{
-                            width:'100%',
-                            height:'100%',
+                            width:70,
+                            height:70,
                             position:'absolute',
+                            margin:5,
                             borderRadius:360,
-                            padding:5,
                         }}
                         />
                     </View>

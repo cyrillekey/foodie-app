@@ -1,13 +1,14 @@
-import React from 'react'
-import { View ,Text} from 'react-native'
-import { useSelector } from 'react-redux'
-import { LineDivider, TextButton } from '.'
-import { COLORS, FONTS, SIZES } from '../constants'
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { View ,Text} from 'react-native';
+import { useSelector } from 'react-redux';
+import { LineDivider, TextButton } from '.';
+import { COLORS, FONTS, SIZES } from '../constants';
 const FooterTotal = ({
-    onPress
+    onPress,
 }) => {
-    const subtotal = useSelector(state=>state.productReducer.cartTotal)
-    const shippingCost = useSelector(state=>state.productReducer.shippingCost)
+    const subtotal = useSelector(state=>state.productReducer.cartTotal);
+    const shippingCost = useSelector(state=>state.productReducer.shippingCost);
   return (
     <View>
         <View
@@ -21,43 +22,43 @@ const FooterTotal = ({
         >
             <View
             style={{
-                flexDirection:'row'
+                flexDirection:'row',
             }}
             >
                 <Text
                 style={{
                     flex:1,
-                    ...FONTS.h3
+                    ...FONTS.h3,
                 }}
                 >Subtotal</Text>
                 <Text style={{
-                    ...FONTS.h3
-                }}>$ {subtotal.toFixed(2)}</Text>
+                    ...FONTS.h3,
+                }}>Kes {subtotal.toFixed(2)}</Text>
             </View>
             <View
             style={{
                 flexDirection:'row',
                 marginTop:SIZES.base,
-                marginBottom:SIZES.padding
+                marginBottom:SIZES.padding,
             }}
             >
                 <Text style={{
                     flex:1,
-                    ...FONTS.body3
+                    ...FONTS.body3,
                 }}>Delivery Fee</Text>
                 <Text style={{
-                        ...FONTS.h3
-                }}>$ {shippingCost.toFixed(2)}</Text>
+                        ...FONTS.h3,
+                }}>Kes {shippingCost.toFixed(2)}</Text>
             </View>
             <LineDivider
             lineStyle={{
-                backgroundColor:COLORS.gray2
+                backgroundColor:COLORS.gray2,
             }}
             />
             <View
             style={{
                 flexDirection:'row',
-                marginTop:SIZES.padding
+                marginTop:SIZES.padding,
             }}
             >
             <Text style={{
@@ -66,7 +67,7 @@ const FooterTotal = ({
             }} >Total</Text>
             <Text style={{
                 ...FONTS.h2,
-            }} >$ {(subtotal + shippingCost).toFixed(2)}</Text>
+            }} >Kes {(subtotal + shippingCost).toFixed(2)}</Text>
             </View>
             <TextButton
             label="Proceed"
@@ -80,7 +81,7 @@ const FooterTotal = ({
             />
         </View>
     </View>
-  )
-}
+  );
+};
 
-export default FooterTotal
+export default FooterTotal;
