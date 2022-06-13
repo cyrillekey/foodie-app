@@ -97,7 +97,7 @@ const CartTab = ({navigation}) => {
                     >
                         <Text
                         style={{...FONTS.body3}}
-                        >{data.item.name}</Text>
+                        >{data.item.food_name}</Text>
                         <Text style={{
                             ...FONTS.h3,
                             color:COLORS.primary,

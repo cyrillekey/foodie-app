@@ -3,7 +3,7 @@
 import React from 'react';
 import {
     View,
-    Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Alert,
+    Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Alert, PermissionsAndroid,
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
@@ -175,13 +175,33 @@ const Home = (navigation) => {
                     />
         );
     };
+    const askForLocationPermission = async () => {
+        const result = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+        if (result === true){
+        navigation.navigate('pickAddress');
+        } else {
+        try {
+          await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Foodie Use Location to determine where to deliver food',
+            },
+          );
+          navigation.navigate('pickAddress');
+        } catch (err) {
+          Alert.alert('Location Error','You need to grant location permission so we can be able to serve you better');
+        }
+    }
+      };
     const renderDelivery = ()=>{
         return (
             <TouchableOpacity style={{
                 marginTop:SIZES.padding,
                 marginHorizontal:SIZES.padding,
             }}
-            onPress={()=>navigation.navigate('pickAddress')}
+            onPress={()=>askForLocationPermission()}
             >
                 <View
                 style={{

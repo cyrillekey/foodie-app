@@ -1,8 +1,12 @@
-import React from 'react'
-import { Text, View,StyleSheet,Image, SafeAreaView } from 'react-native'
-import { Iconlabel, LineDivider } from '../../Components'
-import { COLORS, FONTS,icons,images, SIZES } from '../../constants'
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { Text, View,StyleSheet,Image, SafeAreaView } from 'react-native';
+import { Iconlabel, LineDivider } from '../../Components';
+import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
+import { useSelector } from 'react-redux';
 const Profile = () => {
+    const user = useSelector(state=>state.userReducer.user);
+    console.log(user);
   return (
     <SafeAreaView
     style={styles.container}
@@ -25,25 +29,25 @@ const Profile = () => {
                 style={{
                     height:60,
                     width:60,
-                    borderRadius:40
+                    borderRadius:40,
                 }}
                 />
                 <View
                 style={{
-                    marginLeft:SIZES.padding
+                    marginLeft:SIZES.padding,
                 }}
                 >
                     <Text
                     style={{
-                        ...FONTS.h3
+                        ...FONTS.h3,
                     }}
-                    >John Doe</Text>
+                    >{user?.user_name}</Text>
                     <Text
                     style={{
-                        ...FONTS.h5
+                        ...FONTS.h5,
                     }}
                     >
-                        johm@mail.coms
+                        {user?.user_mail ?? 'test@mail.com'}
                     </Text>
                 </View>
             </View>
@@ -51,52 +55,52 @@ const Profile = () => {
     </View>
     <View
     style={{
-        marginBottom:SIZES.padding
+        marginBottom:SIZES.padding,
     }}
     >
     <Iconlabel
     containerStyle={{
-        marginLeft:SIZES.padding
+        marginLeft:SIZES.padding,
     }}
     icon={icons.location}
     iconStyle={{
-        tintColor:COLORS.black
+        tintColor:COLORS.black,
     }}
         label="Kaluta indi"
         labelStyle={{
-            paddingLeft:SIZES.base
+            paddingLeft:SIZES.base,
         }}
     />
     <Iconlabel
     containerStyle={{
-        marginLeft:SIZES.padding
+        marginLeft:SIZES.padding,
     }}
     icon={icons.cart}
     iconStyle={{
-        tintColor:COLORS.black
+        tintColor:COLORS.black,
     }}
         label="cyrilleotieno7@gmail.com"
         labelStyle={{
-            paddingLeft:SIZES.base
+            paddingLeft:SIZES.base,
         }}
     />
     <Iconlabel
     containerStyle={{
-        marginLeft:SIZES.padding
+        marginLeft:SIZES.padding,
     }}
     icon={icons.call}
     iconStyle={{
-        tintColor:COLORS.black
+        tintColor:COLORS.black,
     }}
-        label="+254708073370"
+        label={user?.user_phone}
         labelStyle={{
-            paddingLeft:SIZES.base
+            paddingLeft:SIZES.base,
         }}
     />
     </View>
     <LineDivider
     lineStyle={{
-        backgroundColor:COLORS.transparentBlack7
+        backgroundColor:COLORS.transparentBlack7,
     }}
     />
     <View
@@ -104,7 +108,7 @@ const Profile = () => {
         flexDirection:'row',
         justifyContent:'space-around',
         alignItems:'center',
-        padding:SIZES.padding *1.5
+        padding:SIZES.padding * 1.5,
     }}
     ><View
         style={{
@@ -113,41 +117,40 @@ const Profile = () => {
         }}
         ><Text
             style={{
-                ...FONTS.body4
+                ...FONTS.body4,
             }}
             >$1250</Text>
             <Text
             style={{
-                ...FONTS.body4
+                ...FONTS.body4,
             }}
             >Wallet</Text>
         </View>
         <View>
            <Text
            style={{
-               ...FONTS.body4
+               ...FONTS.body4,
            }}
-           >Hello wor</Text> 
+           >Hello wor</Text>
         </View>
     </View>
     <LineDivider
     lineStyle={{
-        backgroundColor:COLORS.black
+        backgroundColor:COLORS.black,
     }}
     />
     </SafeAreaView>
-  )
-}
+  );
+};
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         flex:1,
     },
     userInfoSection:{
         paddingHorizontal:30,
         paddingBottom:25,
-        paddingTop:SIZES.padding
-        
-    }
+        paddingTop:SIZES.padding,
+    },
 });
-export default Profile
+export default Profile;

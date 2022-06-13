@@ -58,6 +58,7 @@ const FoodDetails = ({route,navigation}) => {
             paddingHorizontal:SIZES.padding,
         }}>
             <ImageBackground
+            resizeMode="cover"
             source={{uri:food.food_image}}
             imageStyle={{
                 borderRadius:SIZES.radius,
@@ -159,7 +160,7 @@ const FoodDetails = ({route,navigation}) => {
                     backgroundColor:COLORS.primary,
                 }}
                     icon={icons.star}
-                    label="4.5"
+                    label={food.ratings}
                     labelStyle={{
                         color:COLORS.white,
                     }}
@@ -273,7 +274,7 @@ const FoodDetails = ({route,navigation}) => {
             }}
         >
             <Image
-            source={images.profile}
+            source={{uri:food.restaurant.restaurant_image}}
             style={{
                 width:50,
                 height:50,
@@ -287,7 +288,7 @@ const FoodDetails = ({route,navigation}) => {
                 justifyContent:'center',
             }}
             >
-                <Text style={{...FONTS.h3}}>John Doe</Text>
+                <Text style={{...FONTS.h3,width:SIZES.width * 0.8}}>{food.restaurant.restaurant_name}</Text>
                 <Text style={{...FONTS.body4,color:COLORS.gray}}>12.5 KM away from here</Text>
             </View>
             <Ratings
