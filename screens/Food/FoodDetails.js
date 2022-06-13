@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React from 'react';
 import { ScrollView, View ,Image, Text, TouchableOpacity} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components'
+import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components';
 import { COLORS ,SIZES,icons, FONTS,images} from '../../constants'
 import { addToCart } from '../../stores/cart/cartActions'
 import { addFavourite, removeFavourite } from '../../stores/products/productActions'
 const FoodDetails = ({route,navigation}) => {
-    const food = useSelector(state=>state.productReducer.products.find(element=>element.id === route.params.id));
-    const isFav =useSelector(state=>state.productReducer.favourites.find(element=>element.id == route.params.id))
+    const food = useSelector(state=>state.productReducer.products.find(element=>element.food_id === route.params.id));
+    const isFav = useSelector(state=>state.productReducer.favourites.find(element=>element.food_id === route.params.id));
     const dispatch = useDispatch();
-    const [count,setCount]=React.useState(1)
+    const [count,setCount] = React.useState(1);
   return (
     <View
     style={{
@@ -24,9 +24,9 @@ const FoodDetails = ({route,navigation}) => {
             height:50,
             marginTop:10,
             alignItems:'center',
-            paddingHorizontal:SIZES.padding
+            paddingHorizontal:SIZES.padding,
     }}
-        title={food.name}
+        title={food.food_name}
         leftComponent={
             <TextIconButton
             iconLeft={icons.back}
@@ -37,16 +37,16 @@ const FoodDetails = ({route,navigation}) => {
                 alignItems:'center',
                 borderWidth:1,
                 borderRadius:SIZES.radius,
-                borderColor:COLORS.gray2
+                borderColor:COLORS.gray2,
             }}
             iconStyle={{
                 width:20,
                 height:20,
                 tintColor:COLORS.gray2,
-                marginRight:SIZES.base
+                marginRight:SIZES.base,
             }}
             onPress={()=>{
-                navigation.pop()
+                navigation.pop();
             }}
             />
         }
@@ -55,48 +55,47 @@ const FoodDetails = ({route,navigation}) => {
         <View style={{
             marginTop:SIZES.radius,
             marginBottom:SIZES.padding,
-            paddingHorizontal:SIZES.padding
+            paddingHorizontal:SIZES.padding,
         }}>
             <View style={{
-                height:190,
+                height:200,
                 borderRadius:SIZES.radius,
-                backgroundColor:COLORS.lightGray2
+                backgroundColor:COLORS.lightGray2,
             }}>
-                <View 
+                <View
                 style={{
                     flexDirection:'row',
                     justifyContent:'space-between',
                     marginTop:SIZES.base,
                     paddingHorizontal:SIZES.radius,
-                    
                 }}
                 >
                     <View
                     style={{
-                        flexDirection:'row'
+                        flexDirection:'row',
                     }}
                     >
                         <Image
                             source={icons.calories}
                             style={{
                                 width:30,
-                                height:30
+                                height:30,
                             }}
                         />
                         <Text style={{
                             ...FONTS.body4,
-                            color:COLORS.darkGray2
+                            color:COLORS.darkGray2,
                         }}>
-                            {food.calories} Calories
+                            {food?.food_calories ?? 0.0} Calories
                         </Text>
                     </View>
                     <TouchableOpacity
                     onPress={
                         ()=>{
-                            if(isFav){
-                                dispatch(removeFavourite({id:food.id}))
-                            }else{
-                                dispatch(addFavourite({id:food.id}))
+                            if (isFav){
+                                dispatch(removeFavourite({id:food.food_id}));
+                            } else {
+                                dispatch(addFavourite({id:food.food_id}));
                             }
                         }
                     }
@@ -112,40 +111,40 @@ const FoodDetails = ({route,navigation}) => {
                     </TouchableOpacity>
                 </View>
                 <Image
-                source={food.image}
-                resizeMode="contain"
+                source={{uri:food.food_image}}
+                resizeMode="cover"
                 style={{
-                    height:170,
-                    width:'100%'
+                    height:160,
+                    width:'100%',
                 }}
                 />
             </View>
             <View
             style={{
-                marginTop:SIZES.padding
+                marginTop:SIZES.padding,
             }}
             >
                 <Text
                 style={{
-                    ...FONTS.h1
+                    ...FONTS.h1,
                 }}
                 >
-                    {food.name}
+                    {food.food_name}
                 </Text>
                 <Text
                 style={{
                     marginTop:SIZES.base,
                     ...FONTS.body3,
                     color:COLORS.darkGray,
-                    textAlign:'justify'
+                    textAlign:'justify',
                 }}
                 >
-                {food.description}
+                {food.food_desc}
                 </Text>
                 <View
                 style={{
                     flexDirection:'row',
-                    marginTop:SIZES.padding
+                    marginTop:SIZES.padding,
                 }}
                 >
                 <Iconlabel
@@ -155,37 +154,35 @@ const FoodDetails = ({route,navigation}) => {
                     icon={icons.star}
                     label="4.5"
                     labelStyle={{
-                        color:COLORS.white
+                        color:COLORS.white,
                     }}
                 />
                 <Iconlabel
                 containerStyle={{
                     marginLeft:SIZES.radius,
-                    paddingHorizontal:0
-                    
+                    paddingHorizontal:0,
                 }}
                     icon={icons.clock}
                     label="30min"
                     labelStyle={{
-                        color:COLORS.black
+                        color:COLORS.black,
                     }}
                     iconStyle={{
-                        tintColor:COLORS.black
+                        tintColor:COLORS.black,
                     }}
                 />
                 <Iconlabel
                 containerStyle={{
                     marginLeft:SIZES.radius,
-                    paddingHorizontal:0
-                    
+                    paddingHorizontal:0,
                 }}
                     icon={icons.dollar}
                     label="Best Seller"
                     labelStyle={{
-                        color:COLORS.black
+                        color:COLORS.black,
                     }}
                     iconStyle={{
-                        tintColor:COLORS.black
+                        tintColor:COLORS.black,
                     }}
                 />
                 </View>
@@ -207,11 +204,11 @@ const FoodDetails = ({route,navigation}) => {
                         style={{
                             flexDirection:'row',
                             flexWrap:'wrap',
-                            marginLeft:SIZES.padding
+                            marginLeft:SIZES.padding,
                         }}
                     >
                        <TextButton
-                        label={"11\""}
+                        label={'11\''}
                         buttonContainerStyle={{
                             width:45,
                             height:45,
@@ -219,14 +216,14 @@ const FoodDetails = ({route,navigation}) => {
                             borderWidth:1,
                             backgroundColor:null,
                             margin:SIZES.base,
-                            borderColor:COLORS.gray
+                            borderColor:COLORS.gray,
                         }}
                         labelStyle={{
-                            ...FONTS.h3
+                            ...FONTS.h3,
                         }}
                        />
                        <TextButton
-                        label={"12\""}
+                        label={'12\''}
                         buttonContainerStyle={{
                             width:45,
                             height:45,
@@ -234,14 +231,14 @@ const FoodDetails = ({route,navigation}) => {
                             borderWidth:1,
                             backgroundColor:null,
                             margin:SIZES.base,
-                            borderColor:COLORS.gray
+                            borderColor:COLORS.gray,
                         }}
                         labelStyle={{
-                            ...FONTS.h3
+                            ...FONTS.h3,
                         }}
                        />
                        <TextButton
-                        label={"13\""}
+                        label={'13\''}
                         buttonContainerStyle={{
                             width:45,
                             height:45,
@@ -249,12 +246,12 @@ const FoodDetails = ({route,navigation}) => {
                             borderWidth:1,
                             backgroundColor:null,
                             margin:SIZES.base,
-                            borderColor:COLORS.gray
+                            borderColor:COLORS.gray,
                         }}
                         labelStyle={{
-                            ...FONTS.h3
+                            ...FONTS.h3,
                         }}
-                       /> 
+                       />
                     </View>
                 </View>
             </View>
@@ -265,7 +262,7 @@ const FoodDetails = ({route,navigation}) => {
                 flexDirection:'row',
                 marginVertical:SIZES.padding,
                 paddingHorizontal:SIZES.padding,
-                alignItems:'center'
+                alignItems:'center',
             }}
         >
             <Image
@@ -273,19 +270,18 @@ const FoodDetails = ({route,navigation}) => {
             style={{
                 width:50,
                 height:50,
-                borderRadius:SIZES.radius
+                borderRadius:SIZES.radius,
             }}
             />
             <View
             style={{
                 flex:1,
                 marginLeft:SIZES.radius,
-                justifyContent:'center'
+                justifyContent:'center',
             }}
             >
                 <Text style={{...FONTS.h3}}>John Doe</Text>
                 <Text style={{...FONTS.body4,color:COLORS.gray}}>12.5 KM away from here</Text>
-                
             </View>
             <Ratings
                 rating={4}
@@ -302,15 +298,17 @@ const FoodDetails = ({route,navigation}) => {
         height:90,
         alignItems:'center',
         paddingHorizontal:SIZES.padding,
-        paddingBottom:SIZES.radius
+        paddingBottom:SIZES.radius,
     }}
     ><StepperIncrement
             onAdd={()=>{
-                setCount(count+1)
+                if (count <= food.stock){
+                setCount(count + 1);
+                }
             }}
             onMinus={()=>{
-                if(count!=1){
-                    setCount(count-1)
+                if (count !== 1){
+                    setCount(count - 1);
                 }
             }}
             value={count}
@@ -322,18 +320,18 @@ const FoodDetails = ({route,navigation}) => {
             height:60,
             marginLeft:SIZES.radius,
             paddingHorizontal:SIZES.radius,
-            borderRadius:SIZES.radius
+            borderRadius:SIZES.radius,
         }}
         label="Buy Now"
-        label2={`$${food.price}`}
+        label2={`Kes ${food.food_price}`}
         onPress={()=>{
             dispatch(addToCart({id:food
-            .id,qty:count}));
+            .food_id,qty:count}));
         }}
         />
     </View>
     </View>
-  )
-}
+  );
+};
 
-export default FoodDetails
+export default FoodDetails;

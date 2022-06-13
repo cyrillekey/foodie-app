@@ -1,15 +1,16 @@
+/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
     View,
-    Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator,
+    Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Alert,
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard } from '../../Components';
 import { useSelector,useDispatch } from 'react-redux';
 import { getAddressName } from '../../constants/util';
 import axios  from 'axios';
-import { saveCategory } from '../../stores/products/productActions';
+import { addProducts, saveCategory } from '../../stores/products/productActions';
 
 const Home = (navigation) => {
     const menu = useSelector(state=>state.productReducer.products);
@@ -17,16 +18,33 @@ const Home = (navigation) => {
     const [form,setForm] = React.useState(<ActivityIndicator/>);
     const categories = useSelector(state=>state.productReducer.categories);
     const dispatch = useDispatch();
+    const [category,setCategory] = React.useState(0);
     getAddressName(address.latitude,address.longitude,setForm);
     React.useEffect(()=>{
+        let current=0;
         axios.get('https://foodieback.herokuapp.com/get-all-categories').then((result) => {
             if (result.status === 200){
+                current = result.data[0].cat_id;
+            setCategory(current);
             dispatch(saveCategory({categories:result.data}));
+            fetchFood(current);
             }
         }).catch((err) => {
             console.log(err);
         });
-    });
+        // eslint-disable-next-line
+    },[dispatch]);
+    const fetchFood = (x)=>{
+        axios.get(`https://foodieback.herokuapp.com/food-by-category/${x}`).then(response=>{
+            if (response.status === 200){
+            dispatch(addProducts({food:response.data}));
+            }
+        }).catch(error=>{
+            console.log(error);
+            Alert.alert('Error','Something went horribly wrong trying to fetch food');
+        }
+        );
+    };
     const  renderSearch = ()=>{
         return (
             <View style={{
@@ -115,7 +133,8 @@ const Home = (navigation) => {
                     renderItem={({item,index})=>(
                         <TouchableOpacity
                         onPress={()=>{
-                            console.log('Mango');
+                            fetchFood(item.cat_id);
+                            setCategory(item.cat_id);
                         }}
                         style={{
                             flexDirection:'row',
@@ -141,6 +160,7 @@ const Home = (navigation) => {
                                 alignSelf:'center',
                                 marginRight:SIZES.base,
                                 ...FONTS.h3,
+                                color:category == item.cat_id ? COLORS.primary : COLORS.black,
                             }}>
                                 {item.cat_name}
                             </Text>
@@ -202,7 +222,7 @@ const Home = (navigation) => {
             {renderSearch()}
             <FlatList
                 data={menu}
-                keyExtractor={(item)=>`${item.id}`}
+                keyExtractor={(item)=>`${item.food_id}`}
                 showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={<View>
                     {renderDelivery()}
@@ -219,15 +239,18 @@ const Home = (navigation) => {
                                 marginBottom:SIZES.radius,
                             }}
                             imageStyle={{
-                                marginTop:20,
                                 height:110,
                                 width:110,
+                                borderRadius:50,
+                                marginRight:10,
+                                marginLeft:5,
+
                             }}
                             item={item}
                             onPress={()=>{
                                 //console.log(navigation)
                                 navigation.navigate('fooddetails',{
-                                    id:item.id,
+                                    id:item.food_id,
                                 });
                             }}
                         />

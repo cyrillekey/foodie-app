@@ -38,7 +38,7 @@ const CartTab = ({navigation}) => {
             />
             <SwipeListView
             data={cartList}
-            keyExtractor={item=>`${item.id}`}
+            keyExtractor={item=>`${item.food_id}`}
             contentContainerStyle={{
                 marginTop:SIZES.radius,
                 paddingHorizontal:SIZES.padding,
@@ -60,14 +60,14 @@ const CartTab = ({navigation}) => {
                     tintColor:COLORS.white,
                 }}
                 onPress={()=>{
-                    dispatch(removeFromCart({id:data.item.id}));
+                    dispatch(removeFromCart({id:data.item.food_id}));
                 }}
                 />
             )}
             renderItem={(data,index)=>{
                return (<View
                 style={{
-                    height:80,
+                    height:90,
                     backgroundColor:COLORS.lightGray2,
                     ...styles.cartItemContainer,
                 }}
@@ -80,13 +80,14 @@ const CartTab = ({navigation}) => {
                     }}
                     >
                         <Image
-                        source={data.item.image}
+                        source={{uri:data.item.food_image}}
                         resizeMode="contain"
                         style={{
                             width:'100%',
                             height:'100%',
                             position:'absolute',
-                            top:10,
+                            borderRadius:360,
+                            padding:5,
                         }}
                         />
                     </View>
@@ -100,8 +101,8 @@ const CartTab = ({navigation}) => {
                         >{data.item.name}</Text>
                         <Text style={{
                             ...FONTS.h3,
-                            color:COLORS.primary
-                        }} >$ {data.item.price}</Text>
+                            color:COLORS.primary,
+                        }} >Kes {data.item.food_price}</Text>
                     </View>
                     <StepperIncrement
                     containerStyle={{
@@ -111,14 +112,16 @@ const CartTab = ({navigation}) => {
                     }}
                     value={data.item.qty}
                     onMinus={()=>{
-                        dispatch(reduceQty({id:data.item.id}));
+                        dispatch(reduceQty({id:data.item.food_id}));
                     }}
                     onAdd={
-                        ()=>dispatch(increaseQty({id:data.item.id}))
+                        ()=>dispatch(increaseQty({id:data.item.food_id}))
                     }
                     />
                 </View>
-                )}}
+                );
+            }
+            }
             />
             <FooterTotal
             onPress={()=>{

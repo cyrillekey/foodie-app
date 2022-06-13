@@ -1,7 +1,7 @@
 import * as userActions from './userActionTypes';
 import { dummyData } from '../../constants';
 const initialState = {
-    user:{},
+    user:null,
     address:{
         latitude:0,
         longitude:0,

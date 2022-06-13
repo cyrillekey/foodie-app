@@ -12,7 +12,7 @@ const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
         }}
         onPress={onPress}>
             <Image
-            source={item.image}
+            source={{uri:item.food_image}}
                 style={
                     imageStyle
                 }
@@ -23,15 +23,15 @@ const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
                 <Text style={{
                     ...FONTS.h3,fontSize:17,color:COLORS.black,
                 }}>
-                    {item.name}
+                    {item.food_name}
                 </Text>
                 <Text style={{color:COLORS.darkGray2,...FONTS.body4}}>
-                    {item.description}
+                    {item?.food_desc?.substring(0,20) ?? 'Temp'}
                 </Text>
                 <Text style={{
                     marginTop:SIZES.base,...FONTS.h2,
                 }}>
-                    {item.price}
+                  Kes  {item.food_price}
                 </Text>
             </View>
         </TouchableOpacity>
