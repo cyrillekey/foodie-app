@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { ScrollView, View ,Image, Text, TouchableOpacity, ImageBackground} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { ScrollView, View ,Image, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Header, Iconlabel, LineDivider, Ratings, StepperIncrement, TextButton, TextIconButton } from '../../Components';
-import { COLORS ,SIZES,icons, FONTS,images} from '../../constants'
-import { addToCart } from '../../stores/cart/cartActions'
-import { addFavourite, removeFavourite } from '../../stores/products/productActions'
+import { COLORS ,SIZES,icons, FONTS,images} from '../../constants';
+import { addToCart } from '../../stores/cart/cartActions';
+import { addFavourite, removeFavourite } from '../../stores/products/productActions';
 const FoodDetails = ({route,navigation}) => {
-    const food = useSelector(state=>state.productReducer.products.find(element=>element.food_id === route.params.id));
-    const isFav = useSelector(state=>state.productReducer.favourites.find(element=>element.food_id === route.params.id));
+    const food = useSelector(state=>state.productReducer.products.find(element=>element.food_id == route.params.id));
+    const isFav = useSelector(state=>state.productReducer.favourites.find(element=>element.food_id == route.params.id));
     const dispatch = useDispatch();
     const [count,setCount] = React.useState(1);
   return (

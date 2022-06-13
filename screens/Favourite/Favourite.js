@@ -49,10 +49,10 @@ const Favourite = (navigation) => {
                             }}
                             item={item}
                             onPress={()=>{
-                                console.log(item)
-                                // navigation.navigate('fooddetails',{
-                                //     id:item.food_id,
-                                // });
+                                console.log(item.food_id);
+                                //navigation.navigate('fooddetails',{
+                                  //  id:item.food_id,
+                                //});
                             }}
                         />
                     );
