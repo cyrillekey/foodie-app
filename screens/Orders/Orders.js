@@ -4,17 +4,19 @@ import React from 'react';
 import { View,Text, Alert } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { OrderItem, TextButton } from '../../Components';
-import { COLORS, FONTS, SIZES } from '../../constants';
+import { OrderItem, ShimmerWrapper, TextButton } from '../../Components';
+import { COLORS, dummyData, FONTS, SIZES } from '../../constants';
 import { getDate } from '../../constants/util';
 import { addOrders } from '../../stores/products/productActions';
 const Orders = (navigation) => {
 const [isHistory,setIsHistory] = React.useState(true);
 const dispatch = useDispatch();
+const [fetching,setFetching] = React.useState(false);
 const orders = useSelector(state=>state.productReducer.order);
 const user = useSelector(state=>state.userReducer.user);
 const token = useSelector(state=>state.userReducer.jwtToken);
 const getOrders = (type) =>{
+  setFetching(true);
   var config = {
     method: 'get',
     url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
@@ -24,7 +26,9 @@ const getOrders = (type) =>{
   };
   axios(config).then(response=>{
     dispatch(addOrders(response.data));
+    setFetching(false);
   }).catch(response=>{
+    setFetching(false);
     console.log(config);
     Alert.alert('Error','Something went wring trying to fetch orders');});
 };
@@ -76,6 +80,36 @@ const getOrders = (type) =>{
         }}
         />
       </View>
+      {
+
+        fetching === true ?
+        <FlatList
+        data={dummyData.menu[0].list}
+        key={(item)=>`${item.id}`}
+        style={{
+          marginTop:SIZES.padding,
+          paddingHorizontal:SIZES.padding,
+        }}
+        renderItem={({item,index})=>{
+          return (
+            <ShimmerWrapper>
+              <View>
+                <Text> </Text>
+                <View
+                style={{
+                  height:140,
+                  marginTop:SIZES.radius,
+                  paddingHorizontal:SIZES.base,
+                  borderRadius:SIZES.radius,
+                  marginBottom:SIZES.radius,
+              }}
+                />
+              </View>
+            </ShimmerWrapper>
+          );
+        }}
+        />
+        :
       <FlatList
       data={orders}
       keyExtractor={(item)=>`${item.order_id}`}
@@ -102,13 +136,7 @@ const getOrders = (type) =>{
           </View>);
       }}
       />
-      {/* <ScrollView
-      style={{
-        marginTop:SIZES.padding ,
-        paddingHorizontal:SIZES.padding,
-      }}
-      >
-      </ScrollView> */}
+    }
     </View>
   );
 };
