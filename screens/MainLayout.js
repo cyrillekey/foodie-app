@@ -77,7 +77,7 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
     const getOrders = (type) =>{
         var config = {
           method: 'get',
-          url: `/customer/get-customer-order/${user?.customer_id}`,
+          url: `/customer/get-customer-order/${user?.customer_id}/1`,
           headers: {
             'Authorization': `Bearer ${token}`,
           },

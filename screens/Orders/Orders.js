@@ -17,7 +17,7 @@ const token = useSelector(state=>state.userReducer.jwtToken);
 const getOrders = (type) =>{
   var config = {
     method: 'get',
-    url: `/customer/get-customer-order/${user?.customer_id}`,
+    url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
     headers: {
       'Authorization': `Bearer ${token}`,
     },
@@ -46,6 +46,7 @@ const getOrders = (type) =>{
         <TextButton
         label="History"
         onPress={()=>{
+          getOrders(2);
           setIsHistory(true);
         }}
         buttonContainerStyle={{
@@ -61,6 +62,7 @@ const getOrders = (type) =>{
         <TextButton
         label="Upcoming"
         onPress={()=>{
+          getOrders(1);
           setIsHistory(false);
         }}
         buttonContainerStyle={{

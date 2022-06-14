@@ -66,7 +66,7 @@ const OtpScreen = ({navigation}) => {
           dispatch(saveUser({user:response.data.customer}));
           navigation.reset({
             index:0,
-            routes:[{name:'success'}],
+            routes:[{name:'Home'}],
         });
         }
       })
