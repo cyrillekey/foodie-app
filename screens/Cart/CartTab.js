@@ -96,9 +96,11 @@ const CartTab = ({navigation}) => {
                     }}
                     >
                         <Text
+                        numberOfLines={2}
                         style={{...FONTS.body3}}
                         >{data.item.food_name}</Text>
-                        <Text style={{
+                        <Text
+                        style={{
                             ...FONTS.h3,
                             color:COLORS.primary,
                         }} >Kes {data.item.food_price}</Text>

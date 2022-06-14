@@ -33,7 +33,7 @@ const FooterTotal = ({
                 >Subtotal</Text>
                 <Text style={{
                     ...FONTS.h3,
-                }}>Kes {subtotal}</Text>
+                }}>Kes {subtotal.toFixed(2)}</Text>
             </View>
             <View
             style={{
