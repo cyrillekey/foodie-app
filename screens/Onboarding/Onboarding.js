@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react"
-import { View,Text, Image, ImageBackground } from "react-native"
-import Animated ,{useSharedValue } from "react-native-reanimated";
-import { FONTS, SIZES ,images, COLORS, constants} from "../../constants";
-import { TextButton } from "../../Components";
-import { useDispatch ,useSelector} from "react-redux";
-import { saveAddress } from "../../stores/user/userActions";
-import Geolocation from "react-native-geolocation-service";
+import React from 'react';
+import { View,Text, Image, ImageBackground } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { FONTS, SIZES ,images, COLORS, constants} from '../../constants';
+import { TextButton } from '../../Components';
+import { useDispatch } from 'react-redux';
+import { saveAddress, viewedOnboarding } from '../../stores/user/userActions';
+import Geolocation from 'react-native-geolocation-service';
 const OnBoarding = ({navigation})=>{
     const scrollX = new Animated.Value(8);
     const flatListRef = React.useRef();
@@ -57,13 +57,13 @@ const OnBoarding = ({navigation})=>{
                 }
             </View>
         );
-    }
-    const renderHeaderLogo=()=>{
+    };
+    const renderHeaderLogo = ()=>{
         return (
             <View
             style={{
                 position:'absolute',
-                top:SIZES.height > 800 ? 50:25,
+                top:SIZES.height > 800 ? 50 : 25,
                 left:0,
                 right:0,
                 alignItems:'center',
@@ -74,13 +74,13 @@ const OnBoarding = ({navigation})=>{
                 source={images.logo}
                 resizeMode="contain"
                 style={{
-                    width:SIZES.width*0.5,
-                    height:100
+                    width:SIZES.width * 0.5,
+                    height:100,
                 }}
                 />
             </View>
         );
-    }
+    };
     const renderFooter = ( )=>{
         return (
             <View style={{
@@ -100,13 +100,15 @@ const OnBoarding = ({navigation})=>{
                 <TextButton
                     label="Skip"
                     buttonContainerStyle={{
-                        backgroundColor:null
+                        backgroundColor:null,
                     }}
                     labelStyle={{
-                        color:COLORS.black
+                        color:COLORS.black,
                     }}
-                    onPress={()=>
-                        navigation.replace('SignIn')
+                    onPress={()=>{
+                        dispatch(viewedOnboarding(true));
+                        navigation.replace('SignIn');
+                    }
                     }
                 />
                 <TextButton
@@ -114,11 +116,11 @@ const OnBoarding = ({navigation})=>{
                     buttonContainerStyle={{
                     height:60,
                     width:130,
-                    borderRadius:SIZES.radius
+                    borderRadius:SIZES.radius,
                     }}
                     onPress={()=>{
-                        console.log(constants.onboarding_screens.length)
-                        let index=Math.ceil(Number(scrollX._value/SIZES.width))
+                        console.log(constants.onboarding_screens.length);
+                        let index=Math.ceil(Number(scrollX._value / SIZES.width));
                         // if(index<constants.onboarding_screens.length-1){
                         //     navigation.replace("SignIn")
                         // }
@@ -126,12 +128,12 @@ const OnBoarding = ({navigation})=>{
                 />
                 </View>
             </View>
-        )
-    }
+        );
+    };
     return (
         <View style={{
             flex:1,
-            backgroundColor:COLORS.white
+            backgroundColor:COLORS.white,
         }}>
             {renderHeaderLogo()}
             <Animated.FlatList
@@ -145,7 +147,7 @@ const OnBoarding = ({navigation})=>{
                 onScroll={
                     Animated.event(
                         [
-                          {nativeEvent:{contentOffset:{x:scrollX}}}
+                          {nativeEvent:{contentOffset:{x:scrollX}}},
                         ],{useNativeDriver:false}
                     )
                 }
@@ -154,7 +156,7 @@ const OnBoarding = ({navigation})=>{
                         <View
                             style={{
                                 flex:1,
-                                width:SIZES.width*0.98
+                                width:SIZES.width * 0.98,
                             }}
                         >
                             <View
@@ -167,7 +169,7 @@ const OnBoarding = ({navigation})=>{
                                     flex:1,
                                     alignItems:'center',
                                     justifyContent:'flex-end',
-                                    height:index==1 ? "92%":"100%",
+                                    height:index === 1 ? '92%' : '100%',
                                     width:'100%',
                                 }}
                                 >
@@ -175,9 +177,9 @@ const OnBoarding = ({navigation})=>{
                                     source={item.bannerImage}
                                     resizeMode="contain"
                                     style={{
-                                        height:SIZES.height*0.3,
-                                        width:SIZES.width*0.6,
-                                        marginBottom:-SIZES.padding
+                                        height:SIZES.height * 0.3,
+                                        width:SIZES.width * 0.6,
+                                        marginBottom:-SIZES.padding,
                                     }}
                                     />
                                 </ImageBackground>
@@ -187,7 +189,7 @@ const OnBoarding = ({navigation})=>{
                              marginTop:30,
                             alignItems:'center',
                             justifyContent:'center',
-                            paddingHorizontal:SIZES.radius
+                            paddingHorizontal:SIZES.radius,
                             }}>
                                 <Text
                                 style={{
@@ -213,6 +215,6 @@ const OnBoarding = ({navigation})=>{
             />
             {renderFooter()}
         </View>
-    )
-}
+    );
+};
  export default OnBoarding;

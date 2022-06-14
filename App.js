@@ -1,15 +1,14 @@
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
-import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from "./screens";
+import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from './screens';
 import SplashScreen from 'react-native-splash-screen';
 import {PermissionsAndroid} from 'react-native';
- import { store,persistor } from "./stores/store";
-import { PersistGate } from "redux-persist/integration/react";
-import userReducer from "./stores/user/userReducer";
+ import { store,persistor } from './stores/store';
+import { PersistGate } from 'redux-persist/integration/react';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (

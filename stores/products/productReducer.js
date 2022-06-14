@@ -20,10 +20,12 @@ const productReducer = (state = initialState,action )=>{
             if (state.cartItems.length > 0){
             let exist = state.cartItems.find(cart=>cart.food_id === action.payload.id);
             if (exist){
+                console.log("Im called");
                 const tempCart = [...state.cartItems];
                 let index = state.cartItems.indexOf(exist);
                 tempCart[index].qty += action.payload.qty;
                 let total = tempCart[index].food_price * action.payload.qty;
+                console.log(total);
                 return {...state,cartItems:tempCart,qty:state.qty + action.payload.qty,cartTotal:state.cartTotal + total};
             } else {
             let item = state.products.find(product=>product.food_id === action.payload.id);

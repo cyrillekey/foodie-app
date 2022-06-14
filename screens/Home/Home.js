@@ -6,16 +6,14 @@ import {
     Text,Image, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Alert, PermissionsAndroid,
 } from 'react-native';
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
-import { HorizontalFoodCard } from '../../Components';
+import { HorizontalFoodCard,ShimmerWrapper } from '../../Components';
 import { useSelector,useDispatch } from 'react-redux';
 import { getAddressName } from '../../constants/util';
 import axios  from 'axios';
 import { addProducts, saveCategory } from '../../stores/products/productActions';
-import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
-import LinearGradient from 'react-native-linear-gradient';
-
+import { saveAddress } from '../../stores/user/userActions';
+import Geolocation from 'react-native-geolocation-service';
 const Home = (navigation) => {
-    const ShimmperPlaceHolder=createShimmerPlaceholder(LinearGradient);
     const [fetching,setFetching] = React.useState(true);
     const menu = useSelector(state=>state.productReducer.products);
     const address = useSelector(state=>state.userReducer.address);
@@ -25,7 +23,7 @@ const Home = (navigation) => {
     const [category,setCategory] = React.useState(0);
     getAddressName(address.latitude,address.longitude,setForm);
     React.useEffect(()=>{
-        let current=0;
+        let current = 0;
         axios.get('https://foodieback.herokuapp.com/get-all-categories').then((result) => {
             if (result.status === 200){
                 current = result.data[0].cat_id;
@@ -189,7 +187,16 @@ const Home = (navigation) => {
               title: 'Foodie Use Location to determine where to deliver food',
             },
           );
-          navigation.navigate('pickAddress');
+          Geolocation.getCurrentPosition(
+            (position) => {
+              dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
+            },
+            (error) => {
+              console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+          //navigation.navigate('pickAddress');
         } catch (err) {
           Alert.alert('Location Error','You need to grant location permission so we can be able to serve you better');
         }
@@ -296,7 +303,7 @@ const Home = (navigation) => {
                 </View>}
                 renderItem={({item,index})=>{
                     return (
-                        <ShimmperPlaceHolder
+                        <ShimmerWrapper
                         width={SIZES.width * 0.85}
                         style={{
                             borderRadius:SIZES.radius,

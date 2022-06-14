@@ -6,7 +6,7 @@ import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
 const Profile = () => {
     const user = useSelector(state=>state.userReducer.user);
-    console.log(user);
+//    console.log(user);
   return (
     <SafeAreaView
     style={styles.container}
