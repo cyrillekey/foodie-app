@@ -1,19 +1,57 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text,Image, ActivityIndicator } from 'react-native'
-import React from 'react'
-import { COLORS, dummyData, FONTS } from '../../constants';
+import { View, Text,Image, ActivityIndicator, Alert } from 'react-native';
+import React from 'react';
+import { COLORS, FONTS } from '../../constants';
 import { CardItem, FooterTotal, FormInput, Header } from '../../Components';
 import { SIZES,icons } from '../../constants';
 import { TextIconButton } from '../../Components';
 import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAddressName } from '../../constants/util';
+import axios from 'axios';
+import { clearCart } from '../../stores/products/productActions';
 const PlaceOrder = ({navigation}) => {
     const address = useSelector(state=>state.userReducer.address);
+    const [submitting,setSubmitting] = React.useState(false);
     const [form,setForm] = React.useState(<ActivityIndicator/>);
     getAddressName(address.latitude,address.longitude,setForm);
     const card = useSelector(state=>state.userReducer.selectedCard);
-    console.log(card);
+    const cart = useSelector(state=>state.productReducer.cartItems);
+    const user = useSelector(state=>state.userReducer.user);
+    const token = useSelector(state=>state.userReducer.jwtToken);
+    const dispatch = useDispatch();
+    const formatted = cart.map((item)=>({
+        'food_id':item.food_id,
+        'quantity':item.qty,
+    }));
+    const placeOrder = () => {
+        setSubmitting(true);
+        var config = {
+            method: 'post',
+            url: `/customer/create-order/${user.customer_id}`,
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            data : formatted,
+          };
+          console.log(config);
+        axios(config).then(
+            response=>{
+                setSubmitting(false);
+                if (response.status === 201){
+                    dispatch(clearCart());
+                    navigation.reset({
+                        index:0,
+                        routes:[{name:'success'}],
+                    });
+                }
+            }
+        ).catch(err=>{
+            setSubmitting(false);
+            Alert.alert('Error', 'Something went wrong');
+            console.log(err);});
+    };
   return (
     <View
     style={{
@@ -27,7 +65,7 @@ const PlaceOrder = ({navigation}) => {
             height:50,
             marginTop:10,
             alignItems:'center',
-            paddingHorizontal:SIZES.padding
+            paddingHorizontal:SIZES.padding,
     }}
         title="CHECKOUT"
         leftComponent={
@@ -40,16 +78,16 @@ const PlaceOrder = ({navigation}) => {
                 alignItems:'center',
                 borderWidth:1,
                 borderRadius:SIZES.radius,
-                borderColor:COLORS.gray2
+                borderColor:COLORS.gray2,
             }}
             iconStyle={{
                 width:20,
                 height:20,
                 tintColor:COLORS.gray2,
-                marginRight:SIZES.base
+                marginRight:SIZES.base,
             }}
             onPress={()=>{
-                navigation.pop()
+                navigation.pop();
             }}
             />
         }
@@ -58,7 +96,7 @@ const PlaceOrder = ({navigation}) => {
     contentContainerStyle={{
         flexGrow:1,
         paddingHorizontal:SIZES.padding,
-        paddingBottom:20
+        paddingBottom:20,
     }}
     >
         <View>
@@ -69,15 +107,15 @@ const PlaceOrder = ({navigation}) => {
         </View>
         <View
         style={{
-            marginTop:SIZES.padding
+            marginTop:SIZES.padding,
         }}
         onMagicTap={()=>{
-            console.log("hello")
+            console.log('hello');
         }}
         >
             <Text
             style={{
-                ...FONTS.h3
+                ...FONTS.h3,
             }}
             >Delivery Address</Text>
             <View
@@ -111,7 +149,7 @@ const PlaceOrder = ({navigation}) => {
         </View>
         <View
         style={{
-            marginTop:SIZES.padding
+            marginTop:SIZES.padding,
         }}
         >
             <Text style={{...FONTS.h3}}>Add Coupon</Text>
@@ -121,7 +159,7 @@ const PlaceOrder = ({navigation}) => {
                 borderWidth:2,
                 borderColor:COLORS.lightGray2,
                 paddingRight:0,
-                borderRadius:SIZES.radius
+                borderRadius:SIZES.radius,
             }}
             placeholder="Coupon Code"
             appendComponent={
@@ -132,7 +170,7 @@ const PlaceOrder = ({navigation}) => {
                     justifyContent:'center',
                     backgroundColor:COLORS.primary,
                     borderTopRightRadius:SIZES.radius,
-                    borderBottomRightRadius:SIZES.radius
+                    borderBottomRightRadius:SIZES.radius,
                 }}
                 >
                     <Image
@@ -146,16 +184,19 @@ const PlaceOrder = ({navigation}) => {
             }
             />
         </View>
-     
     </KeyboardAvoidingScrollView>
     <FooterTotal
+    active={submitting}
     subTotal={120}
     total={500}
+    label={submitting ? <ActivityIndicator style={{
+        color:COLORS.white,
+    }} size="large"/> : 'Proceed'}
     shippingFee={150}
-    onPress={()=>navigation.replace("success")}
+    onPress={()=>placeOrder()}
     />
     </View>
-  )
-}
+  );
+};
 
 export default PlaceOrder;

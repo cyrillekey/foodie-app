@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { View, Text ,Image} from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, images, SIZES } from '../constants'
@@ -7,7 +8,7 @@ const OrderItem = ({
     name,
     price,
     date,qty,status,
-    navigation
+    navigation,
 }) => {
   return (
     <View
@@ -17,11 +18,12 @@ const OrderItem = ({
             marginTop:SIZES.radius,
             paddingHorizontal:SIZES.base,
             borderRadius:SIZES.radius,
+            marginBottom:SIZES.radius,
         }}
     >
       <View
       style={{
-          flex:1,flexDirection:'row'
+          flex:1,flexDirection:'row',
       }}
       >
           <View>
@@ -31,7 +33,7 @@ const OrderItem = ({
                   height:50,
                   width:50,
                   marginTop:SIZES.base,
-                  borderRadius:SIZES.radius
+                  borderRadius:SIZES.radius,
               }}
               />
           </View>
@@ -44,62 +46,63 @@ const OrderItem = ({
           >
               <Text
               style={{
-                  ...FONTS.h2
+                  ...FONTS.h2,
               }}
               >Pizza Hut</Text>
               <Text
               style={{
                   ...FONTS.body3,
-                  color:COLORS.gray
+                  color:COLORS.gray,
               }}
-              >
-                  19 Sep, 14:40</Text>
+              >{date}</Text>
               <Text
               style={{
                   marginTop:4,
                   ...FONTS.body4,
                   color:COLORS.green,
               }}
-              >Order Delivered</Text>
+              >{status}</Text>
           </View>
           <View
           style={{
-              marginTop:SIZES.base
+              marginTop:SIZES.base,
           }}
           >
               <Text
               style={{
                   ...FONTS.h3,
-                  color:COLORS.primary
+                  color:COLORS.primary,
               }}
-              >$35.20</Text>
+              >Kes {price}</Text>
           </View>
       </View>
       <View
       style={{
           flexDirection:'row',
         justifyContent:'space-between',
-        marginBottom:SIZES.radius
+        marginBottom:SIZES.radius,
       }}
       >
           <TextButton
             buttonContainerStyle={{
                 height:40,
                 borderRadius:SIZES.radius,
-                width:130
+                width:130,
             }}
             label="Order Details"
-            onPress={()=>navigation.navigate("orderDetails")}
+            onPress={()=>{
+                navigation.navigate("orderDetails")
+            }}
           />
             <TextButton
             buttonContainerStyle={{
                 height:40,
                 borderRadius:SIZES.radius,
                 width:130,
-                backgroundColor:COLORS.lightOrange2
+                backgroundColor:COLORS.lightOrange2,
             }}
             labelStyle={{
-                color:COLORS.primary
+                color:COLORS.primary,
             }}
             label="Track"
             onPress={()=>{

@@ -107,7 +107,7 @@ const OnBoarding = ({navigation})=>{
                     }}
                     onPress={()=>{
                         dispatch(viewedOnboarding(true));
-                        navigation.replace('SignIn');
+                        navigation.navigate('SignIn');
                     }
                     }
                 />

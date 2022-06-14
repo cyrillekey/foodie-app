@@ -49,7 +49,7 @@ const SignUp = ({navigation}) => {
     });
     var config = {
       method: 'post',
-      url: 'https://foodieback.herokuapp.com/register',
+      url: '/register',
       headers: {
         'Content-Type': 'application/json',
       },

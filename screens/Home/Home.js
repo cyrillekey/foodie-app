@@ -24,7 +24,7 @@ const Home = (navigation) => {
     getAddressName(address.latitude,address.longitude,setForm);
     React.useEffect(()=>{
         let current = 0;
-        axios.get('https://foodieback.herokuapp.com/get-all-categories').then((result) => {
+        axios.get('/get-all-categories').then((result) => {
             if (result.status === 200){
                 current = result.data[0].cat_id;
             setCategory(current);
@@ -37,7 +37,7 @@ const Home = (navigation) => {
         // eslint-disable-next-line
     },[dispatch]);
     const fetchFood = (x)=>{
-        axios.get(`https://foodieback.herokuapp.com/food-by-category/${x}`).then(response=>{
+        axios.get(`/food-by-category/${x}`).then(response=>{
             if (response.status === 200){
             dispatch(addProducts({food:response.data}));
             }

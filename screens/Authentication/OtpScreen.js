@@ -30,7 +30,7 @@ const OtpScreen = ({navigation}) => {
   }, []);
   const resendToken = () => {
     axios.get(
-      `https://foodieback.herokuapp.com/get-activation-token/${user.user_phone}`,
+      `/get-activation-token/${user.user_phone}`,
     );
   };
   const checkCodeActivation = () => {
@@ -64,7 +64,10 @@ const OtpScreen = ({navigation}) => {
         if (response.status === 200){
           dispatch(saveToken({token:response.data.token}));
           dispatch(saveUser({user:response.data.customer}));
-          navigation.replace('Home');
+          navigation.reset({
+            index:0,
+            routes:[{name:'success'}],
+        });
         }
       })
       .catch(response => {

@@ -27,7 +27,6 @@ const productReducer = (state = initialState,action )=>{
                 console.log(total);
                 return {...state,cartItems:tempCart,qty:state.qty + action.payload.qty,cartTotal:state.cartTotal + total};
             } else {
-                console.log("im called");
             let item = state.products.find(product=>product.food_id === action.payload.id);
             item.qty = action.payload.qty;
             let total = item.food_price * action.payload.qty;
@@ -62,10 +61,15 @@ const productReducer = (state = initialState,action )=>{
         case cartActions.INCREASE_QTY:
             {
             let itemAdd = state.cartItems.find(cart=>cart.food_id === action.payload.id);
+            if (itemAdd.stock <= itemAdd.stock + 1){
             const tempCartAdd = [...state.cartItems];
             let indexOfAdd = state.cartItems.indexOf(itemAdd);
             tempCartAdd[indexOfAdd].qty += 1;
             return {...state,cartItems:tempCartAdd,qty:state.qty + 1,cartTotal:state.cartTotal + itemAdd.food_price};
+            } else {
+                console.log("goes over");
+                return state;
+            }
             }
         case productActions.ADD_FAVOURITE:
             if (state.favourites.length > 0){
@@ -85,6 +89,10 @@ const productReducer = (state = initialState,action )=>{
             return {...state,favourites:tempFav};
         case productActions.SAVE_CATEGORY:
             return {...state,categories:action.payload.categories};
+        case productActions.SAVE_ORDERS:
+            return {...state,order:action.payload};
+        case productActions.CLEAR_CART:
+            return {...state,cartItems:[]};
         default:
             return state;
     }

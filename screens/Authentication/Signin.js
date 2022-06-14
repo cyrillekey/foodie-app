@@ -65,7 +65,7 @@ const Signin = ({navigation}) => {
     });
     axios({
       method:'POST',
-      url: 'https://foodieback.herokuapp.com/login',
+      url: '/login',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -76,7 +76,10 @@ const Signin = ({navigation}) => {
       if (response.status === 200){
         dispatch(saveUser({user:response.data.customer}));
         dispatch(saveToken({token:response.data.token}));
-        navigation.navigate('Home');
+        navigation.reset({
+          index:0,
+          routes:[{name:'Home'}],
+      });
       } else {
         Alert.alert('Authentication Error',response.response.data.message,[
           {

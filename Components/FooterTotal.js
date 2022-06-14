@@ -6,6 +6,8 @@ import { LineDivider, TextButton } from '.';
 import { COLORS, FONTS, SIZES } from '../constants';
 const FooterTotal = ({
     onPress,
+    active = false,
+    label = 'Proceed',
 }) => {
     const subtotal = useSelector(state=>state.productReducer.cartTotal);
     const shippingCost = useSelector(state=>state.productReducer.shippingCost);
@@ -70,7 +72,8 @@ const FooterTotal = ({
             }} >Kes {(subtotal + shippingCost).toFixed(2)}</Text>
             </View>
             <TextButton
-            label="Proceed"
+            disabled={active}
+            label={label}
             buttonContainerStyle={{
                 height:60,
                 marginTop:SIZES.padding,

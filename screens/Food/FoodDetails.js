@@ -274,7 +274,7 @@ const FoodDetails = ({route,navigation}) => {
             }}
         >
             <Image
-            source={{uri:food.restaurant.restaurant_image}}
+            source={{uri:food?.restaurant?.restaurant_image ?? 'https://res.cloudinary.com/dftgy3yfd/image/upload/v1654857099/foodie/photo-1653039001288-1ca7ee2596ab_vsdny6.webp'}}
             style={{
                 width:50,
                 height:50,
@@ -288,7 +288,7 @@ const FoodDetails = ({route,navigation}) => {
                 justifyContent:'center',
             }}
             >
-                <Text style={{...FONTS.h3,width:SIZES.width * 0.8}}>{food.restaurant.restaurant_name}</Text>
+                <Text style={{...FONTS.h3,width:SIZES.width * 0.8}}>{food?.restaurant?.restaurant_name ?? 'Testing' }</Text>
                 <Text style={{...FONTS.body4,color:COLORS.gray}}>12.5 KM away from here</Text>
             </View>
             <Ratings

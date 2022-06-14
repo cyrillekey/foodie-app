@@ -1,11 +1,34 @@
 /* eslint-disable react-native/no-inline-styles */
+import axios from 'axios';
 import React from 'react';
-import { View,Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View,Text, Alert } from 'react-native';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 import { OrderItem, TextButton } from '../../Components';
 import { COLORS, FONTS, SIZES } from '../../constants';
+import { getDate } from '../../constants/util';
+import { addOrders } from '../../stores/products/productActions';
 const Orders = (navigation) => {
 const [isHistory,setIsHistory] = React.useState(true);
+const dispatch = useDispatch();
+const orders = useSelector(state=>state.productReducer.order);
+const user = useSelector(state=>state.userReducer.user);
+const token = useSelector(state=>state.userReducer.jwtToken);
+const getOrders = (type) =>{
+  var config = {
+    method: 'get',
+    url: `/customer/get-customer-order/${user?.customer_id}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+  axios(config).then(response=>{
+    dispatch(addOrders(response.data));
+  }).catch(response=>{
+    console.log(config);
+    Alert.alert('Error','Something went wring trying to fetch orders');});
+};
+
   return (
     <View
     style={{
@@ -51,21 +74,39 @@ const [isHistory,setIsHistory] = React.useState(true);
         }}
         />
       </View>
-      <ScrollView
+      <FlatList
+      data={orders}
+      keyExtractor={(item)=>`${item.order_id}`}
+      showsHorizontalScrollIndicator={false}
+      style={{
+        marginTop:SIZES.padding,
+        paddingHorizontal:SIZES.padding,
+      }}
+      renderItem={({item,index})=>{
+        var formatted = getDate(item.order_date);
+        return (<View>
+          <Text
+          style={{
+            ...FONTS.body3,
+          }}
+          >{formatted}</Text>
+          <OrderItem
+            name={item.order_id}
+            status={item.orderStatus}
+            navigation={navigation}
+            date={formatted}
+            price={item.order_amount + item.delivery_cost}
+          />
+          </View>);
+      }}
+      />
+      {/* <ScrollView
       style={{
         marginTop:SIZES.padding ,
         paddingHorizontal:SIZES.padding,
       }}
       >
-        <Text
-        style={{
-          ...FONTS.body3,
-        }}
-        >19 Sep 2021</Text>
-        <OrderItem
-          navigation={navigation}
-        />
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };

@@ -8,14 +8,16 @@ import {
     Image,
     TouchableWithoutFeedback,
     FlatList,
+    Alert
 } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import {Header} from '../Components';
-import { COLORS, SIZES,icons, dummyData, FONTS, constants } from '../constants';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { COLORS, SIZES,icons, FONTS, constants } from '../constants';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '../stores/tab/tabActions';
-import { Favourite, Home ,Notification,Orders,Profile,Restaurant,Search} from './index';
-
+import { Favourite, Home ,Orders,Profile,Restaurant} from './index';
+import axios from 'axios';
+import { addOrders } from '../stores/products/productActions';
 const TabButton = ({label,icon,isFocus,onPress,innerContainerStyle,outerContainerStyle,navigation})=>{
     return (
         <TouchableWithoutFeedback onPress={onPress}>
@@ -69,6 +71,23 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
     const notificationTabColor = useSharedValue(COLORS.white);
     const orderTabFlex = useSharedValue(1);
     const orderTabColor = useSharedValue(COLORS.white);
+    const dispatch = useDispatch();
+    const user = useSelector(state=>state.userReducer.user);
+    const token = useSelector(state=>state.userReducer.jwtToken);
+    const getOrders = (type) =>{
+        var config = {
+          method: 'get',
+          url: `/customer/get-customer-order/${user?.customer_id}`,
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        };
+        axios(config).then(response=>{
+          dispatch(addOrders(response.data));
+        }).catch(response=>{
+          console.log(config);
+          Alert.alert('Error','Something went wring trying to fetch orders');});
+      };
     //Animation stylr
     const homeFlexStyle = useAnimatedStyle(()=>{
         return {
@@ -121,7 +140,6 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
         };
     });
     const selected = useSelector(state=>state.tabReducer.selectedTab);
-    const dispatch = useDispatch();
     React.useEffect(()=>{
         dispatch(setSelectedTab({selectedTab:constants.screens.home}))
     },[dispatch]);
@@ -273,7 +291,10 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
                     outerContainerStyle={searchFlexStyle}
                     innerContainerStyle={searchColorrStyle}
                     />
-                    <TabButton label="Orders" icon={icons.cart} isFocus={selected==constants.screens.orders} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.orders}));}}
+                    <TabButton label="Orders" icon={icons.cart} isFocus={selected==constants.screens.orders} onPress={()=>{
+                        getOrders();
+                        dispatch(setSelectedTab({selectedTab:constants.screens.orders}));
+                    }}
                     outerContainerStyle={orderFlexStyle}
                     innerContainerStyle={orderColorrStyle}/>
                     <TabButton label="Profile" icon={icons.profile} isFocus={selected==constants.screens.profile} onPress={()=>{dispatch(setSelectedTab({selectedTab:constants.screens.profile}));}}

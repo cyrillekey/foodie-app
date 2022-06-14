@@ -4,8 +4,9 @@ import { COLORS, FONTS, icons, SIZES ,dummyData} from '../../constants';
 import { Header ,LineDivider} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
-
 const OrderDetails = ({navigation}) => {
+    
+//const productOrder = 
   return (
     <View
     style={{
