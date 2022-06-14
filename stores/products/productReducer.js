@@ -61,7 +61,9 @@ const productReducer = (state = initialState,action )=>{
         case cartActions.INCREASE_QTY:
             {
             let itemAdd = state.cartItems.find(cart=>cart.food_id === action.payload.id);
-            if (itemAdd.stock <= itemAdd.stock + 1){
+            console.log(itemAdd.stock);
+            console.log(itemAdd.qty < (itemAdd.stock));
+            if (itemAdd.qty < itemAdd.stock){
             const tempCartAdd = [...state.cartItems];
             let indexOfAdd = state.cartItems.indexOf(itemAdd);
             tempCartAdd[indexOfAdd].qty += 1;
@@ -92,7 +94,7 @@ const productReducer = (state = initialState,action )=>{
         case productActions.SAVE_ORDERS:
             return {...state,order:action.payload};
         case productActions.CLEAR_CART:
-            return {...state,cartItems:[]};
+            return {...state,cartItems:[],qty:0};
         default:
             return state;
     }
