@@ -8,12 +8,6 @@ import { useDispatch ,useSelector} from "react-redux";
 import { saveAddress } from "../../stores/user/userActions";
 import Geolocation from "react-native-geolocation-service";
 const OnBoarding = ({navigation})=>{
-    const user = useSelector(state=>state.userReducer.user);
-    React.useEffect(()=>{
-        if (user !== null){
-            navigation.navigate('Home');
-        }
-    });
     const scrollX = new Animated.Value(8);
     const flatListRef = React.useRef();
     const dispatch = useDispatch();
@@ -34,7 +28,7 @@ const OnBoarding = ({navigation})=>{
                     flexDirection:'row',
                     alignItems:'center',
                     justifyContent:'center',
-                    marginTop:20
+                    marginTop:20,
                 }}
             >
                 {

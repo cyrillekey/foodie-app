@@ -9,6 +9,7 @@ const initialState = {
     jwtToken:'',
     paymentMethods:dummyData.allCards,
     selectedCard:{},
+    onboarded:false,
 };
 
 const userReducer = (state = initialState,action)=>{
@@ -29,6 +30,8 @@ const userReducer = (state = initialState,action)=>{
             return {...state,jwtToken:action.payload.token};
         case userActions.LOGOUT:
             return {...state,user:null};
+        case userActions.ONBOARDED:
+            return {...state,onboarded:true};
         default:
             return state;
     }
