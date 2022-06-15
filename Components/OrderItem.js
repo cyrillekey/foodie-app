@@ -9,6 +9,7 @@ const OrderItem = ({
     price,
     date,qty,status,
     navigation,
+    onPress,
 }) => {
   return (
     <View
@@ -90,9 +91,7 @@ const OrderItem = ({
                 width:130,
             }}
             label="Order Details"
-            onPress={()=>{
-                navigation.navigate("orderDetails")
-            }}
+            onPress={onPress}
           />
             <TextButton
             buttonContainerStyle={{

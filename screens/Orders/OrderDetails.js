@@ -1,12 +1,14 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable comma-dangle */
 import { View, Text ,Image,ScrollView} from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, icons, SIZES ,dummyData} from '../../constants';
 import { Header ,LineDivider} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
-const OrderDetails = ({navigation}) => {
-    
-//const productOrder = 
+import { useSelector } from 'react-redux';
+const OrderDetails = ({navigation,route}) => {
+    const details = useSelector(state=>state.productReducer.order)[route.params.id];
   return (
     <View
     style={{
@@ -45,7 +47,7 @@ const OrderDetails = ({navigation}) => {
         </View>
         <View
         style={{
-            position:"absolute",
+            position:'absolute',
             bottom:0,
             width:'100%',
             height:300
@@ -77,7 +79,7 @@ const OrderDetails = ({navigation}) => {
             >
                 <Text style={{...FONTS.h3,marginLeft:SIZES.padding}}>Order items</Text>
                 {
-                    dummyData.menu[1].list.map(item=>(
+                    details?.productOrder?.map((item)=>(
                         <View
             style={{
                 flexDirection:'row',
@@ -86,7 +88,7 @@ const OrderDetails = ({navigation}) => {
             }}
             >
             <Image
-            source={item.image}
+            source={{uri:item?.food?.food_image}}
             style={{
                 width:40,
                 height:40,
@@ -102,8 +104,8 @@ const OrderDetails = ({navigation}) => {
                     ...FONTS.body4,
                     color:COLORS.gray,
                 }}
-                >{item.name}</Text>
-                <Text style={{...FONTS.h3}}>Qty: 4</Text>
+                >{item?.food?.food_name}</Text>
+                <Text style={{...FONTS.h3}}>Qty: {item.qunatity}</Text>
             </View>
             </View>
                     ))

@@ -76,7 +76,7 @@ const getOrders = (type) =>{
           backgroundColor: isHistory ? COLORS.lightOrange2 : COLORS.primary,
         }}
         labelStyle={{
-          color: isHistory ? COLORS.primary :COLORS.white,
+          color: isHistory ? COLORS.primary : COLORS.white,
         }}
         />
       </View>
@@ -131,6 +131,11 @@ const getOrders = (type) =>{
             navigation={navigation}
             date={formatted}
             price={item.order_amount + item.delivery_cost}
+            onPress={()=>{
+              navigation.navigate('orderDetails',{
+                id:index,
+            });
+            }}
           />
           </View>);
       }}
