@@ -116,7 +116,10 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                 <View style={{marginBottom:SIZES.padding}}>
                 <CustomDrawerItem label="Logout" icon={icons.logout} onPress={()=>{
                     dispatch(logoutUser());
-                    navigation.navigate('SignIn');
+                    navigation.reset({
+                        index:0,
+                        routes:[{name:'SignIn'}],
+                    });
                 }}/>
                 </View>
             </View>
