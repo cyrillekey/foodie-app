@@ -4,7 +4,7 @@ import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity } from 'rea
 import { Iconlabel, LineDivider } from '../../Components';
 import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
-const Profile = ({navigation}) => {
+const Profile = (navigation) => {
     const user = useSelector(state=>state.userReducer.user);
   return (
     <SafeAreaView
@@ -147,7 +147,11 @@ const Profile = ({navigation}) => {
         marginTop:10,
     }}
     >
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{
+            navigation.navigate('editProfile');
+        }}
+        >
             <View
             style={{
                 flexDirection:'row',
@@ -164,7 +168,7 @@ const Profile = ({navigation}) => {
                     fontSize:16,
                     lineHeight:26,
                 }}
-                >Support</Text>
+                >Edit Profile</Text>
             </View>
         </TouchableOpacity>
         <TouchableOpacity>
