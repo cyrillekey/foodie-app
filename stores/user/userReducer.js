@@ -3,8 +3,8 @@ import { dummyData } from '../../constants';
 const initialState = {
     user:null,
     address:{
-        latitude:0,
-        longitude:0,
+        latitude:-1.2433969,
+        longitude:36.6633494,
     },
     jwtToken:'',
     paymentMethods:dummyData.allCards,

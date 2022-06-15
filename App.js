@@ -2,13 +2,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails,EditProfile} from './screens';
 import SplashScreen from 'react-native-splash-screen';
 import {PermissionsAndroid} from 'react-native';
  import { store,persistor } from './stores/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import Geolocation from 'react-native-geolocation-service';
+import { saveAddress } from './stores/user/userActions';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -22,6 +24,7 @@ const AppWrapper = () =>{
 const App = () => {
   const user = useSelector(state=>state.userReducer.user);
   const onboarded = useSelector(state=>state.userReducer.onboarded);
+  const dispatch = useDispatch();
     const askForLocationPermission = async () => {
         try {
           await PermissionsAndroid.request(
@@ -36,6 +39,15 @@ const App = () => {
       };
     React.useEffect(()=>{
         askForLocationPermission();
+        Geolocation.getCurrentPosition(
+          (position) => {
+            dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
+          },
+          (error) => {
+            console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
         SplashScreen.hide();
     });
     return (
