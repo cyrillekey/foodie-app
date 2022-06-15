@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
-import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails} from './screens';
+import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails,EditProfile} from './screens';
 import SplashScreen from 'react-native-splash-screen';
 import {PermissionsAndroid} from 'react-native';
  import { store,persistor } from './stores/store';
@@ -65,6 +65,7 @@ const App = () => {
                 <Stack.Screen name="deliveryMap" component={DeliveryMap} />
                 <Stack.Screen name="pickAddress" component={PickAddress}/>
                 <Stack.Screen name="orderDetails" component={OrderDetails}/>
+                <Stack.Screen name="editProfile" component={EditProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);

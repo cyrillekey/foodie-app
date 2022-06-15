@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React from 'react';
 import { View,Text, Alert } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { FlatList} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { OrderItem, ShimmerWrapper, TextButton } from '../../Components';
 import { COLORS, dummyData, FONTS, SIZES } from '../../constants';
@@ -92,18 +92,17 @@ const getOrders = (type) =>{
         }}
         renderItem={({item,index})=>{
           return (
-            <ShimmerWrapper>
+            <ShimmerWrapper
+            style={{
+              height:140,
+              marginTop:SIZES.radius,
+               borderRadius:SIZES.radius,
+               marginBottom:SIZES.radius,
+            }}
+            width={SIZES.width * 0.85}
+            >
               <View>
                 <Text> </Text>
-                <View
-                style={{
-                  height:140,
-                  marginTop:SIZES.radius,
-                  paddingHorizontal:SIZES.base,
-                  borderRadius:SIZES.radius,
-                  marginBottom:SIZES.radius,
-              }}
-                />
               </View>
             </ShimmerWrapper>
           );

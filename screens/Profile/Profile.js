@@ -1,12 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text, View,StyleSheet,Image, SafeAreaView } from 'react-native';
+import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Iconlabel, LineDivider } from '../../Components';
 import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
-const Profile = () => {
+const Profile = ({navigation}) => {
     const user = useSelector(state=>state.userReducer.user);
-//    console.log(user);
   return (
     <SafeAreaView
     style={styles.container}
@@ -17,6 +16,9 @@ const Profile = () => {
     >
         <View
         style={styles.userInfoSection}
+        onMagicTap={()=>{
+            console.log(navigation);
+        }}
         >
             <View
             style={{
@@ -114,6 +116,7 @@ const Profile = () => {
         style={{
             alignItems:'center',
             alignSelf:'center',
+            borderRightColor:COLORS.black,
         }}
         ><Text
             style={{
@@ -139,6 +142,72 @@ const Profile = () => {
         backgroundColor:COLORS.black,
     }}
     />
+    <View
+    style={{
+        marginTop:10,
+    }}
+    >
+        <TouchableOpacity>
+            <View
+            style={{
+                flexDirection:'row',
+                paddingVertical:15,
+                paddingHorizontal:30,
+            }}
+            >
+                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Text
+                style={{
+                    color:'#777777',
+                    marginLeft:20,
+                    fontWeight:'600',
+                    fontSize:16,
+                    lineHeight:26,
+                }}
+                >Support</Text>
+            </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <View
+            style={{
+                flexDirection:'row',
+                paddingVertical:15,
+                paddingHorizontal:30,
+            }}
+            >
+                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Text
+                style={{
+                    color:'#777777',
+                    marginLeft:20,
+                    fontWeight:'600',
+                    fontSize:16,
+                    lineHeight:26,
+                }}
+                >Support</Text>
+            </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <View
+            style={{
+                flexDirection:'row',
+                paddingVertical:15,
+                paddingHorizontal:30,
+            }}
+            >
+                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Text
+                style={{
+                    color:'#777777',
+                    marginLeft:20,
+                    fontWeight:'600',
+                    fontSize:16,
+                    lineHeight:26,
+                }}
+                >Support</Text>
+            </View>
+        </TouchableOpacity>
+    </View>
     </SafeAreaView>
   );
 };

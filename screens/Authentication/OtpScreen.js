@@ -30,7 +30,7 @@ const OtpScreen = ({navigation}) => {
   }, []);
   const resendToken = () => {
     axios.get(
-      `/get-activation-token/${user.user_phone}`,
+      `/get-activation-token/${user?.user_phone}`,
     );
   };
   const checkCodeActivation = () => {
@@ -88,7 +88,7 @@ const OtpScreen = ({navigation}) => {
   return (
     <AuthLayout
       title="Verification"
-      sutitle={`Enter Verification code sent to ${user.user_phone}`}>
+      sutitle={`Enter Verification code sent to ${user?.user_phone ?? '0712345678'}`}>
       <View
         style={{
           flex: 1,

@@ -31,6 +31,7 @@ import OrderStatus from "./Orders/OrderStatus";
 import DeliveryMap from "./Maps/DeliveryMap";
 import PickAddress from './Maps/PickAddress';
 import OrderDetails from "./Orders/OrderDetails";
+import EditProfile from "./Profile/EditProfile";
 export {
     MainLayout,
     Home,
@@ -55,4 +56,5 @@ export {
     DeliveryMap,
     PickAddress,
     OrderDetails,
+    EditProfile,
 };
