@@ -33,7 +33,12 @@ const PlaceOrder = ({navigation}) => {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
-            data : formatted,
+            data :
+            {
+                'latitude':address.latitude,
+                'longitude':address.longitude,
+                'item':formatted,
+            },
           };
           console.log(config);
         axios(config).then(

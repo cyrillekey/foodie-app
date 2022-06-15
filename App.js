@@ -51,7 +51,7 @@ const App = () => {
         SplashScreen.hide();
     });
     return (
-            <GestureHandlerRootView style={{flex:1}}>
+            <GestureHandlerRootView style={{flex:1,}}>
               <NavigationContainer>
           <Stack.Navigator
                 screenOptions={{
