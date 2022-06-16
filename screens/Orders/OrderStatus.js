@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Alert } from 'react-native'
 import React from 'react'
 import { Header, LineDivider, TextButton } from '../../Components';
 import { COLORS, constants, dummyData, FONTS, icons, SIZES } from '../../constants';
@@ -148,6 +148,13 @@ const OrderStatus = ({navigation}) => {
       }}
       >
           <TextButton
+          onPress={()=>Alert.alert(
+            'Are you Sure',
+            'Are you sure you want to cancel this order',
+            [
+                {text:'',onPress:()}
+            ]
+            )}
           buttonContainerStyle={{
               width:'40%',
               borderRadius:SIZES.base,
@@ -159,7 +166,7 @@ const OrderStatus = ({navigation}) => {
           }}
           />
           <TextButton
-          label="Map VIew"
+          label="Map View"
           buttonContainerStyle={{
             width:'40%',
             borderRadius:SIZES.base,
