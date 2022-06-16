@@ -59,7 +59,7 @@ const PickAddress = ({navigation}) => {
                 placeholderTextColor:COLORS.black,
             }}
             query={{
-                key: 'AIzaSyDX0TsScjMl2802PeJ5KarUFGvjJnPhl2Q',
+                key: '',
                 language: 'en',
               }}
               onFail={(e)=>{console.log(e)}}
