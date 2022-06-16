@@ -59,9 +59,10 @@ const PickAddress = ({navigation}) => {
                 placeholderTextColor:COLORS.black,
             }}
             query={{
-                key: 'YOUR API KEY',
+                key: 'AIzaSyDX0TsScjMl2802PeJ5KarUFGvjJnPhl2Q',
                 language: 'en',
               }}
+              onFail={(e)=>{console.log(e)}}
         />
             </View>
         <MapView
