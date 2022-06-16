@@ -108,10 +108,10 @@ const menu = [
         name: "Recommended",
         list: [
             hamburger, hotTacos, wrapSandwich,
-        ]
+        ],
     },
 
-]
+];
 const allCards = [
     {
         id: 1,
@@ -138,8 +138,13 @@ const allCards = [
         name: "Master Card",
         icon: require("../assets/icons/mastercard.png"),
     },
-]
-const restaurant=[
+    {
+        id:6,
+        name:'Lipa na Mpesa',
+        icon: require('../assets/icons/mpesa.png'),
+    },
+];
+const restaurant = [
     {
         id: 1,
         name: "Hamburger",

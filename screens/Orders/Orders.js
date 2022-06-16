@@ -126,6 +126,7 @@ const getOrders = (type) =>{
           }}
           >{formatted}</Text>
           <OrderItem
+            index={index}
             name={item.order_id}
             status={item.orderStatus}
             navigation={navigation}

@@ -141,14 +141,14 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
     });
     const selected = useSelector(state=>state.tabReducer.selectedTab);
     React.useEffect(()=>{
-        dispatch(setSelectedTab({selectedTab:constants.screens.home}))
+        dispatch(setSelectedTab({selectedTab:constants.screens.home}));
     },[dispatch]);
     React.useEffect(()=>{
         if (selected === constants.screens.home){
             flasListRef?.current?.scrollToIndex({
                 index:0,
-                amimated:false
-            })
+                amimated:false,
+            });
             homeTabFlex.value = withTiming(4,{duration:500});
             homeTabColor.value = withTiming(COLORS.primary,{duration:500})
         } else {

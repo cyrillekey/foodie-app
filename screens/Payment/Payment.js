@@ -67,8 +67,9 @@ import { saveCard } from '../../stores/user/userActions';
             >Payment Methods</Text>
             <View>
                 {
-                    cards.map((data,index)=>(
+                cards.map((data,index)=>(
                         <CardItem
+                        key={index}
                         item={data}
                         isSelected={data.id == card}
                         onPress={()=>{

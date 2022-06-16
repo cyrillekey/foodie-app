@@ -10,6 +10,7 @@ const OrderItem = ({
     date,qty,status,
     navigation,
     onPress,
+    index
 }) => {
   return (
     <View
@@ -105,7 +106,9 @@ const OrderItem = ({
             }}
             label="Track"
             onPress={()=>{
-               navigation.navigate("orderStatus"); 
+               navigation.navigate('orderStatus',{
+                id:index,
+               });
             }}
           />
       </View>
