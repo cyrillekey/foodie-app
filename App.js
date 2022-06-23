@@ -12,6 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Geolocation from 'react-native-geolocation-service';
 import { saveAddress } from './stores/user/userActions';
 import { Notifications } from 'react-native-notifications';
+import axios from 'axios';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -55,14 +56,29 @@ const App = () => {
     const notificationreg = () =>{
       Notifications.registerRemoteNotifications();
       Notifications.events().registerRemoteNotificationsRegistered((registered)=>{
-        console.log(registered.deviceToken);
+        if (user !== null){
+          axios({
+            method:'POST',
+            url:`/update-fcm-token/${user.customer_id}`,
+            headers:{
+              'Content-Type': 'application/json',
+            },
+            data:{
+              'token':registered.deviceToken,
+            },
+          }).then(resp=>{
+            console.log(resp.status);
+          }).catch(err=>{
+            console.log(err.status);
+          });
+        }
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
         console.error(event);
       });
       Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
         console.log(`Notification received in the foreground: ${notification.title}`);
-        completion({alert:false,sound:false,badge:false});
+        completion({alert:true,sound:true,badge:true});
       });
       Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
         console.log(notification);
