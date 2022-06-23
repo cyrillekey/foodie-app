@@ -6,7 +6,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails,EditProfile} from './screens';
 import SplashScreen from 'react-native-splash-screen';
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
  import { store,persistor } from './stores/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Geolocation from 'react-native-geolocation-service';
@@ -67,21 +67,26 @@ const App = () => {
               'token':registered.deviceToken,
             },
           }).then(resp=>{
-            console.log(resp.status);
           }).catch(err=>{
             console.log(err.status);
           });
+          console.log(registered.deviceToken);
         }
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
         console.error(event);
       });
       Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
-        console.log(`Notification received in the foreground: ${notification.title}`);
+        console.log(notification);
         completion({alert:true,sound:true,badge:true});
       });
       Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
-        console.log(notification);
+        if (Platform.OS =='android'){
+          if (!notification.payload || (!notification.payload.android_channel_id && !notification.payload["gcm.notification.android_channel_id"])) {
+            notification.payload.android_channel_id = "my-notification-channel-id";
+            Notifications.postLocalNotification(notification.payload);
+          }
+        }
         completion({alert:true,sound:false,badge:true});
       });
       Notifications.events().registerNotificationOpened((notification,completion)=>{
