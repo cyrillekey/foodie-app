@@ -5769,6 +5769,11 @@
   dependencies:
     "@types/geojson" "^7946.0.7"
 
+"react-native-notifications@^4.3.1":
+  "integrity" "sha512-A668d+Q0/VQRjmrh+LvDpc/REA8GXgwCijXDCIlDHGMK8enmrtdxY5OANQf1VM3hecf+fD0wYFw2uqL/ZR8jgg=="
+  "resolved" "https://registry.npmjs.org/react-native-notifications/-/react-native-notifications-4.3.1.tgz"
+  "version" "4.3.1"
+
 "react-native-qrcode-svg@^6.1.2":
   "integrity" "sha512-lMbbxoPVybXCp9SYm73Aj/0iZ9OlSZl2u+zpdbjgC4DYHBm9m9tDQxISNg1OPeR7AAzmyx8IV4JTFmk8G5R22g=="
   "resolved" "https://registry.npmjs.org/react-native-qrcode-svg/-/react-native-qrcode-svg-6.1.2.tgz"

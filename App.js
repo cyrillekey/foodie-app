@@ -11,6 +11,7 @@ import {PermissionsAndroid} from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 import Geolocation from 'react-native-geolocation-service';
 import { saveAddress } from './stores/user/userActions';
+import { Notifications } from 'react-native-notifications';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -48,8 +49,26 @@ const App = () => {
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
+      notificationreg();
         SplashScreen.hide();
     });
+    const notificationreg = () =>{
+      Notifications.registerRemoteNotifications();
+      Notifications.events().registerRemoteNotificationsRegistered((registered)=>{
+        console.log(registered.deviceToken);
+      });
+      Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
+        console.error(event);
+      });
+      Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
+        console.log(`Notification received in the foreground: ${notification.title}`);
+        completion({alert:false,sound:false,badge:false});
+      });
+      Notifications.events().registerNotificationOpened((notification,completion)=>{
+        console.log(notification.payload);
+        completion();
+      });
+    };
     return (
             <GestureHandlerRootView style={{flex:1,}}>
               <NavigationContainer>
