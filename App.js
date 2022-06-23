@@ -64,6 +64,10 @@ const App = () => {
         console.log(`Notification received in the foreground: ${notification.title}`);
         completion({alert:false,sound:false,badge:false});
       });
+      Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
+        console.log(notification);
+        completion({alert:true,sound:false,badge:true});
+      });
       Notifications.events().registerNotificationOpened((notification,completion)=>{
         console.log(notification.payload);
         completion();
