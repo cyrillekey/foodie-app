@@ -55,6 +55,7 @@ const App = () => {
         SplashScreen.hide();
     });
     const notificationreg = () =>{
+      Notifications.registerRemoteNotifications();
       Notifications.events().registerRemoteNotificationsRegistered((registered)=>{
         if (user !== null){
           axios({
@@ -72,6 +73,21 @@ const App = () => {
           });
           //console.log(registered.deviceToken);
         }
+      });
+      Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
+        completion({alert:true,sound:true,badge:true});
+      });
+      Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
+        if (Platform.OS == 'android'){
+          if (!notification.payload || (!notification.payload.android_channel_id && !notification.payload['gcm.notification.android_channel_id'])) {
+            notification.payload.android_channel_id = 'my-notification-channel-id';
+            Notifications.postLocalNotification(notification.payload);
+          }
+        }
+        completion({alert:true,sound:false,badge:true});
+      });
+      Notifications.events().registerNotificationOpened((notification,completion)=>{
+        completion();
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
         console.log('an error occured',event);

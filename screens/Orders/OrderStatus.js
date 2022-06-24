@@ -230,7 +230,6 @@ const OrderStatus = ({navigation,route}) => {
           onPress={()=>navigation.navigate('deliveryMap')}
           />
       </View>
-    
         }
     </View>
   );
