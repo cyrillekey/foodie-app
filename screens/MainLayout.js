@@ -85,7 +85,6 @@ const MainLayout = ({drawerAnimationStyle,navigation}) => {
         axios(config).then(response=>{
           dispatch(addOrders(response.data));
         }).catch(response=>{
-          console.log(config);
           Alert.alert('Error','Something went wring trying to fetch orders');});
       };
     //Animation stylr

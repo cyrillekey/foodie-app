@@ -40,7 +40,6 @@ const PlaceOrder = ({navigation}) => {
                 'item':formatted,
             },
           };
-          console.log(config);
         axios(config).then(
             response=>{
                 setSubmitting(false);
@@ -55,7 +54,7 @@ const PlaceOrder = ({navigation}) => {
         ).catch(err=>{
             setSubmitting(false);
             Alert.alert('Error', 'Something went wrong');
-            console.log(err);});
+        });
     };
   return (
     <View
@@ -115,7 +114,6 @@ const PlaceOrder = ({navigation}) => {
             marginTop:SIZES.padding,
         }}
         onMagicTap={()=>{
-            console.log('hello');
         }}
         >
             <Text

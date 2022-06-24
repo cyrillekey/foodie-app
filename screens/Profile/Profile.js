@@ -17,7 +17,6 @@ const Profile = (navigation) => {
         <View
         style={styles.userInfoSection}
         onMagicTap={()=>{
-            console.log(navigation);
         }}
         >
             <View

@@ -32,7 +32,6 @@ const OrderStatus = ({navigation,route}) => {
                 setCurrentStep(0);
                 break;
         }
-        console.log(status);
     },[order.orderStatus]);
     const [label,setLabel] = React.useState(
         'Cancel'

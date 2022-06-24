@@ -8,7 +8,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from 'react-native-gesture-handler';
 import { Header } from '../../Components';
 const EditProfile = (navigation) => {
-    console.log(navigation)
   return (
     <View
       style={{

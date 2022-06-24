@@ -24,7 +24,6 @@ const productReducer = (state = initialState,action )=>{
                 let index = state.cartItems.indexOf(exist);
                 tempCart[index].qty += action.payload.qty;
                 let total = tempCart[index].food_price * action.payload.qty;
-                console.log(total);
                 return {...state,cartItems:tempCart,qty:state.qty + action.payload.qty,cartTotal:state.cartTotal + total};
             } else {
             let item = state.products.find(product=>product.food_id === action.payload.id);
@@ -61,15 +60,12 @@ const productReducer = (state = initialState,action )=>{
         case cartActions.INCREASE_QTY:
             {
             let itemAdd = state.cartItems.find(cart=>cart.food_id === action.payload.id);
-            console.log(itemAdd.stock);
-            console.log(itemAdd.qty < (itemAdd.stock));
             if (itemAdd.qty < itemAdd.stock){
             const tempCartAdd = [...state.cartItems];
             let indexOfAdd = state.cartItems.indexOf(itemAdd);
             tempCartAdd[indexOfAdd].qty += 1;
             return {...state,cartItems:tempCartAdd,qty:state.qty + 1,cartTotal:state.cartTotal + itemAdd.food_price};
             } else {
-                console.log("goes over");
                 return state;
             }
             }

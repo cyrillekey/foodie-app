@@ -29,7 +29,6 @@ const getOrders = (type) =>{
     setFetching(false);
   }).catch(response=>{
     setFetching(false);
-    console.log(config);
     Alert.alert('Error','Something went wring trying to fetch orders');});
 };
 

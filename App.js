@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -54,7 +55,6 @@ const App = () => {
         SplashScreen.hide();
     });
     const notificationreg = () =>{
-      Notifications.registerRemoteNotifications();
       Notifications.events().registerRemoteNotificationsRegistered((registered)=>{
         if (user !== null){
           axios({
@@ -68,34 +68,17 @@ const App = () => {
             },
           }).then(resp=>{
           }).catch(err=>{
-            console.log(err.status);
+            console.log('Error occured',err.status);
           });
-          console.log(registered.deviceToken);
+          //console.log(registered.deviceToken);
         }
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
-        console.error(event);
-      });
-      Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
-        console.log(notification);
-        completion({alert:true,sound:true,badge:true});
-      });
-      Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
-        if (Platform.OS =='android'){
-          if (!notification.payload || (!notification.payload.android_channel_id && !notification.payload["gcm.notification.android_channel_id"])) {
-            notification.payload.android_channel_id = "my-notification-channel-id";
-            Notifications.postLocalNotification(notification.payload);
-          }
-        }
-        completion({alert:true,sound:false,badge:true});
-      });
-      Notifications.events().registerNotificationOpened((notification,completion)=>{
-        console.log(notification.payload);
-        completion();
+        console.log('an error occured',event);
       });
     };
     return (
-            <GestureHandlerRootView style={{flex:1,}}>
+            <GestureHandlerRootView style={{flex:1}}>
               <NavigationContainer>
           <Stack.Navigator
                 screenOptions={{
