@@ -3,8 +3,10 @@ import React from 'react';
 import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Iconlabel, LineDivider } from '../../Components';
 import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../stores/user/userActions';
 const Profile = (navigation) => {
+    const dispatch = useDispatch();
     const user = useSelector(state=>state.userReducer.user);
   return (
     <SafeAreaView
@@ -190,7 +192,15 @@ const Profile = (navigation) => {
                 >Support</Text>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{
+            dispatch(logoutUser());
+                    navigation.reset({
+                        index:0,
+                        routes:[{name:'SignIn'}],
+                    });
+        }}
+        >
             <View
             style={{
                 flexDirection:'row',
@@ -198,7 +208,7 @@ const Profile = (navigation) => {
                 paddingHorizontal:30,
             }}
             >
-                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Image source={icons.logout} style={{height:25,width:25,tintColor:'#FF6347'}}/>
                 <Text
                 style={{
                     color:'#777777',
@@ -207,7 +217,7 @@ const Profile = (navigation) => {
                     fontSize:16,
                     lineHeight:26,
                 }}
-                >Support</Text>
+                >Logout</Text>
             </View>
         </TouchableOpacity>
     </View>

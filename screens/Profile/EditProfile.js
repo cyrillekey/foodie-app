@@ -7,7 +7,43 @@ import Animated from 'react-native-reanimated';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from 'react-native-gesture-handler';
 import { Header } from '../../Components';
+import { useDispatch, useSelector } from 'react-redux';
+import { launchImageLibrary } from 'react-native-image-picker';
+import axios from 'axios';
+import { saveUser } from '../../stores/user/userActions';
+var fs = require('react-native-fs');
 const EditProfile = (navigation) => {
+  const user = useSelector(state=>state.userReducer.user);
+  const token = useSelector(state=>state.userReducer.jwtToken);
+  const dispatch = useDispatch();
+  const [form,setForm] = React.useState({
+    user_name:user.user_name,
+    user_phone:user.user_phone,
+    user_mail:user.user_mail,
+  });
+  const imagePicker = async() =>{
+    const result = await launchImageLibrary({
+    });
+     const data = new FormData();
+      data.append('category_image',result.assets[0].bitrate);
+      axios({
+        url:`/customer/upload-profile-image/${user.customer_id}`,
+        headers:{
+        'Authorization':`Bearer ${token}`,
+        },
+        method:'post',
+        data:data,
+      }).then(res=>{
+        if (res.status === 200){
+          dispatch(saveUser({user:res.data}));
+        }
+      }).catch(err=>{
+        console.log(err);
+      });
+  };
+  const updateProfile = () =>{
+    axios.post(`/customer/update-profile/${user.customer_id}`,{}).then(val=>{}).catch(err=>{});
+  };
   return (
     <View
       style={{
@@ -35,7 +71,7 @@ const EditProfile = (navigation) => {
           ),
         }}>
         <View style={{alignItems: 'center'}}>
-          <TouchableOpacity onPress={() => React.createRef().current.snapTo(0)}>
+          <TouchableOpacity onPress={() => imagePicker()}>
             <View
               style={{
                 height: 100,
@@ -45,7 +81,7 @@ const EditProfile = (navigation) => {
                 alignItems: 'center',
               }}>
               <ImageBackground
-                source={images.profile}
+                source={user?.profile_picture ?? images.profile}
                 style={{height: 100, width: 100}}
                 imageStyle={{borderRadius: 15}}>
                 <View
@@ -79,7 +115,7 @@ const EditProfile = (navigation) => {
             fontSize:18,
             fontWeight:'bold',
           }}
-          >John Doe</Text>
+          >{user?.user_name ?? 'John Doe'}</Text>
         </View>
         <View
         style={{
@@ -100,6 +136,10 @@ const EditProfile = (navigation) => {
             placeholder="Username"
             placeholderTextColor="#666666"
             autoCorrect={false}
+            value = {form.user_name}
+            onChangeText={(value)=>{
+              setForm({...form,user_name:value});
+            }}
             style={{
                 flex:1,
                 marginTop:Platform.OS === 'ios' ? '0' : -12,
@@ -121,12 +161,16 @@ const EditProfile = (navigation) => {
             <FontAwesome
             size={20}
             color={COLORS.black}
-            name="user-o"
+            name="user-circle"
             />
             <TextInput
-            placeholder="Username"
+            placeholder="Email"
             placeholderTextColor="#666666"
             autoCorrect={false}
+            value= {form.user_mail}
+            onChangeText={(value)=>{
+              setForm({...form,user_mail:value});
+            }}
             style={{
                 flex:1,
                 marginTop:Platform.OS === 'ios' ? '0' : -12,
@@ -148,12 +192,17 @@ const EditProfile = (navigation) => {
             <FontAwesome
             size={20}
             color={COLORS.black}
-            name="user-o"
+            name="phone"
             />
+
             <TextInput
-            placeholder="Username"
+            value={form.user_phone}
+            placeholder="User Phone"
             placeholderTextColor="#666666"
             autoCorrect={false}
+            onChangeText={(value)=>{
+              setForm({...form,user_phone:value});
+            }}
             style={{
                 flex:1,
                 marginTop:Platform.OS === 'ios' ? '0' : -12,
