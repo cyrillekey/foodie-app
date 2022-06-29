@@ -1,13 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity,ActivityIndicator } from 'react-native';
 import { Iconlabel, LineDivider } from '../../Components';
 import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../stores/user/userActions';
+import { getAddressName } from '../../constants/util';
 const Profile = (navigation) => {
     const dispatch = useDispatch();
     const user = useSelector(state=>state.userReducer.user);
+    const [form,setForm] = React.useState(<ActivityIndicator/>);
+    const address = useSelector(state=>state.userReducer.address);
+    getAddressName(address.latitude,address.longitude,setForm);
   return (
     <SafeAreaView
     style={styles.container}
@@ -28,7 +32,7 @@ const Profile = (navigation) => {
             }}
             >
                 <Image
-                source={images.profile}
+                source={user?.profile_picture == null ? images.profile : {uri:user.profile_picture}}
                 style={{
                     height:60,
                     width:60,
@@ -69,7 +73,7 @@ const Profile = (navigation) => {
     iconStyle={{
         tintColor:COLORS.black,
     }}
-        label="Kaluta indi"
+        label={form}
         labelStyle={{
             paddingLeft:SIZES.base,
         }}

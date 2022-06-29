@@ -7,6 +7,8 @@ import {
   ImageBackground,
   Image,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, icons, images, SIZES} from '../../constants';
@@ -18,62 +20,80 @@ import {useDispatch, useSelector} from 'react-redux';
 import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import {saveUser} from '../../stores/user/userActions';
-import {getRealPathFromURI} from 'react-native-get-real-path';
-var fs = require('react-native-fs');
+import { API_ENDPOINT } from '../../constants/api';
 const EditProfile = navigation => {
   const user = useSelector(state => state.userReducer.user);
   const token = useSelector(state => state.userReducer.jwtToken);
-
   const dispatch = useDispatch();
-  const [profile, setProfile] = React.useState('');
   const [form, setForm] = React.useState({
     user_name: user.user_name,
     user_phone: user.user_phone,
     user_mail: user.user_mail,
   });
+  const [label,setLabel] = React.useState(
+    <Image
+      source={icons.call}
+      style={{
+        height: 35,
+        width: 35,
+        tintColor: '#fff',
+        opacity: 0.7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
+      }}
+    />,
+  );
   const imagePicker = async () => {
     const result = await launchImageLibrary({
       includeBase64: true,
       selectionLimit: 1,
     });
     const file = result.assets[0];
-    const path = await getRealPathFromURI(file.uri);
     let data = new FormData();
     data.append('category_image', {
       uri: file.uri,
       type: file.type,
       name: file.fileName,
     });
-    fetch(`https://255e-196-216-85-56.ngrok.io/customer/upload-profile-image/${user.customer_id}`,
-    {
-      method:'POST',
-      body:data,
-      headers:{
-        'Authorization':`Bearer ${token}`,
-        'Content-type':'multipart/form-data',
+    setLabel(<ActivityIndicator
+      key="indicator"
+      size="large"
+      color="#fff"
+      />);
+    const response = await fetch(
+      `${API_ENDPOINT}/customer/upload-profile-image/${user.customer_id}`,
+      {
+        method: 'POST',
+        body: data,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'multipart/form-data',
+        },
       },
+    );
+    if (response.status === 200) {
+      const test = await response.json();
+      dispatch(saveUser({user: test}));
+    } else {
+      Alert.alert('Error', 'Something went wrong trying to upload image');
     }
-    ).then(res=>{
-      console.log(res.json);
-    }).catch(err=>{
-      console.log(err);
-    });
-    //  data.append('category_image',fs.readFile(path),file.fileName);
-    // axios({
-    //   url:`/customer/upload-profile-image/${user.customer_id}`,
-    //   headers:{
-    //   
-    //   
-    //   },
-    //   method:'post',
-    //   data:data,
-    // }).then(res=>{
-    //   if (res.status === 200){
-    //     dispatch(saveUser({user:res.data}));
-    //   }
-    // }).catch(err=>{
-    //   console.log(err);
-    // });
+    setLabel(<Image
+      source={icons.call}
+      style={{
+        height: 35,
+        width: 35,
+        tintColor: '#fff',
+        opacity: 0.7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
+      }}
+    />,);
   };
   const updateProfile = () => {
     let updateUser = user;
@@ -127,7 +147,11 @@ const EditProfile = navigation => {
                 alignItems: 'center',
               }}>
               <ImageBackground
-                source={profile == '' ? images.profile : {uri: profile}}
+                source={
+                  user?.profile_picture == null
+                    ? images.profile
+                    : {uri: user.profile_picture}
+                }
                 style={{height: 100, width: 100}}
                 imageStyle={{borderRadius: 15}}>
                 <View
@@ -136,20 +160,7 @@ const EditProfile = navigation => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
-                    source={icons.call}
-                    style={{
-                      height: 35,
-                      width: 35,
-                      tintColor: '#fff',
-                      opacity: 0.7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                      borderRadius: 10,
-                    }}
-                  />
+                  {label}
                 </View>
               </ImageBackground>
             </View>

@@ -3,6 +3,6 @@ import {AppRegistry, Platform} from 'react-native';
 import AppWrapper from './App';
 import {name as appName} from './app.json';
 import axios from 'axios';
-//axios.defaults.baseURL = 'https://foodieback.herokuapp.com';
-axios.defaults.baseURL = 'https://255e-196-216-85-56.ngrok.io';
+import { API_ENDPOINT } from './constants/api';
+axios.defaults.baseURL = API_ENDPOINT;
 AppRegistry.registerComponent(appName, () =>AppWrapper);

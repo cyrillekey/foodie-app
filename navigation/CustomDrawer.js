@@ -3,7 +3,7 @@
 import React from 'react'
 import { Image, TouchableOpacity, View,Text} from 'react-native';
 import { createDrawerNavigator,DrawerContentScrollView } from '@react-navigation/drawer';
-import {COLORS, SIZES,icons, dummyData, FONTS, constants} from '../constants';
+import {COLORS, SIZES,icons, dummyData, FONTS, constants, images} from '../constants';
 import { MainLayout } from '../screens';
 import Animated from 'react-native-reanimated';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -68,7 +68,7 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                     marginTop:SIZES.radius,
                     alignItems:'center',
                 }}>
-                    <Image source={dummyData.myProfile.profile_image} style={{width:50,height:50,borderRadius:SIZES.radius}}/>
+                    <Image source={user?.profile_picture == null ? images.profile : {uri:user.profile_picture}} style={{width:50,height:50,borderRadius:SIZES.radius}}/>
                     <View style={{marginLeft:SIZES.radius}}>
                         <Text
                             style={{
