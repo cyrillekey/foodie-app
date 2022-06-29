@@ -5901,6 +5901,10 @@
     "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
 
+"react-native-get-real-path@github:Wraptime/react-native-get-real-path":
+  "resolved" "git+ssh://git@github.com/Wraptime/react-native-get-real-path.git#b2ce361af46e93011d16280c55cea8a7ad985a6e"
+  "version" "1.0.1"
+
 "react-native-google-places-autocomplete@^2.4.1":
   "integrity" "sha512-NJrzZ5zsguhTqe0C5tIW9PfxOn2wkWDiGYIBFksHzFOIIURxFPUlO0cJmfOjs5CBIDtMampgNXBdgADExBen5w=="
   "resolved" "https://registry.npmjs.org/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-2.4.1.tgz"

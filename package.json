@@ -25,6 +25,7 @@
     "react-native-fs": "^2.20.0",
     "react-native-geolocation-service": "^5.3.0-beta.4",
     "react-native-gesture-handler": "2.1.1",
+    "react-native-get-real-path": "github:Wraptime/react-native-get-real-path",
     "react-native-google-places-autocomplete": "^2.4.1",
     "react-native-image-picker": "^4.8.4",
     "react-native-keyboard-avoiding-scroll-view": "^1.0.1",
