@@ -2,7 +2,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails,EditProfile} from './screens';
@@ -25,6 +25,7 @@ const AppWrapper = () =>{
   );
 };
 const App = () => {
+  const navigation = useNavigation();
   const user = useSelector(state=>state.userReducer.user);
   const onboarded = useSelector(state=>state.userReducer.onboarded);
   const dispatch = useDispatch();
