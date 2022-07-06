@@ -1,7 +1,7 @@
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-# Game Review
+# Foodie App
 This app consumes a custom sprinboot backend paired with a [courier app](https://github.com/cyrillekey/foodie-courier). The app is built using react native and uses google maps and firebase
 
 ## Prerequisite
