@@ -14,6 +14,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { saveAddress } from './stores/user/userActions';
 import { Notifications } from 'react-native-notifications';
 import axios from 'axios';
+import { saveUser,saveToken } from './stores/user/userActions';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -25,7 +26,6 @@ const AppWrapper = () =>{
   );
 };
 const App = () => {
-  const navigation = useNavigation();
   const user = useSelector(state=>state.userReducer.user);
   const onboarded = useSelector(state=>state.userReducer.onboarded);
   const dispatch = useDispatch();
@@ -53,8 +53,31 @@ const App = () => {
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
       notificationreg();
-        SplashScreen.hide();
+      silent_login();
+      SplashScreen.hide();
     });
+    const silent_login = ()=>{
+      if (user !== null){
+      axios({
+        method:'POST',
+        url:'/silentlogin',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        data:{
+          'user_mail':user.user_mail,
+          'user_password':user.password,
+        },
+      }).then(
+        (resp) => {
+          if (resp.status === 200){
+            dispatch(saveUser({user:resp.data.customer}));
+        dispatch(saveToken({token:resp.data.token}));
+          }
+        }
+      ).catch((err)=>console.log(err));
+    }
+    };
     const notificationreg = () =>{
       Notifications.registerRemoteNotifications();
       Notifications.events().registerRemoteNotificationsRegistered((registered)=>{
@@ -72,14 +95,13 @@ const App = () => {
           }).catch(err=>{
             console.log('Error occured',err.status);
           });
-          //console.log(registered.deviceToken);
         }
       });
       Notifications.events().registerNotificationReceivedBackground((notification,completion)=>{
         completion({alert:true,sound:true,badge:true});
       });
       Notifications.events().registerNotificationReceivedForeground((notification,completion)=>{
-        if (Platform.OS == 'android'){
+        if (Platform.OS === 'android'){
           if (!notification.payload || (!notification.payload.android_channel_id && !notification.payload['gcm.notification.android_channel_id'])) {
             notification.payload.android_channel_id = 'my-notification-channel-id';
             Notifications.postLocalNotification(notification.payload);

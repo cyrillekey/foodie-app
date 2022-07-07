@@ -5,3 +5,4 @@ export const SAVE_CARD = 'SAVE_CARD';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const LOGOUT = 'LOGOUT';
 export const ONBOARDED = 'ONBOARDED';
+export const SAVE_PAYMENTS = 'SAVE_PAYEMENTS';

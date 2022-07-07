@@ -1,14 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
-import { ScrollView, Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { ScrollView, Text, View } from 'react-native';
+import React from 'react';
 import { CardItem, Header, TextButton } from '../../Components';
 import { TextIconButton } from '../../Components';
-import { SIZES,icons,COLORS, dummyData, FONTS } from '../../constants';
+import { SIZES,icons,COLORS,FONTS } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveCard } from '../../stores/user/userActions';
+import { saveCard, savePaymentMethods } from '../../stores/user/userActions';
+import axios from 'axios';
  const Payment = ({navigation})=>{
+    const get_payment = ()=>{
+        axios({
+            method:'GET',
+            url:'/foodie/payment-types',
+        }).then(response=>{
+            if (response.status === 200){
+            dispatch(savePaymentMethods(response.data));
+            }
+        }).catch(err=>{
+            console.log(err);
+        });
+    };
+    React.useEffect(()=>{
+        get_payment();
+     },[]);
      const dispatch = useDispatch();
      const cards = useSelector(state=>state.userReducer.paymentMethods);
+     console.log(cards);
      const [card,setCard] = React.useState(null);
     return (
       <View
@@ -69,11 +86,11 @@ import { saveCard } from '../../stores/user/userActions';
                 {
                 cards.map((data,index)=>(
                         <CardItem
-                        key={index}
+                        key={data.payment_id}
                         item={data}
-                        isSelected={data.id == card}
+                        isSelected={data.payment_id == card}
                         onPress={()=>{
-                            setCard(data.id);
+                            setCard(data.payment_id);
                         }}
                         />))
                 }
@@ -94,7 +111,7 @@ import { saveCard } from '../../stores/user/userActions';
                     label="Place Your Order"
                     disabled={card === null}
                     onPress={()=>{
-                        dispatch(saveCard({id:card}))
+                        dispatch(saveCard({id:card}));
                         navigation.navigate('checkout');
                     }}
                     />

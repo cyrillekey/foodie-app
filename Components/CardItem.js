@@ -31,7 +31,7 @@ export default function CardItem({
       }}
       >
         <Image
-        source={item.icon}
+        source={{uri:item.payment_image}}
         resizeMode='center'
         style={{
           width:35,
@@ -45,7 +45,7 @@ export default function CardItem({
         marginLeft:SIZES.radius,
         ...FONTS.h3
       }}
-      >{item.name}</Text>
+      >{item.payment_name}</Text>
       <Image
       source={isSelected ? icons.check_on : icons.check_off}
       style={{

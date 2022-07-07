@@ -28,7 +28,7 @@ const PlaceOrder = ({navigation}) => {
         setSubmitting(true);
         var config = {
             method: 'post',
-            url: `/customer/create-order/${user.customer_id}`,
+            url: `/customer/create-order/${user.customer_id}/${card.payment_id}`,
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
@@ -51,9 +51,10 @@ const PlaceOrder = ({navigation}) => {
                     });
                 }
             }
-        ).catch(err=>{
+        ).catch(err => {
             setSubmitting(false);
             Alert.alert('Error', 'Something went wrong');
+            console.log(err);
         });
     };
   return (

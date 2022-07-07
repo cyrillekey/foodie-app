@@ -7,7 +7,7 @@ const initialState = {
         longitude:36.6633494,
     },
     jwtToken:'',
-    paymentMethods:dummyData.allCards,
+    paymentMethods:[],
     selectedCard:{},
     onboarded:false,
 };
@@ -19,7 +19,7 @@ const userReducer = (state = initialState,action)=>{
                 ...state,address:action.payload,
             };
         case userActions.SAVE_CARD:
-            let card = state.paymentMethods.find(c=>c.id == action.payload.id);
+            let card = state.paymentMethods.find(c=>c.payment_id === action.payload.id);
             return {
                 ...state,selectedCard:card,
             };
@@ -32,6 +32,8 @@ const userReducer = (state = initialState,action)=>{
             return {...state,user:null};
         case userActions.ONBOARDED:
             return {...state,onboarded:true};
+        case userActions.SAVE_PAYMENTS:
+            return {...state,paymentMethods:action.payload};
         default:
             return state;
     }
