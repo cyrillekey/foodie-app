@@ -7,8 +7,32 @@ import { Header ,LineDivider} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 const OrderDetails = ({navigation,route}) => {
-    const details = useSelector(state=>state.productReducer.order)[route.params.id];
+    const id = route.params.id;
+    const token = useSelector(state=>state.userReducer.jwtToken);
+    const order_id = route.params.order_id;
+    let details = (useSelector(state=>state.productReducer.order)[id]);
+    const [temp,setTemp] = React.useState();
+    React.useEffect(()=>{
+        if (!details && order_id){
+            axios({
+                url:`customer/get-order-details/${order_id}`,
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+            }).then(response=>{
+                if(response.status === 200){
+                    setTemp(response.data);
+                }
+            }).catch(err=>{
+                console.log(err);
+            });
+        }else{
+            setTemp(details);
+        }
+    },[details,order_id,token]);
   return (
     <View
     style={{
@@ -16,7 +40,7 @@ const OrderDetails = ({navigation,route}) => {
         backgroundColor:COLORS.white
     }}
     ><Header
-            title="#4525445"
+            title={'#' + temp?.order_id ?? "123"}
             containerStye={{
                 marginTop:SIZES.padding,
                 paddingHorizontal:SIZES.padding
@@ -34,7 +58,7 @@ const OrderDetails = ({navigation,route}) => {
         }}
         >
             <QRCode
-              value='12545'
+              value={temp?.delivery_id ?? '125'}
               size={220}
             />
             <Text
@@ -79,8 +103,9 @@ const OrderDetails = ({navigation,route}) => {
             >
                 <Text style={{...FONTS.h3,marginLeft:SIZES.padding}}>Order items</Text>
                 {
-                    details?.productOrder?.map((item)=>(
+                    temp?.productOrder?.map((item)=>(
                         <View
+                        key={item?.food?.food_id}
             style={{
                 flexDirection:'row',
                 alignItems:'center',

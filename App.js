@@ -2,7 +2,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import CustomDrawer from './navigation/CustomDrawer';
 import { FoodDetails, ForgotPassword, OnBoarding,OtpScreen,Signin, SignUp ,CartTab, Payment, PlaceOrder, Success, OrderStatus, DeliveryMap, PickAddress, OrderDetails,EditProfile} from './screens';
@@ -15,6 +15,7 @@ import { saveAddress } from './stores/user/userActions';
 import { Notifications } from 'react-native-notifications';
 import axios from 'axios';
 import { saveUser,saveToken } from './stores/user/userActions';
+import { navigationRef,rootNavigate } from './navigation/RootNavigation';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -53,7 +54,7 @@ const App = () => {
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
       notificationreg();
-      silent_login();
+      //silent_login();
       SplashScreen.hide();
     });
     const silent_login = ()=>{
@@ -110,6 +111,18 @@ const App = () => {
         completion({alert:true,sound:false,badge:true});
       });
       Notifications.events().registerNotificationOpened((notification,completion)=>{
+        var data = notification.payload;
+        var action = notification.payload.action;
+        switch (action) {
+          case 'order_accepted':
+            var order_id = data.order_id;
+            rootNavigate('orderDetails',{
+              order_id:order_id,
+          });
+            break;
+          default:
+            break;
+        }
         completion();
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
@@ -118,7 +131,9 @@ const App = () => {
     };
     return (
             <GestureHandlerRootView style={{flex:1}}>
-              <NavigationContainer>
+              <NavigationContainer
+              ref={navigationRef}
+              >
           <Stack.Navigator
                 screenOptions={{
                     headerShown: false,
