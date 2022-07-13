@@ -7,6 +7,7 @@ import { Header, TextButton } from '../../Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveAddress } from '../../stores/user/userActions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const PickAddress = ({navigation}) => {
     const mapView = React.useRef();
     const address = useSelector(state=>state.userReducer.address);
@@ -62,7 +63,7 @@ const PickAddress = ({navigation}) => {
                 key: '',
                 language: 'en',
               }}
-              onFail={(e)=>{console.log(e)}}
+              onFail={(e)=>{universalErrorhandlerWithSnackbar(e);}}
         />
             </View>
         <MapView

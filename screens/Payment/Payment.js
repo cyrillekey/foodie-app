@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { ScrollView, Text, View } from 'react-native';
 import React from 'react';
@@ -7,6 +8,7 @@ import { SIZES,icons,COLORS,FONTS } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveCard, savePaymentMethods } from '../../stores/user/userActions';
 import axios from 'axios';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
  const Payment = ({navigation})=>{
     const get_payment = ()=>{
         axios({
@@ -17,16 +19,14 @@ import axios from 'axios';
             dispatch(savePaymentMethods(response.data));
             }
         }).catch(err=>{
-            console.log(err);
+            universalErrorhandlerWithSnackbar(err);
         });
     };
     React.useEffect(()=>{
-        console.log('im called'); 
         get_payment();
      },[]);
      const dispatch = useDispatch();
      const cards = useSelector(state=>state.userReducer.paymentMethods);
-     console.log(cards);
      const [card,setCard] = React.useState(null);
     return (
       <View
@@ -89,7 +89,7 @@ import axios from 'axios';
                         <CardItem
                         key={data.payment_id}
                         item={data}
-                        isSelected={data.payment_id == card?.payment_id}
+                        isSelected={data.payment_id === card?.payment_id}
                         onPress={()=>{
                             setCard(data);
                         }}

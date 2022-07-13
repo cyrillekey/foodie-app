@@ -8,7 +8,7 @@ import {
   Switch,
   Text,
   ActivityIndicator,
-  Alert
+  Alert,
 } from 'react-native';
 import {AuthLayout} from '..';
 import {FormInput, TextButton, TextIconButton} from '../../Components';
@@ -16,6 +16,7 @@ import {SIZES, icons, COLORS, FONTS} from '../../constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { saveToken, saveUser } from '../../stores/user/userActions';
+import { universalErroHandlerWithAlert } from '../../constants/util';
 const Signin = ({navigation}) => {
   const dispatch = useDispatch();
   const [see, setSee] = React.useState(true);
@@ -84,27 +85,16 @@ const Signin = ({navigation}) => {
         Alert.alert('Authentication Error',response.response.data.message,[
           {
             text:'Cancel',
-            onPress:()=>console.log('cancel'),
           },
           {
             text:'Ok',
-            onPress:()=>console.log('Ok'),
           },
         ]);
       }
     }).catch(response=>{
       setFrom({...form,submittin:false});
     setLabel('Sign In');
-    Alert.alert('Error occured',response.response.data.message,[
-      {
-        text:'Cancel',
-        onPress:()=>console.log('cancel'),
-      },
-      {
-        text:'Ok',
-        onPress:()=>console.log('Ok'),
-      },
-    ]);
+    universalErroHandlerWithAlert(response);
     });
   };
   return (

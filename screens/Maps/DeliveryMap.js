@@ -8,6 +8,7 @@ import { ShimmerWrapper, TextIconButton } from '../../Components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const DeliveryMap = ({navigation,route}) => {
   const order_id = (route.params.order_id);
   const token = useSelector(state=>state.userReducer.jwtToken);
@@ -26,13 +27,12 @@ const DeliveryMap = ({navigation,route}) => {
                 setisLoading(false);
             }
         }).catch(err=>{
-            console.log(err);
+            universalErrorhandlerWithSnackbar(err);
             setisLoading(false);
         });
 },[order_id,token]);
   return (
     <View
-      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         flex: 1,
       }}>
@@ -86,12 +86,11 @@ const DeliveryMap = ({navigation,route}) => {
           }}
           onError={
             (err)=>{
-              console.log(err);
               Toast.show({
                 type:'error',
                 position:'bottom',
                 text1:'Failed',
-                text2:'Error Fetching Directions',
+                text2:err,
               });
             }
           }
@@ -105,7 +104,7 @@ const DeliveryMap = ({navigation,route}) => {
         position:'absolute',
         top: SIZES.padding * 2,
         left:SIZES.padding,
-        ...styles.buttonStyle
+        ...styles.buttonStyle,
       }}
       iconStyle={{
         width:20,
@@ -119,7 +118,7 @@ const DeliveryMap = ({navigation,route}) => {
       style={{
         position:'absolute',
         top:SIZES.padding * 2,
-        right:SIZES.padding
+        right:SIZES.padding,
       }}
       >
         <TextIconButton
@@ -141,7 +140,7 @@ const DeliveryMap = ({navigation,route}) => {
         iconStyle={{
           width:20,
           height:20,
-          tintColor:COLORS.gray
+          tintColor:COLORS.gray,
         }}
         />
       </View>
@@ -149,7 +148,7 @@ const DeliveryMap = ({navigation,route}) => {
       style={{
         position:'absolute',
         bottom:0,
-        width:'100%'
+        width:'100%',
       }}
       >
         <View
@@ -163,7 +162,7 @@ const DeliveryMap = ({navigation,route}) => {
           <View
           style={{
             flexDirection:'row',
-            alignItems:'center'
+            alignItems:'center',
           }}
           >
             <Image
@@ -192,7 +191,7 @@ const DeliveryMap = ({navigation,route}) => {
           style={{
             flexDirection:'row',
             alignItems:'center',
-            marginTop:SIZES.padding
+            marginTop:SIZES.padding,
           }}
           >
             <Image
@@ -242,7 +241,7 @@ const DeliveryMap = ({navigation,route}) => {
             }}
             />
             <View>
-              <Text>{"test"}</Text>
+              <Text>{'test'}</Text>
               <Text>Phone Number</Text>
             </View>
             <Image

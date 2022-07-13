@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable comma-dangle */
-import { View, Text ,Image,ScrollView} from 'react-native'
-import React from 'react'
-import { COLORS, FONTS, icons, SIZES ,dummyData} from '../../constants';
+import { View, Text ,Image,ScrollView} from 'react-native';
+import React from 'react';
+import { COLORS, FONTS, icons, SIZES } from '../../constants';
 import { Header ,LineDivider} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const OrderDetails = ({navigation,route}) => {
     const id = route.params.id;
     const token = useSelector(state=>state.userReducer.jwtToken);
@@ -23,13 +24,13 @@ const OrderDetails = ({navigation,route}) => {
                     'Authorization':`Bearer ${token}`
                 },
             }).then(response=>{
-                if(response.status === 200){
+                if (response.status === 200){
                     setTemp(response.data);
                 }
             }).catch(err=>{
-                console.log(err);
+                universalErrorhandlerWithSnackbar(err);
             });
-        }else{
+        } else {
             setTemp(details);
         }
     },[details,order_id,token]);
@@ -40,7 +41,7 @@ const OrderDetails = ({navigation,route}) => {
         backgroundColor:COLORS.white
     }}
     ><Header
-            title={'#' + temp?.order_id ?? "123"}
+            title={'#' + temp?.order_id ?? '123'}
             containerStye={{
                 marginTop:SIZES.padding,
                 paddingHorizontal:SIZES.padding

@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
 import React from 'react';
-import { Text, View ,Image, Alert, ActivityIndicator} from 'react-native';
+import { View ,Image,  ActivityIndicator} from 'react-native';
 import { FormInput, TextButton } from '../../Components';
 import { COLORS, icons, SIZES } from '../../constants';
+import { universalErroHandlerWithAlert } from '../../constants/util';
 import AuthLayout from './AuthLayout';
 export const ForgotPassword = ({navigation}) => {
   const [phone,setPhone] = React.useState('');
@@ -28,11 +29,9 @@ export const ForgotPassword = ({navigation}) => {
       }
     }).catch(err=>{
       setLabel('Reset');
-      Alert.alert('Error',err.response?.data?.message ?? 'Something Went Wrong Check The Number And Try Again',[
-        {
-          text:'Ok',
-        },c
-      ]);
+      universalErroHandlerWithAlert(err,{
+        label:'Ok',
+      });
     });
   };
   return (

@@ -20,6 +20,8 @@ import { navigationRef,rootNavigate } from './navigation/RootNavigation';
 import CardPayment from './screens/Payment/CardPayment';
 import Toast  from 'react-native-toast-message';
 import PasswordOtp from './screens/Authentication/PasswordOtp';
+import { universalErroHandlerWithAlert, universalErrorhandlerWithSnackbar } from './constants/util';
+import PasswordReset from './screens/Authentication/PasswordReset';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -44,7 +46,7 @@ const App = () => {
             },
           );
         } catch (err) {
-          console.log(err);
+          universalErroHandlerWithAlert(err,{label:'Ok',onPress:()=>askForLocationPermission()});
         }
       };
     React.useEffect(()=>{
@@ -54,7 +56,12 @@ const App = () => {
             dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
           },
           (error) => {
-            console.log(error.code, error.message);
+            Toast.show({
+              position:'bottom',
+              text1:'Error!',
+              text2:error.message,
+              type:'error',
+            });
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
@@ -63,7 +70,6 @@ const App = () => {
       SplashScreen.hide();
     },[]);
     const silent_login = ()=>{
-      console.log('im called');
       if (user !== null){
       axios({
         method:'POST',
@@ -82,7 +88,7 @@ const App = () => {
         dispatch(saveToken({token:resp.data.token}));
           }
         }
-      ).catch((err)=>console.log(err));
+      ).catch((err)=>universalErrorhandlerWithSnackbar(err));
     }
     };
     const notificationreg = () =>{
@@ -100,7 +106,7 @@ const App = () => {
             },
           }).then(resp=>{
           }).catch(err=>{
-            console.log('Error occured',err.status);
+            universalErrorhandlerWithSnackbar(err);
           });
         }
       });
@@ -132,7 +138,11 @@ const App = () => {
         completion();
       });
       Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
-        console.log('an error occured',event);
+        Toast.show({
+          text1:'Error',
+          text2:'Error Trying to Register Push Notification',
+          type:'error',
+        });
       });
     };
     return (
@@ -167,6 +177,7 @@ const App = () => {
                 <Stack.Screen name="editProfile" component={EditProfile}/>
                 <Stack.Screen name="cardPayment" component = {CardPayment}/>
                 <Stack.Screen name="passwordOtp" component={PasswordOtp}/>
+                <Stack.Screen name="passwordReser" component={PasswordReset}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);

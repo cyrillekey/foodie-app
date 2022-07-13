@@ -5,6 +5,7 @@ import { Header, LineDivider, TextButton } from '../../Components';
 import { COLORS, constants, FONTS, icons, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { universalErroHandlerWithAlert } from '../../constants/util';
 
 const OrderStatus = ({navigation,route}) => {
     const order = useSelector(state=>state.productReducer.order)[route.params.id];
@@ -55,7 +56,8 @@ const OrderStatus = ({navigation,route}) => {
             }
         ).catch(response=>{
             setLabel('Cancel');
-            Alert.alert('Error','Something went wrong trying to cancel this order');});
+        universalErroHandlerWithAlert(response);
+        });
     };
   return (
     <View
@@ -208,7 +210,7 @@ const OrderStatus = ({navigation,route}) => {
             'Are you sure you want to cancel this order',
             [
                 {text:'Yes',onPress:()=>cancelOrder()},
-                {text:'No',onPress:()=>{console.log('');}},
+                {text:'No',onPress:()=>{}},
             ]
             )}
           buttonContainerStyle={{

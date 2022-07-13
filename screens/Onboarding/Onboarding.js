@@ -5,8 +5,7 @@ import Animated from 'react-native-reanimated';
 import { FONTS, SIZES ,images, COLORS, constants} from '../../constants';
 import { TextButton } from '../../Components';
 import { useDispatch } from 'react-redux';
-import { saveAddress, viewedOnboarding } from '../../stores/user/userActions';
-import Geolocation from 'react-native-geolocation-service';
+import { viewedOnboarding } from '../../stores/user/userActions';
 const OnBoarding = ({navigation})=>{
     const scrollX = new Animated.Value(8);
     const flatListRef = React.useRef();
@@ -111,10 +110,10 @@ const OnBoarding = ({navigation})=>{
                     }}
                     onPress={()=>{
                         console.log(constants.onboarding_screens.length);
-                        let index=Math.ceil(Number(scrollX._value / SIZES.width));
-                        // if(index<constants.onboarding_screens.length-1){
-                        //     navigation.replace("SignIn")
-                        // }
+                        let index = Math.ceil(Number(scrollX._value / SIZES.width));
+                        if (index < constants.onboarding_screens.length - 1){
+                            navigation.replace('SignIn');
+                        }
                     }}
                 />
                 </View>

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import PermissionsAndroid from 'react-native';
+import PermissionsAndroid, { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 var convert = require('xml-js');
+import Toast  from 'react-native-toast-message';
 export const getAddressName = async (latitude, longitude,setAdd) => {
 return axios
     .get(
@@ -18,7 +19,7 @@ return axios
     // });
     })
     .catch(err => {
-      console.log(err);
+      universalErrorhandlerWithSnackbar(err);
     });
 };
 
@@ -31,7 +32,6 @@ export const askForLocationPermission = async () => {
       },
     );
   } catch (err) {
-    console.log(err);
   }
 };
 export const setLocation = ()=>{
@@ -41,7 +41,6 @@ export const setLocation = ()=>{
       //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
     },
     (error) => {
-      console.log(error.code, error.message);
     },
     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
 );
@@ -87,8 +86,27 @@ export const getDate = (date)=>{
       month = 'Dec';
       break;
     default:
-      month=dat.getMonth();
+      month = dat.getMonth();
       break;
   }
   return `${dat.getDate()} ${month}, ${dat.getHours()}:${dat.getMinutes()}`;
+};
+
+export const universalErroHandlerWithAlert = (err,{label = 'Ok',onPress = ()=>{}}) => {
+  let message = err?.response?.data?.message ?? 'Something Went Wrong Please Try Again or Contact Support If It Persist';
+  Alert.alert('Error',message,[
+    {
+      text:label,
+      onPress:onPress,
+    },
+  ]);
+};
+export const universalErrorhandlerWithSnackbar = (err,onPress = ()=>{}) =>{
+  let message = err?.response?.data?.message ?? 'Something Went Wrong Please Try Again or Contact Support If It Persist';
+  Toast.show({
+    position:'bottom',
+    text1:'Error',
+    text2:message,
+    onPress:onPress,
+  });
 };

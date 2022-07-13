@@ -22,6 +22,7 @@ import axios from 'axios';
 import {saveUser} from '../../stores/user/userActions';
 import { API_ENDPOINT } from '../../constants/api';
 import Toast from 'react-native-toast-message';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const EditProfile = navigation => {
   const user = useSelector(state => state.userReducer.user);
   const token = useSelector(state => state.userReducer.jwtToken);
@@ -127,13 +128,7 @@ const EditProfile = navigation => {
         setSubmitting('Update');
       })
       .catch(err => {
-        Toast.show({
-          position:'bottom',
-          type:'error',
-          text1:'Error',
-          text2:'Something Went Wrong Please Try Again',
-        });
-        console.log(err);
+        universalErrorhandlerWithSnackbar(err);
         setSubmitting('Update');
       });
   };

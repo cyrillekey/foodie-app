@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
 import {AuthLayout} from '..';
 import {FormInput, TextButton} from '../../Components';
@@ -15,6 +15,7 @@ import {SIZES, FONTS, COLORS, icons} from '../../constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { saveUser } from '../../stores/user/userActions';
+import { universalErroHandlerWithAlert } from '../../constants/util';
 const SignUp = ({navigation}) => {
   const [see, setSee] = React.useState(true);
   const [submit, setSubmit] = React.useState('Sign In');
@@ -66,11 +67,9 @@ const SignUp = ({navigation}) => {
           Alert.alert('Something Went Wrong!',response.response.data.message,[
             {
               text:'Cancel',
-              onPress:()=>console.log('cancel'),
             },
             {
               text:'Ok',
-              onPress:()=>console.log('Ok'),
             },
           ]);
         }
@@ -78,16 +77,7 @@ const SignUp = ({navigation}) => {
       .catch(function (e) {
         setForm({...form, submitting: false});
         setSubmit('Sign In');
-        Alert.alert('Error occured',e.response.data.message,[
-          {
-            text:'Cancel',
-            onPress:()=>console.log('cancel'),
-          },
-          {
-            text:'Ok',
-            onPress:()=>console.log('Ok'),
-          },
-        ]);
+        universalErroHandlerWithAlert(e);
       });
   };
   const validateEmail = (text) => {

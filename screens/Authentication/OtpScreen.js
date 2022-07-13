@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import React from 'react';
-import {View, Text, ActivityIndicator,Alert} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import {AuthLayout} from '..';
 import {TextButton} from '../../Components';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
 import { saveToken, saveUser } from '../../stores/user/userActions';
+import { universalErroHandlerWithAlert } from '../../constants/util';
 const OtpScreen = ({navigation}) => {
   const [timer, setTimer] = React.useState(50);
   const [code, setCode] = React.useState('');
@@ -73,16 +74,7 @@ const OtpScreen = ({navigation}) => {
       .catch(response => {
         setClicked(false);
         setLabel('Continue');
-        Alert.alert('Error occured',response.response.data.message,[
-          {
-            text:'Cancel',
-            onPress:()=>console.log('cancel'),
-          },
-          {
-            text:'Ok',
-            onPress:()=>console.log('Ok'),
-          },
-        ]);
+        universalErroHandlerWithAlert(response);
       });
   };
   return (

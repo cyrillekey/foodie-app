@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
@@ -8,11 +9,12 @@ import {
 import { COLORS, SIZES,icons, FONTS, dummyData } from '../../constants';
 import { HorizontalFoodCard,ShimmerWrapper } from '../../Components';
 import { useSelector,useDispatch } from 'react-redux';
-import { getAddressName } from '../../constants/util';
+import { getAddressName, universalErrorhandlerWithSnackbar } from '../../constants/util';
 import axios  from 'axios';
 import { addProducts, saveCategory } from '../../stores/products/productActions';
 import { saveAddress } from '../../stores/user/userActions';
 import Geolocation from 'react-native-geolocation-service';
+import Toast  from 'react-native-toast-message';
 const Home = (navigation) => {
     const [fetching,setFetching] = React.useState(true);
     const menu = useSelector(state=>state.productReducer.products);
@@ -32,7 +34,7 @@ const Home = (navigation) => {
             fetchFood(current);
             }
         }).catch((err) => {
-            console.log(err);
+            universalErrorhandlerWithSnackbar(err);
         });
         // eslint-disable-next-line
     },[dispatch]);
@@ -43,11 +45,44 @@ const Home = (navigation) => {
             }
             setFetching(false);
         }).catch(error=>{
-            console.log(error);
-            Alert.alert('Error','Something went horribly wrong trying to fetch food');
+           universalErrorhandlerWithSnackbar(error);
         }
         );
     };
+    const askForLocationPermission = async () => {
+        const result = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+        if (result === true){
+        navigation.navigate('pickAddress');
+        } else {
+        try {
+          await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Foodie Use Location to determine where to deliver food',
+            },
+          );
+          Geolocation.getCurrentPosition(
+            (position) => {
+              dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
+            },
+            (error) => {
+              Toast.show({
+                text1:'Error',
+                text2:error.message,
+                type:'error',
+                position:'bottom',
+              });
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+          //navigation.navigate('pickAddress');
+        } catch (err) {
+          Alert.alert('Location Error','You need to grant location permission so we can be able to serve you better');
+        }
+    }
+      };
     const  renderSearch = ()=>{
         return (
             <View style={{
@@ -173,35 +208,6 @@ const Home = (navigation) => {
                     />
         );
     };
-    const askForLocationPermission = async () => {
-        const result = await PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-        );
-        if (result === true){
-        navigation.navigate('pickAddress');
-        } else {
-        try {
-          await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Foodie Use Location to determine where to deliver food',
-            },
-          );
-          Geolocation.getCurrentPosition(
-            (position) => {
-              dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
-            },
-            (error) => {
-              console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
-          //navigation.navigate('pickAddress');
-        } catch (err) {
-          Alert.alert('Location Error','You need to grant location permission so we can be able to serve you better');
-        }
-    }
-      };
     const renderDelivery = ()=>{
         return (
             <TouchableOpacity style={{
@@ -282,7 +288,6 @@ const Home = (navigation) => {
                             }}
                             item={item}
                             onPress={()=>{
-                                //console.log(navigation)
                                 navigation.navigate('fooddetails',{
                                     id:item.food_id,
                                 });

@@ -4,16 +4,17 @@ import React from 'react';
 import { View ,Text, FlatList, TouchableOpacity, Image} from 'react-native';
 import { COLORS, FONTS, icons, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const Restaurant = () => {
   const [restaurant,setRestaurant] = React.useState([]);
   const selected = useSelector(state=>state.tabReducer.selectedTab);
   React.useEffect(()=>{
-    if (selected == 'Restaurant'){
+    if (selected === 'Restaurant'){
     axios.get('/get-all-restaurants/').then(response=>{
       if (response.status === 200){
         setRestaurant(response.data);
       }
-    }).catch(resp=>{console.log(resp);});
+    }).catch(resp=>{universalErrorhandlerWithSnackbar(resp);});
   }
   });
   return (

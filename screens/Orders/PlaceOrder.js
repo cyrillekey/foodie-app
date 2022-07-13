@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text,Image, ActivityIndicator, Alert } from 'react-native';
+import { View, Text,Image, ActivityIndicator} from 'react-native';
 import React from 'react';
 import { COLORS, FONTS } from '../../constants';
 import { CardItem, FooterTotal, FormInput, Header } from '../../Components';
@@ -7,7 +7,7 @@ import { SIZES,icons } from '../../constants';
 import { TextIconButton } from '../../Components';
 import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAddressName } from '../../constants/util';
+import { getAddressName, universalErroHandlerWithAlert } from '../../constants/util';
 import axios from 'axios';
 import { clearCart } from '../../stores/products/productActions';
 const PlaceOrder = ({navigation}) => {
@@ -53,8 +53,7 @@ const PlaceOrder = ({navigation}) => {
             }
         ).catch(err => {
             setSubmitting(false);
-            Alert.alert('Error', 'Something went wrong');
-            console.log(err);
+            universalErroHandlerWithAlert(err);
         });
     };
   return (

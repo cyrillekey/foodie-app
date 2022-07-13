@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
 import React from 'react';
-import { View,Text, Alert } from 'react-native';
+import { View,Text} from 'react-native';
 import { FlatList} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { OrderItem, ShimmerWrapper, TextButton } from '../../Components';
 import { COLORS, dummyData, FONTS, SIZES } from '../../constants';
-import { getDate } from '../../constants/util';
+import { getDate, universalErrorhandlerWithSnackbar } from '../../constants/util';
 import { addOrders } from '../../stores/products/productActions';
 const Orders = (navigation) => {
 const [isHistory,setIsHistory] = React.useState(true);
@@ -29,7 +29,8 @@ const getOrders = (type) =>{
     setFetching(false);
   }).catch(response=>{
     setFetching(false);
-    Alert.alert('Error','Something went wring trying to fetch orders');});
+  universalErrorhandlerWithSnackbar(response);
+  });
 };
 
   return (
