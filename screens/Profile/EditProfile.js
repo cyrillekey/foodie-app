@@ -21,6 +21,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import {saveUser} from '../../stores/user/userActions';
 import { API_ENDPOINT } from '../../constants/api';
+import Toast from 'react-native-toast-message';
 const EditProfile = navigation => {
   const user = useSelector(state => state.userReducer.user);
   const token = useSelector(state => state.userReducer.jwtToken);
@@ -30,6 +31,7 @@ const EditProfile = navigation => {
     user_phone: user.user_phone,
     user_mail: user.user_mail,
   });
+  const [submitting,setSubmitting] = React.useState('Update');
   const [label,setLabel] = React.useState(
     <Image
       source={icons.call}
@@ -100,15 +102,40 @@ const EditProfile = navigation => {
     updateUser.user_mail = form.user_mail;
     updateUser.user_phone = form.user_phone;
     updateUser.user_name = form.user_name;
-    axios
-      .post(
-        `/customer/update-profile/${user.customer_id}`,
-        JSON.stringify(updateUser),
-      )
+    setSubmitting(<ActivityIndicator
+      key="indicator"
+      size="large"
+      color="#fff"
+      />);
+    axios(
+      {
+        method:'POST',
+    url: `/customer/update-profile/${user.customer_id}`,
+       data: JSON.stringify(updateUser),
+       headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${token}`,
+       },
+  })
       .then(val => {
         dispatch(saveUser({user: val.data}));
+        Toast.show({
+          position:'bottom',
+          text1:'Success',
+          text2:'Profile Updated',
+        });
+        setSubmitting('Update');
       })
-      .catch(err => {});
+      .catch(err => {
+        Toast.show({
+          position:'bottom',
+          type:'error',
+          text1:'Error',
+          text2:'Something Went Wrong Please Try Again',
+        });
+        console.log(err);
+        setSubmitting('Update');
+      });
   };
   return (
     <View
@@ -260,13 +287,15 @@ const EditProfile = navigation => {
             backgroundColor: COLORS.primary,
             alignItems: 'center',
             marginTop: 10,
-          }}>
+          }}
+          onPress={()=>updateProfile()}
+          >
           <Text
             style={{
               ...FONTS.h3,
               color: COLORS.white,
             }}>
-            Submit
+            {submitting}
           </Text>
         </TouchableOpacity>
       </Animated.View>

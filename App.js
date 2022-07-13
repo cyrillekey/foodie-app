@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
@@ -16,12 +17,15 @@ import { Notifications } from 'react-native-notifications';
 import axios from 'axios';
 import { saveUser,saveToken } from './stores/user/userActions';
 import { navigationRef,rootNavigate } from './navigation/RootNavigation';
+import CardPayment from './screens/Payment/CardPayment';
+import Toast  from 'react-native-toast-message';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <App/>
+        <Toast/>
       </PersistGate>
     </Provider>
   );
@@ -54,10 +58,11 @@ const App = () => {
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
       notificationreg();
-      //silent_login();
+      silent_login();
       SplashScreen.hide();
-    });
+    },[]);
     const silent_login = ()=>{
+      console.log('im called');
       if (user !== null){
       axios({
         method:'POST',
@@ -159,6 +164,7 @@ const App = () => {
                 <Stack.Screen name="pickAddress" component={PickAddress}/>
                 <Stack.Screen name="orderDetails" component={OrderDetails}/>
                 <Stack.Screen name="editProfile" component={EditProfile}/>
+                <Stack.Screen name="cardPayment" component = {CardPayment}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);

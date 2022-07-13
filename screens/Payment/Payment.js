@@ -21,6 +21,7 @@ import axios from 'axios';
         });
     };
     React.useEffect(()=>{
+        console.log('im called'); 
         get_payment();
      },[]);
      const dispatch = useDispatch();
@@ -36,7 +37,7 @@ import axios from 'axios';
       >
         <Header
         navigation={navigation}
-        isBackPresent={false}
+        isBackPresent={true}
     containerStye={{
             height:50,
             marginTop:10,
@@ -88,9 +89,9 @@ import axios from 'axios';
                         <CardItem
                         key={data.payment_id}
                         item={data}
-                        isSelected={data.payment_id == card}
+                        isSelected={data.payment_id == card?.payment_id}
                         onPress={()=>{
-                            setCard(data.payment_id);
+                            setCard(data);
                         }}
                         />))
                 }
@@ -111,14 +112,17 @@ import axios from 'axios';
                     label="Place Your Order"
                     disabled={card === null}
                     onPress={()=>{
-                        dispatch(saveCard({id:card}));
+                        dispatch(saveCard({id:card.payment_id}));
+                        if (card?.paymentTypes === 'CARD'){
+                            navigation.navigate('cardPayment');
+                        } else {
                         navigation.navigate('checkout');
+                        }
                     }}
                     />
                 </View>
         </ScrollView>
       </View>
-    )
-  
-}
+    );
+};
 export default Payment;

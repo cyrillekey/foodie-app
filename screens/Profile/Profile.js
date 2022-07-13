@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity,ActivityIndicator } from 'react-native';
+import { Text, View,StyleSheet,Image, SafeAreaView, TouchableOpacity,ActivityIndicator, Alert } from 'react-native';
 import { Iconlabel, LineDivider } from '../../Components';
 import { COLORS, FONTS,icons,images, SIZES } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,26 @@ const Profile = (navigation) => {
     const [form,setForm] = React.useState(<ActivityIndicator/>);
     const address = useSelector(state=>state.userReducer.address);
     getAddressName(address.latitude,address.longitude,setForm);
+    const logout = () =>{
+        Alert.alert(
+            'Logout',
+            'Are You Sure You Want To Logout',
+            [
+                {
+                    text:'Yes',
+                    onPress:()=>{
+                        dispatch(logoutUser());
+                        navigation.reset({
+                            index:0,
+                            routes:[{name:'SignIn'}],
+                        });},
+                },
+                {
+                    text:'No',
+                },
+            ],
+        );
+    };
   return (
     <SafeAreaView
     style={styles.container}
@@ -107,49 +127,12 @@ const Profile = (navigation) => {
     </View>
     <LineDivider
     lineStyle={{
-        backgroundColor:COLORS.transparentBlack7,
-    }}
-    />
-    <View
-    style={{
-        flexDirection:'row',
-        justifyContent:'space-around',
-        alignItems:'center',
-        padding:SIZES.padding * 1.5,
-    }}
-    ><View
-        style={{
-            alignItems:'center',
-            alignSelf:'center',
-            borderRightColor:COLORS.black,
-        }}
-        ><Text
-            style={{
-                ...FONTS.body4,
-            }}
-            >$1250</Text>
-            <Text
-            style={{
-                ...FONTS.body4,
-            }}
-            >Wallet</Text>
-        </View>
-        <View>
-           <Text
-           style={{
-               ...FONTS.body4,
-           }}
-           >Hello wor</Text>
-        </View>
-    </View>
-    <LineDivider
-    lineStyle={{
         backgroundColor:COLORS.black,
     }}
     />
     <View
     style={{
-        marginTop:10,
+        marginTop:30,
     }}
     >
         <TouchableOpacity
@@ -196,14 +179,48 @@ const Profile = (navigation) => {
                 >Support</Text>
             </View>
         </TouchableOpacity>
+        <TouchableOpacity>
+            <View
+            style={{
+                flexDirection:'row',
+                paddingVertical:15,
+                paddingHorizontal:30,
+            }}
+            >
+                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Text
+                style={{
+                    color:'#777777',
+                    marginLeft:20,
+                    fontWeight:'600',
+                    fontSize:16,
+                    lineHeight:26,
+                }}
+                >Terms And Condition</Text>
+            </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <View
+            style={{
+                flexDirection:'row',
+                paddingVertical:15,
+                paddingHorizontal:30,
+            }}
+            >
+                <Image source={icons.clock} style={{height:25,width:25,tintColor:'#FF6347'}}/>
+                <Text
+                style={{
+                    color:'#777777',
+                    marginLeft:20,
+                    fontWeight:'600',
+                    fontSize:16,
+                    lineHeight:26,
+                }}
+                >Privacy policy</Text>
+            </View>
+        </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>{
-            dispatch(logoutUser());
-                    navigation.reset({
-                        index:0,
-                        routes:[{name:'SignIn'}],
-                    });
-        }}
+        onPress={()=>logout()}
         >
             <View
             style={{

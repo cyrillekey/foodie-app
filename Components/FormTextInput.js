@@ -15,7 +15,8 @@ const FormInput = ({
     autoCompleteType = 'off',
     autoCapitalize = 'none',
     errorMsg = ' ',
-    inputContainerStyle
+    inputContainerStyle,
+    value,
 })=>{
     return (
         <View style={{...containerStyle}}>

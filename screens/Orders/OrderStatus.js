@@ -227,7 +227,9 @@ const OrderStatus = ({navigation,route}) => {
             width:'40%',
             borderRadius:SIZES.base,
           }}
-          onPress={()=>navigation.navigate('deliveryMap')}
+          onPress={()=>navigation.navigate('deliveryMap',{
+            order_id:order.order_id,
+          })}
           />
       </View>
         }
