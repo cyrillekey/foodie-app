@@ -19,6 +19,7 @@ import { saveUser,saveToken } from './stores/user/userActions';
 import { navigationRef,rootNavigate } from './navigation/RootNavigation';
 import CardPayment from './screens/Payment/CardPayment';
 import Toast  from 'react-native-toast-message';
+import PasswordOtp from './screens/Authentication/PasswordOtp';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -165,6 +166,7 @@ const App = () => {
                 <Stack.Screen name="orderDetails" component={OrderDetails}/>
                 <Stack.Screen name="editProfile" component={EditProfile}/>
                 <Stack.Screen name="cardPayment" component = {CardPayment}/>
+                <Stack.Screen name="passwordOtp" component={PasswordOtp}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);

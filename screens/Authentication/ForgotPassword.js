@@ -1,11 +1,40 @@
 /* eslint-disable react-native/no-inline-styles */
+import axios from 'axios';
 import React from 'react';
-import { Text, View ,Image} from 'react-native';
+import { Text, View ,Image, Alert, ActivityIndicator} from 'react-native';
 import { FormInput, TextButton } from '../../Components';
 import { COLORS, icons, SIZES } from '../../constants';
 import AuthLayout from './AuthLayout';
-export const ForgotPassword = () => {
+export const ForgotPassword = ({navigation}) => {
   const [phone,setPhone] = React.useState('');
+  const [label ,setLabel] = React.useState('Reset');
+  const requestPasswordReset = () =>{
+    setLabel(<ActivityIndicator
+    size="large"
+    color={COLORS.white}
+    />);
+    axios({
+      method:'post',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      url:`/reset-password-request/${phone}`,
+    }).then(response=>{
+      setLabel('Reset');
+      if (response.status === 200){
+        navigation.navigate('passwordOtp',{
+          phone:phone,
+        });
+      }
+    }).catch(err=>{
+      setLabel('Reset');
+      Alert.alert('Error',err.response?.data?.message ?? 'Something Went Wrong Check The Number And Try Again',[
+        {
+          text:'Ok',
+        },c
+      ]);
+    });
+  };
   return (
   <AuthLayout
   title="Forgot password"
@@ -20,7 +49,7 @@ export const ForgotPassword = () => {
       <FormInput
       label="Phone Number"
       placeholder="0712345678"
-      keyboardType="tel"
+      keyboardType="phone-pad"
       onChange={(value)=>{
         setPhone(value);
       }}
@@ -42,14 +71,15 @@ export const ForgotPassword = () => {
       }
       />
       <TextButton
-      label="Reset"
+      label={label}
+      disabled={phone.length < 10}
       buttonContainerStyle={{
         height:55,
         alignItems:'center',
         marginTop:SIZES.padding,
         borderRadius:SIZES.radius,
       }}
-      onPress={()=>console.log("")}
+      onPress={()=>requestPasswordReset()}
       />
     </View>
     </AuthLayout>
