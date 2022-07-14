@@ -43,6 +43,7 @@ const PasswordOtp = ({navigation,route}) => {
             // if (response.status === 200){
             //  navigation.navigate('passwordReset',{
             //     phone:phone,
+            //     logged_in:false,
             //  });
             // }
             setLabel('Submit');

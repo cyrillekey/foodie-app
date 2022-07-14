@@ -91,10 +91,12 @@ const Signin = ({navigation}) => {
           },
         ]);
       }
-    }).catch(response=>{
+    }).catch(err=>{
       setFrom({...form,submittin:false});
     setLabel('Sign In');
-    universalErroHandlerWithAlert(response);
+    universalErroHandlerWithAlert(err,{
+      label:'Ok',
+    });
     });
   };
   return (

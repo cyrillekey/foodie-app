@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React from 'react';
 import { View ,Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import { COLORS, FONTS, icons, SIZES } from '../../constants';
+import { COLORS, FONTS, icons, images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
 import { universalErrorhandlerWithSnackbar } from '../../constants/util';
 const Restaurant = () => {
@@ -52,6 +52,7 @@ const Restaurant = () => {
                height:200,
                borderRadius:SIZES.radius,
              }}
+             loadingIndicatorSource={images.placeholder}
              />
              <View
              style={{

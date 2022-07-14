@@ -88,6 +88,7 @@ const CartTab = ({navigation}) => {
                             margin:5,
                             borderRadius:360,
                         }}
+                        loadingIndicatorSource={images.placeholder}
                         />
                     </View>
                     <View

@@ -3,7 +3,7 @@ import React from 'react';
 import { View,Text,Image} from 'react-native';
 import { COLORS, SIZES,images, FONTS } from '../../constants';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
+const AuthLayout = ({title,sutitle,titlecontainerStyle,children,header})=>{
     return (
             <View
             style={{
@@ -16,6 +16,7 @@ const AuthLayout = ({title,sutitle,titlecontainerStyle,children})=>{
                     flex:1,
                     paddingHorizontal:SIZES.padding,
                 }}>
+                    {header}
                     <View style={{
                     alignItems:'center',
                 }}>

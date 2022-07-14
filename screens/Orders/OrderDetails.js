@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable comma-dangle */
-import { View, Text ,Image,ScrollView} from 'react-native';
+import { View, Text ,Image,ScrollView, ActivityIndicator, RefreshControl} from 'react-native';
 import React from 'react';
-import { COLORS, FONTS, icons, SIZES } from '../../constants';
-import { Header ,LineDivider} from '../../Components';
+import { COLORS, FONTS, icons, images, SIZES } from '../../constants';
+import { Header ,LineDivider, TextButton} from '../../Components';
 import QRCode from 'react-native-qrcode-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ const OrderDetails = ({navigation,route}) => {
     const order_id = route.params.order_id;
     let details = (useSelector(state=>state.productReducer.order)[id]);
     const [temp,setTemp] = React.useState();
+    const [refreshing,setRefreshing] = React.useState(true);
     React.useEffect(()=>{
         if (!details && order_id){
             axios({
@@ -27,13 +28,34 @@ const OrderDetails = ({navigation,route}) => {
                 if (response.status === 200){
                     setTemp(response.data);
                 }
+                setRefreshing(false);
             }).catch(err=>{
+                setRefreshing(false);
                 universalErrorhandlerWithSnackbar(err);
             });
         } else {
             setTemp(details);
+            setRefreshing(false);
         }
     },[details,order_id,token]);
+    const onRefresh = () =>{
+        setRefreshing(true);
+        axios({
+            url:`customer/get-order-details/${temp.order_id}`,
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+        }).then(response=>{
+            if (response.status === 200){
+                setTemp(response.data);
+                setRefreshing(false);
+            }
+        }).catch(err=>{
+            universalErrorhandlerWithSnackbar(err);
+            setRefreshing(false);
+        });
+    };
   return (
     <View
     style={{
@@ -50,13 +72,18 @@ const OrderDetails = ({navigation,route}) => {
             isCartpresent={false}
             navigation={navigation}
         />
-        <View
+        <ScrollView
         style={{
             marginTop:SIZES.padding * 2,
             borderRadius:SIZES.radius,
-            justifyContent:'center',
-            alignItems:'center',
         }}
+        contentContainerStyle={{
+            justifyContent:'center',
+            alignItems:'center'
+        }}
+        refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh ={onRefresh}/>
+        }
         >
             <QRCode
               value={temp?.delivery_id ?? '125'}
@@ -69,7 +96,7 @@ const OrderDetails = ({navigation,route}) => {
                 marginTop:SIZES.padding
             }}
             >Scan to confirm Order Received</Text>
-        </View>
+        </ScrollView>
         <View
         style={{
             position:'absolute',
@@ -119,6 +146,7 @@ const OrderDetails = ({navigation,route}) => {
                 width:40,
                 height:40,
             }}
+            loadingIndicatorSource={images.placeholder}
             />
             <View
                 style={{
@@ -171,6 +199,12 @@ const OrderDetails = ({navigation,route}) => {
                 <Text style={{...FONTS.h3}}>8 mins</Text>
             </View>
             </View>
+            <TextButton
+            label="Rate"
+            onPress={()=>{
+                navigation.navigate("driverRatings");
+            }}
+            />
             </ScrollView>
         </View>
     </View>

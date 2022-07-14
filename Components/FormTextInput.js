@@ -16,7 +16,8 @@ const FormInput = ({
     autoCapitalize = 'none',
     errorMsg = ' ',
     inputContainerStyle,
-    value,
+    multiLines = false,
+    lines = 4,
 })=>{
     return (
         <View style={{...containerStyle}}>
@@ -46,7 +47,7 @@ const FormInput = ({
                 marginTop:SIZES.height > 800 ? SIZES.base : 0,
                 borderRadius:SIZES.radius,
                 backgroundColor:COLORS.lightGray2,
-                ...inputContainerStyle
+                ...inputContainerStyle,
             }}
             >
                 {prependComponent}
@@ -54,7 +55,7 @@ const FormInput = ({
                     style={{
                         flex:1,
                         ...inputStyle,
-                        color:COLORS.black
+                        color:COLORS.black,
                     }}
                     placeholder={placeholder}
                     placeholderTextColor={COLORS.gray}
@@ -63,6 +64,8 @@ const FormInput = ({
                     autoComplete={autoCompleteType}
                     autoCapitalize={autoCapitalize}
                     onChangeText={(text)=>onChange(text)}
+                    multiline={multiLines}
+                    numberOfLines={lines}
                 />
                 {appendComponent}
             </View>

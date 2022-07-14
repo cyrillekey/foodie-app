@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import { View, Text, TouchableOpacity,Image } from 'react-native'
 import React from 'react'
-import { COLORS, FONTS, icons, SIZES } from '../constants'
+import { COLORS, FONTS, icons, images, SIZES } from '../constants'
 
 export default function CardItem({
   item,isSelected,onPress
@@ -32,11 +33,12 @@ export default function CardItem({
       >
         <Image
         source={{uri:item.payment_image}}
-        resizeMode='center'
+        resizeMode="center"
         style={{
           width:35,
-          height:35
+          height:35,
         }}
+        loadingIndicatorSource={images.placeholder}
         />
       </View>
       <Text

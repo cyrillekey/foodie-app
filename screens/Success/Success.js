@@ -12,7 +12,7 @@ const Success = ({navigation}) => {
         backgroundColor:COLORS.white
     }}
     >
-        <View
+   <View
         style={{
            flex:1,
            alignItems:'center',
@@ -37,7 +37,7 @@ const Success = ({navigation}) => {
                 marginTop:SIZES.base,
                 ...FONTS.body3,color:COLORS.darkGray
             }}
-            >Payment was successfully</Text>
+            >Order was successfully Placed</Text>
         </View>
         <TextButton
             label="Success"
@@ -47,7 +47,10 @@ const Success = ({navigation}) => {
                 borderRadius:SIZES.radius
             }}
             onPress={()=>{
-                navigation.navigate('Home')
+                navigation.reset({
+                    index:0,
+                    routes:[{name:'Home'}],
+                });
             }}
         />
     </View>

@@ -1,13 +1,13 @@
-/* eslint-disable react/self-closing-comp */
+/* eslint-disable eqeqeq */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React from 'react';
 import { Image, TouchableOpacity, View,Text} from 'react-native';
 import { createDrawerNavigator,DrawerContentScrollView } from '@react-navigation/drawer';
-import {COLORS, SIZES,icons, dummyData, FONTS, constants, images} from '../constants';
+import {COLORS, SIZES,icons, FONTS, constants, images} from '../constants';
 import { MainLayout } from '../screens';
 import Animated from 'react-native-reanimated';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { setSelectedTab, setTest } from '../stores/tab/tabActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedTab} from '../stores/tab/tabActions';
 import { logoutUser } from '../stores/user/userActions';
 
 const Drawer = createDrawerNavigator();
@@ -78,10 +78,10 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                         <Text style={{color:COLORS.white,...FONTS.body4}}>View Profile</Text>
                     </View>
                 </TouchableOpacity>
-                <View 
+                <View
                 style={{
                     flex:1,
-                    marginTop:SIZES.padding
+                    marginTop:SIZES.padding,
                 }}
                 >
                     <CustomDrawerItem
@@ -96,22 +96,25 @@ const CustomDrawerComponent = ({navigation,selectedTab})=>{
                         dispatch(setSelectedTab({selectedTab:constants.screens.my_wallet}));
                         //navigation.navigate('MainLayout');
                     }}/>
-                    <CustomDrawerItem label={constants.screens.notification} icon={icons.notification} onPress={()=>{
-                        dispatch(setSelectedTab({selectedTab:constants.screens.notification}));
+                    <CustomDrawerItem label={constants.screens.orders} icon={icons.cart} onPress={()=>{
+                        dispatch(setSelectedTab({selectedTab:constants.screens.orders}));
                         navigation.navigate('MainLayout');
                     }}/>
                     <CustomDrawerItem label={constants.screens.favourite} icon={icons.favourite} onPress={()=>{
-                        //dispatch(setSelectedTab({test:constants.screens.favourite}))
+                        dispatch(setSelectedTab({selectedTab:constants.screens.favourite}));
                         navigation.navigate('MainLayout');
                     }}/>
                     <View style={{
                         height:1,
                         marginVertical:SIZES.radius,
                         marginLeft:SIZES.radius,
-                        backgroundColor:COLORS.lightGray1
+                        backgroundColor:COLORS.lightGray1,
                     }}/>
                     <CustomDrawerItem label="Track your order" icon={icons.location}/>
-                    <CustomDrawerItem label="Settings" icon={icons.setting}/>
+                    <CustomDrawerItem label="Settings" icon={icons.setting} onPress={()=>{
+                        dispatch(setSelectedTab({selectedTab:constants.screens.profile}));
+                        navigation.navigate('MainLayout');
+                    }}/>
                 </View>
                 <View style={{marginBottom:SIZES.padding}}>
                 <CustomDrawerItem label="Logout" icon={icons.logout} onPress={()=>{
@@ -131,7 +134,7 @@ const CustomDrawer = ({selectedTab,setSelectedTab}) =>{
         inputRange:[0,1],
         outputRange:[1,0.8],
     });
-    const borderRadius=Animated.interpolateNode(progress,{
+    const borderRadius = Animated.interpolateNode(progress,{
         inputRange:[0,1],
         outputRange:[1,26],
     });

@@ -108,5 +108,7 @@ export const universalErrorhandlerWithSnackbar = (err,onPress = ()=>{}) =>{
     text1:'Error',
     text2:message,
     onPress:onPress,
+    type:'error',
   });
+  console.log(err);
 };

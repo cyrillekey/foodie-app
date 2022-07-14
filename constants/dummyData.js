@@ -184,12 +184,35 @@ const restaurant = [
         calories: 78,
         isFavourite: true,
         image: require("../assets/dummyData/wrap_sandwich.png")
-    }
-]
+    },
+];
+const tips = [
+    {
+        id:1,
+        value:'No Tip',
+    },
+    {
+        id:2,
+        value:'100',
+    },
+    {
+        id:3,
+        value:'200',
+    },
+    {
+        id:4,
+        value:'500',
+    },
+    {
+        id:5,
+        value:'1000',
+    },
+];
 export default {
     myProfile,
     categories,
     menu,
     allCards,
-    restaurant
-}
+    restaurant,
+    tips,
+};

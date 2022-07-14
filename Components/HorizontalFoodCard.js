@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { View,Image,TouchableOpacity,Text} from "react-native";
-import { COLORS, FONTS, SIZES } from "../constants";
+import { COLORS, FONTS, images, SIZES } from "../constants";
 const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
     return (
         <TouchableOpacity style={{
@@ -16,6 +16,7 @@ const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
                 style={
                     imageStyle
                 }
+                loadingIndicatorSource={images.placeholder}
             />
             <View style={{
                 flex:1,

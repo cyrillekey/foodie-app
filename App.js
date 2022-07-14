@@ -22,6 +22,7 @@ import Toast  from 'react-native-toast-message';
 import PasswordOtp from './screens/Authentication/PasswordOtp';
 import { universalErroHandlerWithAlert, universalErrorhandlerWithSnackbar } from './constants/util';
 import PasswordReset from './screens/Authentication/PasswordReset';
+import DriverRatings from './screens/Ratings/DriverRatings';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -177,7 +178,8 @@ const App = () => {
                 <Stack.Screen name="editProfile" component={EditProfile}/>
                 <Stack.Screen name="cardPayment" component = {CardPayment}/>
                 <Stack.Screen name="passwordOtp" component={PasswordOtp}/>
-                <Stack.Screen name="passwordReser" component={PasswordReset}/>
+                <Stack.Screen name="passwordReset" component={PasswordReset}/>
+                <Stack.Screen name="driverRatings" component={DriverRatings}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);
