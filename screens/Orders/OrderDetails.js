@@ -199,12 +199,6 @@ const OrderDetails = ({navigation,route}) => {
                 <Text style={{...FONTS.h3}}>8 mins</Text>
             </View>
             </View>
-            <TextButton
-            label="Rate"
-            onPress={()=>{
-                navigation.navigate("driverRatings");
-            }}
-            />
             </ScrollView>
         </View>
     </View>

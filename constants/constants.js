@@ -131,13 +131,13 @@ const tags = [
 const track_order_status = [
     {
         id: 1,
-        title: "Order Confirmed",
-        sub_title: "Your order has been received"
+        title: "Order Placed",
+        sub_title: "Your order has been Placed"
     },
     {
         id: 2,
-        title: "Order Prepared",
-        sub_title: "Your order has been prepared"
+        title: "Order Confirmed",
+        sub_title: "Your order is ready for Delivery"
     },
     {
         id: 3,

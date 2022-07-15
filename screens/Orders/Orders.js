@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
 import React from 'react';
-import { View,Text} from 'react-native';
+import { View,Text, RefreshControl} from 'react-native';
 import { FlatList} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { OrderItem, ShimmerWrapper, TextButton } from '../../Components';
@@ -15,8 +15,10 @@ const [fetching,setFetching] = React.useState(false);
 const orders = useSelector(state=>state.productReducer.order);
 const user = useSelector(state=>state.userReducer.user);
 const token = useSelector(state=>state.userReducer.jwtToken);
+const [refreshing,setRefreshing] = React.useState(true);
 const getOrders = (type) =>{
   setFetching(true);
+  setRefreshing(false);
   var config = {
     method: 'get',
     url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
@@ -29,6 +31,25 @@ const getOrders = (type) =>{
     setFetching(false);
   }).catch(response=>{
     setFetching(false);
+  universalErrorhandlerWithSnackbar(response);
+  });
+};
+const onRefresh = () => {
+  let type = 0;
+  console.log("Im Refreshing");
+  setRefreshing(true);
+  var config = {
+    method: 'get',
+    url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+  axios(config).then(response=>{
+    dispatch(addOrders(response.data));
+    setRefreshing(false);
+  }).catch(response=>{
+    setRefreshing(false);
   universalErrorhandlerWithSnackbar(response);
   });
 };
@@ -90,6 +111,10 @@ const getOrders = (type) =>{
           marginTop:SIZES.padding,
           paddingHorizontal:SIZES.padding,
         }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={
+            onRefresh}/>
+        }
         renderItem={({item,index})=>{
           return (
             <ShimmerWrapper

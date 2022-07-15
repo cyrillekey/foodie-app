@@ -23,6 +23,7 @@ const DriverRatings = ({navigation,route}) => {
             marginTop:SIZES.padding,
             paddingHorizontal:SIZES.padding,
         }}
+        isCartpresent={false}
         />
         <View
         style={{
@@ -49,18 +50,13 @@ const DriverRatings = ({navigation,route}) => {
             style={{
                 ...FONTS.body3,
                 color:COLORS.darkGray,
+                marginTop:SIZES.radius * 0.5,
             }}
             >Delivery Man</Text>
             <Text
             style={{
-                ...FONTS.h3,
-                color:COLORS.green,
-                marginVertical:SIZES.radius,
-            }}
-            >Order Delivered</Text>
-            <Text
-            style={{
                 ...FONTS.body3,
+                marginTop:SIZES.radius
             }}
             >Please Rate Our Services</Text>
             <StarRating
@@ -117,8 +113,20 @@ const DriverRatings = ({navigation,route}) => {
             placeholder="Add Review"
             multiLines={true}
             lines = {4}
+            inputContainerStyle={{
+                height:120,
+            }}
             />
         </View>
+        <TextButton
+        label="Rate"
+        buttonContainerStyle={{
+            height:55,
+            marginHorizontal:SIZES.radius,
+            borderRadius:SIZES.radius,
+            marginTop:SIZES.padding
+        }}
+        />
     </View>
   );
 };

@@ -194,7 +194,22 @@ const OrderStatus = ({navigation,route}) => {
       </View>
       {
         order.orderStatus === 'CANCELLED' ?
-         <View/> :
+         <View/>
+        : order.orderStatus === 'RECEIVED' ?
+        <TextButton
+        label="Rate Driver"
+        buttonContainerStyle={{
+            height:55,
+            borderRadius:SIZES.radius,
+            marginTop:SIZES.padding,
+        }}
+        onPress={()=>{
+            navigation.navigate('driverRatings',{
+                order_id:order.order_id,
+            });
+        }}
+        />
+         :
       <View
       style={{
         height:55,
