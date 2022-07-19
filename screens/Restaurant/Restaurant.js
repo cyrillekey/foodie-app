@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
 import React from 'react';
-import { View ,Text, FlatList, TouchableOpacity, Image} from 'react-native';
+import { View ,Text, FlatList, TouchableOpacity, Image,ActivityIndicator} from 'react-native';
 import { COLORS, FONTS, icons, images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
 import { universalErrorhandlerWithSnackbar } from '../../constants/util';

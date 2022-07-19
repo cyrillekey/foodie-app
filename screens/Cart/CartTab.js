@@ -4,7 +4,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    ActivityIndicator,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useDispatch, useSelector } from 'react-redux';

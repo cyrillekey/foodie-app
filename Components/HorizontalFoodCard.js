@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { View,Image,TouchableOpacity,Text} from "react-native";
+import { View,Image,TouchableOpacity,Text,ActivityIndicator} from "react-native";
 import { COLORS, FONTS, images, SIZES } from "../constants";
 const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
     return (
