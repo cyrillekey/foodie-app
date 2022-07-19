@@ -52,7 +52,7 @@ const Restaurant = () => {
                height:200,
                borderRadius:SIZES.radius,
              }}
-             loadingIndicatorSource={images.placeholder}
+             loadingIndicatorSource={<ActivityIndicator size={'large'} color={COLORS.white}/>}
              />
              <View
              style={{

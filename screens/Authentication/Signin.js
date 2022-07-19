@@ -17,7 +17,9 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { saveToken, saveUser } from '../../stores/user/userActions';
 import { universalErroHandlerWithAlert } from '../../constants/util';
+import { GoogleSignin,GoogleSigninButton,statusCodes } from '@react-native-google-signin/google-signin';
 const Signin = ({navigation}) => {
+  GoogleSignin.configure();
   const dispatch = useDispatch();
   const [see, setSee] = React.useState(true);
   const [form, setFrom] = React.useState({
@@ -54,6 +56,22 @@ const Signin = ({navigation}) => {
   };
   const isEnabled = () => {
     return form.passWordvalid && form.emailValid && form.submittin === false;
+  };
+  const googleSignin = async () => {
+    setFrom({...form,submittin:true});
+    setLabel(<View>
+      <ActivityIndicator color="#fff" style="large" />
+    </View>);
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo);
+    }
+    catch ( error){
+      console.error(error);
+      setFrom({...form,submittin:false});
+    setLabel('Sign In');
+    }
   };
   const login = () =>{
     setFrom({...form,submittin:true});
@@ -230,17 +248,16 @@ const Signin = ({navigation}) => {
             }}
           />
         </View>
-        <View>
           <TextIconButton
             containerStyle={{
               height: 50,
               alignItems: 'center',
               borderRadius: SIZES.radius,
-              backgroundColor: COLORS.blue,
+              backgroundColor: COLORS.black,
               marginTop: SIZES.padding * 2,
             }}
-            label="Sign in With Facebook"
-            iconLeft={icons.cart}
+            label="Sign in With Google"
+            iconLeft={icons.google}
             iconStyle={{
               marginLeft: SIZES.radius,
               tintColor: COLORS.white,
@@ -249,12 +266,9 @@ const Signin = ({navigation}) => {
               marginLeft: SIZES.radius,
               color: COLORS.white,
             }}
-            onPress={() => {
-              console.log('exmpa');
-            }}
+            onPress={googleSignin}
           />
         </View>
-      </View>
     </AuthLayout>
   );
 };

@@ -53,7 +53,7 @@ const PlaceOrder = ({navigation}) => {
             }
         ).catch(err => {
             setSubmitting(false);
-            universalErroHandlerWithAlert(err);
+            universalErroHandlerWithAlert(err,{label:'Ok'});
         });
     };
   return (

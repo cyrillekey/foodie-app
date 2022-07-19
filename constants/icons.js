@@ -37,6 +37,7 @@ const check_on =  require("../assets/icons/check_on.png")
 const check_off =  require("../assets/icons/check_off.png")
 const delete_icon =  require("../assets/icons/delete.png")
 const dotted_line =  require("../assets/icons/dotted_line.png")
+const google = require("../assets/icons/google.png");
 export default {
     coupon,
     cross,
@@ -66,4 +67,5 @@ export default {
     check_off,check_on,
     delete_icon,
     dotted_line,
+    google,
 };

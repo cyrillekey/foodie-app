@@ -52,7 +52,12 @@ const PasswordReset = ({navigation,route}) => {
       },
     }).then(response=>{
       if (response.status === 200){
-      dispatch(saveUser({user:response.data}));
+        console.log(response.data);
+        logged_in ?
+      dispatch(saveUser({user:response.data})) : navigation.reset({
+        index:0,
+        routes:[{name:'SignIn'}],
+    });
       Toast.show();
       }
       setLabel('Reset');

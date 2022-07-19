@@ -16,7 +16,7 @@ const HorizontalFoodCard = ({item,imageStyle,containerStyle,onPress})=>{
                 style={
                     imageStyle
                 }
-                loadingIndicatorSource={images.placeholder}
+                loadingIndicatorSource={<ActivityIndicator size={'large'} color={COLORS.white}/>}
             />
             <View style={{
                 flex:1,

@@ -74,7 +74,9 @@ const OtpScreen = ({navigation}) => {
       .catch(response => {
         setClicked(false);
         setLabel('Continue');
-        universalErroHandlerWithAlert(response);
+        universalErroHandlerWithAlert(response,{
+          label:'Ok',
+        });
       });
   };
   return (

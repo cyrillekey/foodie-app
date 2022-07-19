@@ -18,7 +18,7 @@ import { saveUser } from '../../stores/user/userActions';
 import { universalErroHandlerWithAlert } from '../../constants/util';
 const SignUp = ({navigation}) => {
   const [see, setSee] = React.useState(true);
-  const [submit, setSubmit] = React.useState('Sign In');
+  const [submit, setSubmit] = React.useState('Sign Up');
   const dispath = useDispatch();
   const [form, setForm] = React.useState({
     email: '',
@@ -59,7 +59,7 @@ const SignUp = ({navigation}) => {
     axios(config)
       .then(function (response) {
         setForm({...form, submitting: false});
-        setSubmit('Sign In');
+        setSubmit('Sign Up');
         if (response.status === 201) {
             dispath(saveUser({user:response.data.customer}));
            navigation.navigate('Otp');
@@ -76,8 +76,8 @@ const SignUp = ({navigation}) => {
       })
       .catch(function (e) {
         setForm({...form, submitting: false});
-        setSubmit('Sign In');
-        universalErroHandlerWithAlert(e);
+        setSubmit('Sign Up');
+        universalErroHandlerWithAlert(e,{label:'Ok'});
       });
   };
   const validateEmail = (text) => {

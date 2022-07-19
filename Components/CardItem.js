@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, TouchableOpacity,Image } from 'react-native'
+import { View, Text, TouchableOpacity,Image, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, icons, images, SIZES } from '../constants'
 
@@ -38,7 +38,7 @@ export default function CardItem({
           width:35,
           height:35,
         }}
-        loadingIndicatorSource={images.placeholder}
+        loadingIndicatorSource={<ActivityIndicator size={'large'} color={COLORS.white}/>}
         />
       </View>
       <Text

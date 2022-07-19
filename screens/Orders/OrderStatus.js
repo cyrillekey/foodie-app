@@ -56,7 +56,7 @@ const OrderStatus = ({navigation,route}) => {
             }
         ).catch(response=>{
             setLabel('Cancel');
-        universalErroHandlerWithAlert(response);
+        universalErroHandlerWithAlert(response,{label:'Ok'});
         });
     };
   return (

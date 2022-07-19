@@ -39,17 +39,16 @@ const PasswordOtp = ({navigation,route}) => {
                 phone_number:phone,
             },
         }).then(response=>{
-            console.log(response.status);
-            // if (response.status === 200){
-            //  navigation.navigate('passwordReset',{
-            //     phone:phone,
-            //     logged_in:false,
-            //  });
-            // }
+            if (response.status === 200){
+             navigation.navigate('passwordReset',{
+                phone:phone,
+                logged_in:false,
+             });
+            }
             setLabel('Submit');
             setSubmitting(false);
         }).catch(err=>{
-            universalErroHandlerWithAlert(err);
+            universalErroHandlerWithAlert(err,{label:'Ok'});
             setSubmitting(false);
             setLabel('Submit');
         });

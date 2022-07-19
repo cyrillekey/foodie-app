@@ -146,7 +146,7 @@ const OrderDetails = ({navigation,route}) => {
                 width:40,
                 height:40,
             }}
-            loadingIndicatorSource={images.placeholder}
+            loadingIndicatorSource={<ActivityIndicator size={'large'} color={COLORS.white}/>}
             />
             <View
                 style={{

@@ -47,7 +47,7 @@ const App = () => {
             },
           );
         } catch (err) {
-          universalErroHandlerWithAlert(err,{label:'Ok',onPress:()=>askForLocationPermission()});
+         // universalErroHandlerWithAlert(err,{label:'Ok',onPress:()=>askForLocationPermission()});
         }
       };
     React.useEffect(()=>{
