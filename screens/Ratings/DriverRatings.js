@@ -188,6 +188,7 @@ const DriverRatings = ({navigation,route}) => {
             marginTop:SIZES.padding,
             marginBottom:SIZES.padding,
         }}
+        onPress = {rate_driver}
         disabled={!(form.message.length > 0 && form.subject.length > 0) }
         />
     </ScrollView>
