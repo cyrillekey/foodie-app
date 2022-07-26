@@ -72,10 +72,16 @@ const OrderDetails = ({navigation,route}) => {
             isCartpresent={false}
             navigation={navigation}
         />
+        <View
+        style={{
+            height:SIZES.height * 0.6
+        }}
+        >
         <ScrollView
         style={{
             marginTop:SIZES.padding * 2,
             borderRadius:SIZES.radius,
+            marginBottom:SIZES.padding * 2,
         }}
         contentContainerStyle={{
             justifyContent:'center',
@@ -87,7 +93,7 @@ const OrderDetails = ({navigation,route}) => {
         >
             <QRCode
               value={temp?.delivery_id ?? '125'}
-              size={220}
+              size={SIZES.height * 0.3}
             />
             <Text
             style={{
@@ -97,12 +103,12 @@ const OrderDetails = ({navigation,route}) => {
             }}
             >Scan to confirm Order Received</Text>
         </ScrollView>
+        </View>
         <View
         style={{
             position:'absolute',
             bottom:0,
             width:'100%',
-            height:300
         }}
         >
             <LinearGradient

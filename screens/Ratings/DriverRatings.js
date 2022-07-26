@@ -1,15 +1,70 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import React from 'react';
 import { COLORS, dummyData, FONTS, images, SIZES } from '../../constants';
 import { FormInput, Header, TextButton } from '../../Components';
 import  StarRating from 'react-native-star-rating-widget';
-
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { universalErrorhandlerWithSnackbar } from '../../constants/util';
+import  Toast  from 'react-native-toast-message';
 const DriverRatings = ({navigation,route}) => {
-    const [ratings,setRatings] = React.useState(0.5);
+    const [ratings,setRatings] = React.useState(1.0);
+    const [form,setForm] = React.useState({
+        subject:'',
+        message:'',
+    });
+    const [label,setLabel] = React.useState('Submit');
     const [tip,setTip] = React.useState(1);
+    const [courier,setCourier] = React.useState({});
+    const user = useSelector(state=>state.userReducer.user);
+    const token = useSelector(state=>state.userReducer.jwtToken);
+    const id = route.params.order_id;
+    React.useEffect(()=>{
+        axios({
+            url:`/customer/get-courier-details/${id}`,
+            method:'GET',
+            headers:{
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${token}`,
+            },
+          }).then(response=>{
+            setCourier(response.data);
+          }).catch(err=>{
+            universalErrorhandlerWithSnackbar(err);
+          });
+    },[courier,token,id]);
+    const rate_driver = () =>{
+        setLabel(<ActivityIndicator size= "large" color={COLORS.white}/>);
+        axios({
+            url:`/customer/add-review/courier/${id}/${user?.customer_id}`,
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`,
+            },
+            data:{
+                rating:ratings,
+                subject:'',
+                message:'message',
+            },
+        }).then(response=>{
+            if ( response.status === 201){
+                Toast.show({
+                    text1:'Success',
+                    text2:'Ratings Updated Succesfully',
+                    position:'bottom',
+                    onShow:()=>{},
+                });
+                navigation.navigate('Home');
+            }
+        }).catch(err=>{
+            setLabel('Submit');
+            universalErrorhandlerWithSnackbar(err);
+        });
+    };
   return (
-    <View
+    <ScrollView
     style={{
         flex:1,
         backgroundColor:COLORS.white,
@@ -32,7 +87,7 @@ const DriverRatings = ({navigation,route}) => {
             justifyContent:'center',
         }}
         >
-            <Image source={images.profile}
+            <Image source={courier?.profile_picture ? {uri:courier?.profile_picture} : images.profile}
             resizeMode="center"
             style={{
                 height:120,
@@ -45,7 +100,7 @@ const DriverRatings = ({navigation,route}) => {
                 marginTop:SIZES.padding,
                 ...FONTS.h3,
             }}
-            >John Doe</Text>
+            >{courier.user_name}</Text>
             <Text
             style={{
                 ...FONTS.body3,
@@ -56,10 +111,11 @@ const DriverRatings = ({navigation,route}) => {
             <Text
             style={{
                 ...FONTS.body3,
-                marginTop:SIZES.radius
+                marginTop:SIZES.radius,
             }}
             >Please Rate Our Services</Text>
             <StarRating
+            minRating={1.0}
             rating={ratings}
             onChange={(value)=>{
                 setRatings(value);
@@ -110,24 +166,31 @@ const DriverRatings = ({navigation,route}) => {
             )}
             />
             <FormInput
+            placeholder="Subject"
+            onChange={(text)=>setForm({...form,subject:text})}
+            />
+            <FormInput
             placeholder="Add Review"
             multiLines={true}
             lines = {4}
             inputContainerStyle={{
                 height:120,
             }}
+            onChange={(text)=>setForm({...form,message:text})}
             />
         </View>
         <TextButton
-        label="Rate"
+        label={label}
         buttonContainerStyle={{
             height:55,
             marginHorizontal:SIZES.radius,
             borderRadius:SIZES.radius,
-            marginTop:SIZES.padding
+            marginTop:SIZES.padding,
+            marginBottom:SIZES.padding,
         }}
+        disabled={!(form.message.length > 0 && form.subject.length > 0) }
         />
-    </View>
+    </ScrollView>
   );
 };
 

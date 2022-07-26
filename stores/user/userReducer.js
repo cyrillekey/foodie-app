@@ -1,5 +1,4 @@
 import * as userActions from './userActionTypes';
-import { dummyData } from '../../constants';
 const initialState = {
     user:null,
     address:{

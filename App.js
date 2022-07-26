@@ -20,7 +20,7 @@ import { navigationRef,rootNavigate } from './navigation/RootNavigation';
 import CardPayment from './screens/Payment/CardPayment';
 import Toast  from 'react-native-toast-message';
 import PasswordOtp from './screens/Authentication/PasswordOtp';
-import { universalErroHandlerWithAlert, universalErrorhandlerWithSnackbar } from './constants/util';
+import {universalErrorhandlerWithSnackbar } from './constants/util';
 import PasswordReset from './screens/Authentication/PasswordReset';
 import DriverRatings from './screens/Ratings/DriverRatings';
 const Stack = createStackNavigator();
@@ -57,12 +57,7 @@ const App = () => {
             dispatch(saveAddress({latitude:position.coords.latitude,longitude:position.coords.longitude,latitudeDelta: 0 ,longitudeDelta: 0 }));  //  ({latitude:position.coords.latitude,longitude:position.coords.longitude})
           },
           (error) => {
-            Toast.show({
-              position:'bottom',
-              text1:'Error!',
-              text2:error.message,
-              type:'error',
-            });
+            console.log(error.message);
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );

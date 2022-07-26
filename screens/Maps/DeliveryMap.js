@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, StyleSheet,Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet,Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React from 'react';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {COLORS, FONTS, icons, images, SIZES} from '../../constants';
@@ -8,12 +8,14 @@ import { ShimmerWrapper, TextIconButton } from '../../Components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import { universalErrorhandlerWithSnackbar } from '../../constants/util';
+import { getAddressName, universalErrorhandlerWithSnackbar } from '../../constants/util';
 const DeliveryMap = ({navigation,route}) => {
   const order_id = (route.params.order_id);
   const token = useSelector(state=>state.userReducer.jwtToken);
   const [order,setOrder] = React.useState({});
+  const [courier,setCourier] = React.useState({});
   const [isLoading,setisLoading] = React.useState(true);
+  const [address,setAddress] = React.useState(<ActivityIndicator/>);
   React.useEffect(()=>{
         axios({
             url:`customer/get-order-details/${order_id}`,
@@ -30,7 +32,25 @@ const DeliveryMap = ({navigation,route}) => {
             universalErrorhandlerWithSnackbar(err);
             setisLoading(false);
         });
+        get_courier_details();
+        getAddressName(order.latitude,order.longitude,setAddress);
+// eslint-disable-next-line react-hooks/exhaustive-deps
 },[order_id,token]);
+const get_courier_details = () =>{
+  axios({
+    url:`/customer/get-courier-details/${order?.courier?.courier_id}`,
+    method:'GET',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${token}`,
+    },
+  }).then(response=>{
+    setCourier(response.data);
+  }).catch(err=>{
+    universalErrorhandlerWithSnackbar(err);
+  }
+  );
+};
   return (
     <View
       style={{
@@ -217,7 +237,7 @@ const DeliveryMap = ({navigation,route}) => {
               style={{
                 ...FONTS.h3,
               }}
-              >Padungan, Kuchig</Text>
+              >{address}</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -228,12 +248,12 @@ const DeliveryMap = ({navigation,route}) => {
             borderRadius:SIZES.radius,
             paddingHorizontal:SIZES.padding,
             alignItems:'center',
-            justifyContent:'space-around',
+            justifyContent:'space-between',
             backgroundColor:COLORS.primary,
           }}
           >
             <Image
-            source={images.profile}
+            source={ courier?.profile_picture ? {uri:courier?.profile_picture} : images.placeholder}
             style={{
               width:40,
               height:40,
@@ -241,8 +261,8 @@ const DeliveryMap = ({navigation,route}) => {
             }}
             />
             <View>
-              <Text>{'test'}</Text>
-              <Text>Phone Number</Text>
+              <Text>{courier?.user_name}</Text>
+              <Text>{courier?.user_phone}</Text>
             </View>
             <Image
             source={icons.call}

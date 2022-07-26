@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, Image, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import React from 'react';
 import { Header, LineDivider, TextButton } from '../../Components';
 import { COLORS, constants, FONTS, icons, SIZES } from '../../constants';
@@ -60,7 +60,7 @@ const OrderStatus = ({navigation,route}) => {
         });
     };
   return (
-    <View
+    <ScrollView
     style={{
         flex:1,
         paddingHorizontal:SIZES.padding,
@@ -195,7 +195,7 @@ const OrderStatus = ({navigation,route}) => {
       {
         order.orderStatus === 'CANCELLED' ?
          <View/>
-        : order.orderStatus === 'RECEIVED' ?
+        : order.orderStatus === 'DELIVERED' ?
         <TextButton
         label="Rate Driver"
         buttonContainerStyle={{
@@ -205,7 +205,7 @@ const OrderStatus = ({navigation,route}) => {
         }}
         onPress={()=>{
             navigation.navigate('driverRatings',{
-                order_id:order.order_id,
+                order_id:order.courier.courier_id,
             });
         }}
         />
@@ -250,7 +250,7 @@ const OrderStatus = ({navigation,route}) => {
           />
       </View>
         }
-    </View>
+    </ScrollView>
   );
 };
 
