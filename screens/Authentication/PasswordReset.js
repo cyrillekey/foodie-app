@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View,TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View,TouchableOpacity, Image, ActivityIndicator, ScrollView } from 'react-native';
 import React from 'react';
 import AuthLayout from './AuthLayout';
 import { COLORS, icons, images, SIZES } from '../../constants';
@@ -67,7 +67,7 @@ const PasswordReset = ({navigation,route}) => {
     });
   };
   return (
-      <View
+      <ScrollView
       style={{
         flex:1,
         marginTop:SIZES.padding ,
@@ -174,7 +174,7 @@ const PasswordReset = ({navigation,route}) => {
         disabled={isEnabled() ? false : true}
         onPress={()=>resetPassword()}
         />
-      </View>
+      </ScrollView>
   );
 };
 

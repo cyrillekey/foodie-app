@@ -35,12 +35,11 @@ const getOrders = (type) =>{
   });
 };
 const onRefresh = () => {
-  let type = 0;
   console.log("Im Refreshing");
   setRefreshing(true);
   var config = {
     method: 'get',
-    url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
+    url: `/customer/get-customer-order/${user?.customer_id}/${Number(isHistory)}`,
     headers: {
       'Authorization': `Bearer ${token}`,
     },
@@ -111,10 +110,6 @@ const onRefresh = () => {
           marginTop:SIZES.padding,
           paddingHorizontal:SIZES.padding,
         }}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={
-            onRefresh}/>
-        }
         renderItem={({item,index})=>{
           return (
             <ShimmerWrapper
@@ -142,6 +137,10 @@ const onRefresh = () => {
         marginTop:SIZES.padding,
         paddingHorizontal:SIZES.padding,
       }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={
+          onRefresh}/>
+      }
       renderItem={({item,index})=>{
         var formatted = getDate(item.order_date);
         return (<View>
