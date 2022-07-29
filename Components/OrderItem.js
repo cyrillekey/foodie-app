@@ -10,7 +10,8 @@ const OrderItem = ({
     date,qty,status,
     navigation,
     onPress,
-    index
+    index,
+    courier,
 }) => {
   return (
     <View
@@ -104,8 +105,13 @@ const OrderItem = ({
             labelStyle={{
                 color:COLORS.primary,
             }}
-            label="Track"
+            label={ status === 'DELIVERED' ? 'RATE' : 'TRACK'}
             onPress={()=>{
+                status === 'DELIVERED' ?
+                navigation.navigate('driverRatings',{
+                    order_id:courier,
+                })
+                :
                navigation.navigate('orderStatus',{
                 id:index,
                });

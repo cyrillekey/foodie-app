@@ -15,10 +15,9 @@ const [fetching,setFetching] = React.useState(false);
 const orders = useSelector(state=>state.productReducer.order);
 const user = useSelector(state=>state.userReducer.user);
 const token = useSelector(state=>state.userReducer.jwtToken);
-const [refreshing,setRefreshing] = React.useState(true);
+const [refreshing,setRefreshing] = React.useState(false);
 const getOrders = (type) =>{
   setFetching(true);
-  setRefreshing(false);
   var config = {
     method: 'get',
     url: `/customer/get-customer-order/${user?.customer_id}/${type}`,
@@ -35,23 +34,43 @@ const getOrders = (type) =>{
   });
 };
 const onRefresh = () => {
-  console.log("Im Refreshing");
   setRefreshing(true);
+  setFetching(true);
   var config = {
     method: 'get',
-    url: `/customer/get-customer-order/${user?.customer_id}/${Number(isHistory)}`,
+    url: `/customer/get-customer-order/${user?.customer_id}/${Number(isHistory) + 1}`,
     headers: {
       'Authorization': `Bearer ${token}`,
     },
   };
   axios(config).then(response=>{
     dispatch(addOrders(response.data));
+    setFetching(false);
     setRefreshing(false);
   }).catch(response=>{
+    setFetching(false);
     setRefreshing(false);
   universalErrorhandlerWithSnackbar(response);
   });
 };
+// const onRefresh = React.useCallback(()=>{
+//   setRefreshing(true);
+//   var config = {
+//     method: 'get',
+//     url: `/customer/get-customer-order/${user?.customer_id}/${Number(isHistory)}`,
+//     headers: {
+//       'Authorization': `Bearer ${token}`,
+//     },
+//   };
+//   axios(config).then(response=>{
+//     //dispatch(addOrders(response.data));
+//     console.log(response.data);
+//     setRefreshing(false);
+//   }).catch(response=>{
+//     setRefreshing(false);
+//   universalErrorhandlerWithSnackbar(response);
+//   });
+// },[]);
 
   return (
     <View
@@ -110,6 +129,7 @@ const onRefresh = () => {
           marginTop:SIZES.padding,
           paddingHorizontal:SIZES.padding,
         }}
+        refreshing={refreshing}
         renderItem={({item,index})=>{
           return (
             <ShimmerWrapper
@@ -137,9 +157,10 @@ const onRefresh = () => {
         marginTop:SIZES.padding,
         paddingHorizontal:SIZES.padding,
       }}
+      enabled={false}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={
-          onRefresh}/>
+          onRefresh} />
       }
       renderItem={({item,index})=>{
         var formatted = getDate(item.order_date);
@@ -156,6 +177,7 @@ const onRefresh = () => {
             navigation={navigation}
             date={formatted}
             price={item.order_amount + item.delivery_cost}
+            courier={item?.courier?.courier_id}
             onPress={()=>{
               navigation.navigate('orderDetails',{
                 id:index,
