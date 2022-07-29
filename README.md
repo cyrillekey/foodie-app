@@ -31,7 +31,7 @@ Whether you have some feauture requests/ideas, code improvements, refactoring, p
 If you found any bugs, consider opening an [issue](https://github.com/cyrillekey/foodie-app/issues/new).
 ## Author Info
 * Twitter - [CyrilleKeith](https://twitter.com/cyrille_keith)
-* Linkedin - [LinkedIn:Cyrille Otieno](https://www.linkedin.com/in/cyrill-otieno-032602169/)
+* Linkedin - [Cyrille Otieno](https://www.linkedin.com/in/cyrill-otieno-032602169/)
 
 
 
