@@ -2,7 +2,7 @@
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 # Foodie App
-This app consumes a custom [spring-boot rest backend](https://github.com/cyrillekey/restaurant_backend) paired with a [courier app](https://github.com/cyrillekey/foodie-courier). The app is built using react native and uses google maps and firebase
+This app consumes a custom [spring-boot rest backend](https://github.com/cyrillekey/restaurant-backend) paired with a [courier app](https://github.com/cyrillekey/foodie-courier). The app is built using react native and uses google maps and firebase
 
 ## Prerequisite
 * To run the app successfully you need to create your own Google API KEY
