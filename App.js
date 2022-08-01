@@ -23,6 +23,7 @@ import PasswordOtp from './screens/Authentication/PasswordOtp';
 import {universalErrorhandlerWithSnackbar } from './constants/util';
 import PasswordReset from './screens/Authentication/PasswordReset';
 import DriverRatings from './screens/Ratings/DriverRatings';
+import RestaurantDetails from './screens/Restaurant/RestaurantDetails';
 const Stack = createStackNavigator();
 const AppWrapper = () =>{
   return (
@@ -175,6 +176,7 @@ const App = () => {
                 <Stack.Screen name="passwordOtp" component={PasswordOtp}/>
                 <Stack.Screen name="passwordReset" component={PasswordReset}/>
                 <Stack.Screen name="driverRatings" component={DriverRatings}/>
+                <Stack.Screen name ="restaurantDetails" component={RestaurantDetails}/>
             </Stack.Navigator>
         </NavigationContainer>
         </GestureHandlerRootView>);

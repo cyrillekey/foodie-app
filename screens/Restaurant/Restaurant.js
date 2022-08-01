@@ -2,21 +2,30 @@
 import axios from 'axios';
 import React from 'react';
 import { View ,Text, FlatList, TouchableOpacity, Image,ActivityIndicator} from 'react-native';
-import { COLORS, FONTS, icons, images, SIZES } from '../../constants';
+import { COLORS, dummyData, FONTS, icons, images, SIZES } from '../../constants';
 import { useSelector } from 'react-redux';
 import { universalErrorhandlerWithSnackbar } from '../../constants/util';
-const Restaurant = () => {
+
+import  Toast from 'react-native-toast-message';
+import { ShimmerWrapper } from '../../Components';
+const Restaurant = (navigation) => {
   const [restaurant,setRestaurant] = React.useState([]);
   const selected = useSelector(state=>state.tabReducer.selectedTab);
+  const [loading,setLoading] = React.useState(true);
   React.useEffect(()=>{
     if (selected === 'Restaurant'){
     axios.get('/get-all-restaurants/').then(response=>{
       if (response.status === 200){
+        setLoading(false);
         setRestaurant(response.data);
       }
-    }).catch(resp=>{universalErrorhandlerWithSnackbar(resp);});
+    }).catch(resp=>{
+      setLoading(false);
+      universalErrorhandlerWithSnackbar(resp);
+    });
+
   }
-  });
+  },[selected]);
   return (
     <View
     style={{
@@ -24,7 +33,29 @@ const Restaurant = () => {
       backgroundColor:COLORS.white,
     }}
     >
-       <FlatList
+      {
+        loading ?
+          <FlatList
+          data={dummyData.menu[0].list}
+          keyExtractor={item=>`${item.id}`}
+          contentContainerStyle={{
+            paddingHorizontal:SIZES.radius,
+            paddingBottom:38,
+            marginTop:SIZES.padding,
+          }}
+          renderItem={(item,index)=>(
+            <ShimmerWrapper
+            style={{
+              marginBottom:SIZES.padding,
+              borderRadius:SIZES.radius,
+            }}
+            height={200}
+            width={SIZES.width * 0.95}
+            />
+            )}
+          />
+          :
+        <FlatList
        data={restaurant}
        keyExtractor={item=>`${item.restaurant_id}`}
        contentContainerStyle={{
@@ -37,7 +68,18 @@ const Restaurant = () => {
          style={{
            marginBottom:SIZES.padding * 2,
          }}
-         onPress={()=>console.log(item.isOpen)}
+         onPress={()=>{
+          item.isOpen ?
+          navigation.navigate('restaurantDetails',{
+            id:item.restaurant_id,
+          }) :
+          Toast.show({
+            position:'bottom',
+            text1:'Sorry',
+            text2: 'Restaurant Is Currently Clossed',
+            type:'error',
+          });
+        }}
          >
            <View
            style={{
@@ -131,6 +173,7 @@ const Restaurant = () => {
          </TouchableOpacity>
        )}
        />
+      }
     </View>
   );
 };
